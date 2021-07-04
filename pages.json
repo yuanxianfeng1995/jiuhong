@@ -1,0 +1,308 @@
+{
+	"easycom": { //uView 框架
+		"^u-(.*)": "@/uview-ui/components/u-$1/u-$1.vue"
+	},
+	"pages": [
+		{
+			"path": "pages/home/home",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true,
+				"onReachBottomDistance":50
+			}
+		},
+		{
+			"path": "pages/category/category",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/index/index",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path": "pages/login/login",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom"
+			}
+		},
+		{
+			"path": "pages/login/privacy/privacy",
+			"style": {
+				"navigationBarTitleText": "用户注册协议",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/mine",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/login/mobile/mobile",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/login/code/code",
+			"style": {
+				"navigationBarTitleText": "",
+				"enablePullDownRefresh": false
+			}
+
+		}, {
+			"path": "pages/find/find",
+			"style": {
+				"navigationBarTitleText": "发现",
+				"enablePullDownRefresh": true
+			}
+
+		}, {
+			"path": "pages/group-buy/group-buy",
+			"style": {
+				"navigationBarTitleText": "拼团",
+				"enablePullDownRefresh": true,
+				"navigationStyle": "custom"
+			}
+
+		}, {
+			"path": "pages/message/message",
+			"style": {
+				"navigationBarTitleText": "消息",
+				"enablePullDownRefresh": true
+			}
+		}, {
+			"path": "pages/text/introduction",
+			"style": {
+				"navigationBarTitleText": "平台简介",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/text/group-role",
+			"style": {
+				"navigationBarTitleText": "拼团规则",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/text/contact",
+			"style": {
+				"navigationBarTitleText": "联系客服",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/index/production/detail",
+			"style": {
+				"navigationBarTitleText": "商品详情",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/find/find-detail/find-detail",
+			"style": {
+				"navigationBarTitleText": "详情",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/index/production/coupon-info",
+			"style": {
+				"navigationBarTitleText": "拼团券",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/index/production/buy",
+			"style": {
+				"navigationBarTitleText": "支付详情",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/address/address",
+			"style": {
+				"navigationBarTitleText": "收货地址",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/group-buy/group-detail",
+			"style": {
+				"navigationBarTitleText": "拼团房间",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/wallet/wallet",
+			"style": {
+				"navigationBarTitleText": "余额",
+				"enablePullDownRefresh": false,
+				"app-plus": {
+					"titleNView": {
+						// "buttons":[{
+						// 	"text":"流水记录",
+						// 	"fontSize":"28rpx"
+						// }]
+					}
+				}
+			}
+		}, {
+			"path": "pages/mine/wallet/buy-integral",
+			"style": {
+				"navigationBarTitleText": "购买积分",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/wallet/buy-history",
+			"style": {
+				"navigationBarTitleText": "流水记录",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/wallet/charge-money",
+			"style": {
+				"navigationBarTitleText": "充值",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/wallet/withdraw-deposit",
+			"style": {
+				"navigationBarTitleText": "提现",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/wallet/withdraw-deposit-step",
+			"style": {
+				"navigationBarTitleText": "提现验证",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/coupon/coupon",
+			"style": {
+				"navigationBarTitleText": "开团券",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/coupon/buy/buy",
+			"style": {
+				"navigationBarTitleText": "开团券投入分红",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/integral/integral",
+			"style": {
+				"navigationBarTitleText": "拼团积分",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/integral/buy-balance",
+			"style": {
+				"navigationBarTitleText": "积分转余额",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/integral/buy-alipay",
+			"style": {
+				"navigationBarTitleText": "支付宝购买",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/participation/participation",
+			"style": {
+				"navigationBarTitleText": "分红",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/team/team",
+			"style": {
+				"navigationBarTitleText": "我的粉丝",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/qr-code/qr-code",
+			"style": {
+				"navigationBarTitleText": "我的二维码",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/setting/setting",
+			"style": {
+				"navigationBarTitleText": "设置",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/order/order",
+			"style": {
+				"navigationBarTitleText": "我的订单",
+				"enablePullDownRefresh": false
+			}
+		}
+		// 	{
+		// 		"path": "uni_modules/uni-upgrade-center-app/pages/upgrade-popup",
+		// 		"style": {
+		// 			"disableScroll": true,
+		// 			"app-plus": {
+		// 				"backgroundColorTop": "transparent",
+		// 				"background": "transparent",
+		// 				"titleNView": false,
+		// 				"scrollIndicator": false,
+		// 				"popGesture": "none",
+		// 				"animationType": "fade-in",
+		// 				"animationDuration": 200
+
+		// 			}
+		// 		}
+		// 	}
+	],
+	"tabBar": {
+		"backgroundColor": "#FFFFFF",
+		"borderStyle": "white",
+		"iconWidth": "30px",
+		"list": [{
+				"pagePath": "pages/index/index",
+				"iconPath": "static/tabbar/i_home@2x.png",
+				"selectedIconPath": "static/tabbar/i_home_fill@2x.png"
+			},
+			{
+				"pagePath": "pages/find/find",
+				"iconPath": "static/tabbar/Search@2x.png",
+				"selectedIconPath": "static/tabbar/Search_fill@2x.png"
+			},
+			{
+				"pagePath": "pages/group-buy/group-buy",
+				"iconPath": "static/tabbar/Search@2x.png",
+				"selectedIconPath": "static/tabbar/Search_fill@2x.png"
+			},
+			{
+				"pagePath": "pages/message/message",
+				"iconPath": "static/tabbar/i_Chat@2x.png",
+				"selectedIconPath": "static/tabbar/i_Chat_fill@2x.png"
+			},
+			{
+				"pagePath": "pages/mine/mine",
+				"iconPath": "static/tabbar/Bag@2x.png",
+				"selectedIconPath": "static/tabbar/Bag_fill@2x.png"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		"navigationBarTitleText": "玖红天下",
+		"navigationBarBackgroundColor": "#FFFFFF",
+		"backgroundColor": "#F8F8F8"
+	},
+	"condition": { //模式配置，仅开发期间生效
+		"current": 0, //当前激活的模式(list 的索引项)
+		"list": [{
+			"name": "首页", //模式名称
+			"path": "pages/home/home", //启动页面，必选
+			"query": "" //启动参数，在页面的onLoad函数里面得到
+		}]
+	}
+}

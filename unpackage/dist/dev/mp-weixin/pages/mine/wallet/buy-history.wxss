@@ -1,0 +1,28 @@
+
+.list{
+	background-color: #FFFFFF;
+	margin-top: 24rpx;
+}
+.list .item{
+	height: 96rpx;
+	width: 750rpx;
+	border-bottom: 2rpx solid #F9F9F9;
+	padding:  0 40rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+}
+.list .item text{
+	font-size: 28rpx;
+	color: #000000;
+}
+.list .item text.status{
+	font-weight: 600;
+}
+

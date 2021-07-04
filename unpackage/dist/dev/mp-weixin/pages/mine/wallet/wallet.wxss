@@ -1,0 +1,105 @@
+
+.header{
+	background: #532da3;
+	box-shadow: 0px 4rpx 4rpx 2rpx rgba(44,44,44,0.20); 
+	padding: 68rpx 20rpx 32rpx;
+}
+.menu_btn .btn{
+	-webkit-box-flex: 2;
+	-webkit-flex: 2;
+	        flex: 2;
+	height: 68rpx;
+	line-height: 68rpx;
+	color: #FFFFFF;
+	background: #532da3;
+	border: 2rpx solid #ffffff;
+	border-radius: 14rpx;
+	padding:  0 20rpx;
+	margin-left: 20rpx;
+}
+.header .price text{
+	font-size: 70rpx;
+	color: #ffffff;
+}
+.menu{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	padding-top: 20rpx;
+}
+.menu text{
+	color: #FFFFFF;
+	font-size: 24rpx;
+	padding-top: 10rpx;
+}
+.content .title{
+	font-size: 28rpx;
+	color: #9c9c9c;
+	padding: 40rpx;
+	text-align: center;
+}
+.content .tag{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	padding: 20rpx 0;
+}
+.tag_item{
+	margin-left: 40rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	line-height: 48rpx;
+}
+.tag_item text{
+	font-size: 24rpx;
+	color: #939393;
+}
+.tag_active text{
+	font-size: 28rpx;
+	color: #532DA3;
+}
+.tag_line{
+	height: 0;
+	width: 102rpx;
+	border-bottom: 2rpx solid #F8F7F7;
+}
+.tag_line_active{
+	border-bottom: 2rpx solid #532DA3;
+}
+.list{
+	background-color: #FFFFFF;
+}
+.list .item{
+	height: 96rpx;
+	width: 750rpx;
+	border-bottom: 2rpx solid #F9F9F9;
+	padding:  0 40rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+}
+.list .item text{
+	font-size: 28rpx;
+	color: #000000;
+}
+.list .item text.status{
+	font-weight: 600;
+}
+

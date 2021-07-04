@@ -1,0 +1,160 @@
+别名: com.jiuhongtianxia.app
+创建日期: 2021-5-18
+条目类型: PrivateKeyEntry
+证书链长度: 1
+证书[1]:
+所有者: CN=Eugene Hong, OU=JIUHONGTIANXIA, O=JIUHONGTIANXIA, L=GUIYANG, ST=GUIZHOU, C=ZH
+发布者: CN=Eugene Hong, OU=JIUHONGTIANXIA, O=JIUHONGTIANXIA, L=GUIYANG, ST=GUIZHOU, C=ZH
+序列号: 468e7a48
+有效期为 Wed May 12 01:00:07 CST 2021 至 Fri Apr 18 01:00:07 CST 2121
+证书指纹:
+         MD5:  C2:F4:8C:48:FF:20:EC:21:98:9F:38:C3:A0:15:DF:8D
+         SHA1: 46:CB:D8:4D:25:47:CA:A4:A9:C8:99:3D:9B:C6:3E:80:FD:E4:9D:1D
+         SHA256: 58:96:95:D8:08:3F:99:C6:6F:DA:98:84:D1:4F:BA:5A:63:FC:B9:14:C6:7B:3E:A5:CA:C1:D0:BD:85:55:B4:88
+签名算法名称: SHA256withRSA
+主体公共密钥算法: 2048 位 RSA 密钥
+版本: 3
+
+扩展:
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: 6D 29 A0 38 C2 09 5C 54   3A C9 6A D3 78 45 6B E7  m).8..\T:.j.xEk.
+0010: 7C 58 CC 76                                        .X.v
+]
+]
+
+
+
+*******************************************
+*******************************************
+
+
+
+Warning:
+JKS 密钥库使用专用格式。建议使用 "keytool -importkeystore -srckeystore D:\外包项目\JiuHong-word\jiuhongtianxia.keystore -destkeystore D:\外包项目\JiuHong-word\jiuhongtianxia.keystore -deststoretype pkcs12" 迁移到行业标准格式 PKCS12。
+
+D:\Program Files\jdk1.8.0_201\bin>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

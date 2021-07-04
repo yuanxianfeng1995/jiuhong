@@ -1,0 +1,1 @@
+<view class="contain"><view class="content"><view class="title"><text>{{article.title}}</text></view><view class="date"><text>{{article.createTime}}</text></view><view class="detail"><u-parse vue-id="f4612830-1" html="{{article.content}}" tag-style="{{parseStyle}}" bind:__l="__l"></u-parse></view></view></view>

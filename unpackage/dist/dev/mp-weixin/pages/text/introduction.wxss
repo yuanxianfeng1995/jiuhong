@@ -1,0 +1,8 @@
+
+.content{
+	padding: 74rpx;
+	color: #636161;
+	font-size: 28rpx;
+	line-height: 48rpx;
+}
+

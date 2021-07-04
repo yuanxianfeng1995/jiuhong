@@ -1,0 +1,61 @@
+
+.form{
+	width: 680rpx;
+	height: 294rpx;
+	background: #ffffff;
+	border-radius: 12rpx;
+	margin: 30rpx auto;
+	padding: 38rpx 34rpx;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+}
+.title{
+	font-size: 30rpx;
+	color: #979797;
+}
+.input{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.input text{
+	font-size: 30rpx;
+	color: #000000;
+}
+.input .line{
+	font-size: 50rpx;
+	color: #9c9c9c;
+	font-weight: 300;
+	padding-left: 16rpx;
+	padding-right: 30rpx;
+}
+.sumbit{
+	position: fixed;
+	left: 35rpx;
+	bottom: 20rpx;
+}
+.sumbit .btn{
+	width: 680rpx;
+	height: 120rpx;
+	background: #532da3;
+	border-radius: 20rpx;
+	color: #FFFFFF;
+	line-height: 120rpx;
+}
+.warn{
+	color: #9c9c9c;
+	font-size: 28rpx;
+	text-align: center;
+}
+

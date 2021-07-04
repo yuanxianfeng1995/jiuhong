@@ -1,0 +1,79 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/login/login",
+    "pages/login/privacy/privacy",
+    "pages/mine/mine",
+    "pages/login/mobile/mobile",
+    "pages/login/code/code",
+    "pages/find/find",
+    "pages/group-buy/group-buy",
+    "pages/message/message",
+    "pages/text/introduction",
+    "pages/text/group-role",
+    "pages/text/contact",
+    "pages/index/production/detail",
+    "pages/find/find-detail/find-detail",
+    "pages/index/production/coupon-info",
+    "pages/index/production/buy",
+    "pages/mine/address/address",
+    "pages/group-buy/group-detail",
+    "pages/mine/wallet/wallet",
+    "pages/mine/wallet/buy-integral",
+    "pages/mine/wallet/buy-history",
+    "pages/mine/wallet/charge-money",
+    "pages/mine/wallet/withdraw-deposit",
+    "pages/mine/wallet/withdraw-deposit-step",
+    "pages/mine/coupon/coupon",
+    "pages/mine/coupon/buy/buy",
+    "pages/mine/integral/integral",
+    "pages/mine/integral/buy-balance",
+    "pages/mine/integral/buy-alipay",
+    "pages/mine/participation/participation",
+    "pages/mine/team/team",
+    "pages/mine/qr-code/qr-code",
+    "pages/mine/setting/setting",
+    "pages/mine/order/order",
+    "uni_modules/uni-upgrade-center-app/pages/upgrade-popup"
+  ],
+  "subPackages": [],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "玖红天下",
+    "navigationBarBackgroundColor": "#FFFFFF",
+    "backgroundColor": "#F8F8F8"
+  },
+  "tabBar": {
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "white",
+    "iconWidth": "30px",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "static/tabbar/i_home@2x.png",
+        "selectedIconPath": "static/tabbar/i_home_fill@2x.png"
+      },
+      {
+        "pagePath": "pages/find/find",
+        "iconPath": "static/tabbar/Search@2x.png",
+        "selectedIconPath": "static/tabbar/Search_fill@2x.png"
+      },
+      {
+        "pagePath": "pages/group-buy/group-buy",
+        "iconPath": "static/tabbar/Search@2x.png",
+        "selectedIconPath": "static/tabbar/Search_fill@2x.png"
+      },
+      {
+        "pagePath": "pages/message/message",
+        "iconPath": "static/tabbar/i_Chat@2x.png",
+        "selectedIconPath": "static/tabbar/i_Chat_fill@2x.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "iconPath": "static/tabbar/Bag@2x.png",
+        "selectedIconPath": "static/tabbar/Bag_fill@2x.png"
+      }
+    ]
+  },
+  "usingComponents": {}
+}

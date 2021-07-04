@@ -1,0 +1,78 @@
+
+.content {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	position: relative;
+	height: 100vh;
+	background: url(/static/image/login-bg.png) no-repeat top left;
+	background-size: cover;
+	padding: 42rpx 34rpx;
+}
+.logo{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	margin: auto;
+}
+.logo image{
+	width: 336rpx;
+	height: 336rpx;
+}
+.logo_name{
+	font-size: 52rpx;
+	color: #ffffff;
+	padding-top: 40rpx;
+}
+.title{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+}
+.welcome{
+	color: #FFFFFF;
+	font-size: 52rpx;
+}
+.subheading{
+	color: #FFFFFF;
+	font-size: 32rpx;
+	padding-top: 58rpx;
+}
+.weixin{
+	margin-top: 58rpx;
+}
+.weixin image{
+	width: 680rpx;
+	height: 120rpx;
+}
+.privacy{
+	margin-top: 42rpx;
+	color: #FFFFFF;
+	font-size: 24rpx;
+	text-align: center;
+}
+

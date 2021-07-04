@@ -1,0 +1,197 @@
+
+.status_bar {
+	height: 25px;
+	width: 100%;
+}
+.contain{
+	background: #f8f7f7;
+	min-height: 100vh;
+}
+.header{
+	width: 100%;
+	height: 800rpx;
+	position: relative;
+}
+.mine_bg{
+	position: relative;
+	z-index: 0;
+	width: 100%;
+	height: 800rpx;
+	/* filter: blur(26rpx); */
+}
+.mine_bg_view{
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	z-index: 1;
+	background-color: rgba(0,0,0,0.4);
+	border-radius: 0px 0px 60rpx 60rpx;
+}
+.mine_bg image{
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 800rpx;
+	-webkit-filter: blur(6rpx);
+	        filter: blur(6rpx);
+	border-radius: 0px 0px 60rpx 60rpx;
+}
+.mine_detail{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	position: absolute;
+	bottom: 152rpx;
+	left: 0;
+	z-index: 9;
+	width: 100%;
+	padding: 60rpx 38rpx 38rpx;
+}
+.mine_detail .author{
+	width: 136rpx;
+	height: 136rpx;
+	border: 4rpx solid #ffffff;
+	border-radius: 50%;
+	box-shadow: 0px 8rpx 40rpx 0px rgba(0,0,0,0.10), 0px 4rpx 148rpx 80rpx rgba(0,0,0,0.20);
+}
+.detail_text{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	font-size: 28rpx;
+	color: #ffffff;
+	padding-top: 50rpx;
+	line-height: 1.5;
+}
+.mine_balance{
+	width: 100%;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	padding-top: 38rpx;
+	padding-left: 10rpx;
+}
+.balance_price .num{
+	font-size: 70rpx;
+	color: #ffffff;
+	padding-bottom: 30rpx;
+	margin-left: -16rpx;
+}
+.balance_price{
+	font-size: 24rpx;
+	color: rgba(249,249,249,0.80);
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-align: start;
+	-webkit-align-items: flex-start;
+	        align-items: flex-start;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+}
+.balance_btn .btn{
+	width: 96rpx;
+	height: 68rpx;
+	line-height: 68rpx;
+	opacity: 1;
+	background: #532da3;
+	border: 2rpx solid #ffffff;
+	border-radius: 14rpx;
+	color: #FFFFFF;
+	margin-left: 16rpx;
+	padding: 0;
+}
+.mine_data{
+	width: 678rpx;
+	height: 204rpx;
+	opacity: 1;
+	background: #532da3;
+	border: 2rpx solid #6d2ef3;
+	border-radius: 42rpx;
+	box-shadow: 0px 4rpx 4rpx 2rpx rgba(44,44,44,0.20); 
+	margin: -160rpx auto 0;
+	position: relative;
+	z-index: 19;
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	-webkit-box-pack: justify;
+	-webkit-justify-content: space-between;
+	        justify-content: space-between;
+	padding: 30rpx;
+}
+.mine_data_item{
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: flex;
+	-webkit-box-orient: vertical;
+	-webkit-box-direction: normal;
+	-webkit-flex-direction: column;
+	        flex-direction: column;
+	-webkit-box-align: center;
+	-webkit-align-items: center;
+	        align-items: center;
+	color: rgba(255,255,255,0.80);
+	font-size: 24rpx;
+	padding: 0 20rpx;
+}
+.mine_data_item .data_num{
+	font-size: 36rpx;
+	font-weight: 700;
+	color: #f3d66c;
+	padding: 10rpx 0;
+}
+.data_icon{
+	width: 60rpx;
+	height: 60rpx;
+}
+.order_status{
+	margin: 40rpx 0 20rpx;
+	padding: 0 30rpx;
+	background-color: #FFFFFF;
+}
+.order_status_text{
+	padding-top: 18rpx;
+	color: #595959;
+}
+.status_icon{
+	position: relative;
+}
+.menu_list{
+	padding-bottom: 80rpx;
+}
+.menu_list_block{
+	margin-top: 20rpx;
+}
+

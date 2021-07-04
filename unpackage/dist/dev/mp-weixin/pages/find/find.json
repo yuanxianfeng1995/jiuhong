@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "发现",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "u-tabbar": "/uview-ui/components/u-tabbar/u-tabbar"
+  }
+}
