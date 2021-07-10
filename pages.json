@@ -8,7 +8,7 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom",
-				"enablePullDownRefresh": true,
+				"enablePullDownRefresh": false,
 				"onReachBottomDistance":50
 			}
 		},
@@ -17,7 +17,7 @@
 			"style": {
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom",
-				"enablePullDownRefresh": true
+				"enablePullDownRefresh": false
 			}
 		},
 		{
@@ -26,6 +26,13 @@
 				"navigationBarTitleText": "",
 				"navigationStyle": "custom",
 				"enablePullDownRefresh": true
+			}
+		},
+		{
+			"path" : "pages/goods/goods-list/goods-list",
+			"style": {
+				"navigationBarTitleText": "商品列表",
+				"enablePullDownRefresh": false
 			}
 		},
 		{
@@ -265,6 +272,14 @@
 		"borderStyle": "white",
 		"iconWidth": "30px",
 		"list": [{
+				"pagePath": "pages/home/home",
+				"iconPath": "static/tabbar/i_home@2x.png",
+				"selectedIconPath": "static/tabbar/i_home_fill@2x.png"
+			},{
+				"pagePath": "pages/category/category",
+				"iconPath": "static/tabbar/i_home@2x.png",
+				"selectedIconPath": "static/tabbar/i_home_fill@2x.png"
+			},{
 				"pagePath": "pages/index/index",
 				"iconPath": "static/tabbar/i_home@2x.png",
 				"selectedIconPath": "static/tabbar/i_home_fill@2x.png"

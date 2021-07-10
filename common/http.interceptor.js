@@ -28,10 +28,10 @@ const install = (Vue, vm) => {
 			 * ------------------------------------------------------------------------
 			 * */
 			config.header.Authorization = 'Bearer' + token;
-			if(!uni.getStorageSync('token') || config.header.Authorization.length < 6 ){
-				vm.$u.route('/pages/login/login') 
-				return
-			}
+			// if(!uni.getStorageSync('token') || config.header.Authorization.length < 6 ){
+			// 	vm.$u.route('/pages/login/login') 
+			// 	return
+			// }
 			
 		}
 		
