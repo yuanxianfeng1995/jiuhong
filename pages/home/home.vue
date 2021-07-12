@@ -582,8 +582,8 @@
 	}
 
 	.category-list {
-		width: 92%;
-		margin: 0 4%;
+		width: 100%;
+		padding: 0 4%;
 		padding: 0 0 30upx 0;
 		border-bottom: solid 2upx #f6f6f6;
 		display: flex;
@@ -602,11 +602,11 @@
 				justify-content: center;
 
 				.icon {
-					font-size: 42upx;
-					width: 80upx;
+					font-size: 50upx;
+					width: 100upx;
 					text-align: center;
-					line-height: 76upx;
-					height: 80upx;
+					line-height: 100upx;
+					height: 100upx;
 					color: #fff;
 					border-radius: 50%;
 					background-color: #24dede;
@@ -629,7 +629,7 @@
 
 		image {
 			width: 100%;
-			height: 20vw;
+			height: 30vw;
 		}
 	}
 
@@ -641,6 +641,7 @@
 		padding-left: 40rpx;
 		display: flex;
 		align-items: center;
+		padding: 20rpx 0 20rpx 40rpx;
 	}
 
 	.message .message_icon {

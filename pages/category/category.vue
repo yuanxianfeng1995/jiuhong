@@ -210,6 +210,9 @@
 		onLoad() {
 		},
 		methods: {
+			toGoods(){
+				
+			},
 			//筛选点击
 			tabClick(index){
 				if(this.filterIndex === index && index !== 2){
@@ -225,7 +228,6 @@
 					duration: 300,
 					scrollTop: 0
 				})
-				this.loadData('refresh', 1);
 				uni.showLoading({
 					title: '正在加载'
 				})
@@ -387,7 +389,7 @@
 			font-size: 30upx;
 			position: relative;
 			&.current{
-				color: #007AFF;
+				color: #532da3;
 				&:after{
 					content: '';
 					position: absolute;
@@ -396,7 +398,7 @@
 					transform: translateX(-50%);
 					width: 120upx;
 					height: 0;
-					border-bottom: 4upx solid #090A0F;
+					border-bottom: 4upx solid #532da3;
 				}
 			}
 		}
