@@ -47,7 +47,7 @@
 								<view class="name">{{goods.name}}</view>
 								<view class="info">
 									<view class="price">{{goods.price}}</view>
-									<view class="slogan">{{goods.slogan}}</view>
+									<view class="slogan">销量：{{goods.slogan}}件</view>
 								</view>
 							</view>
 						</view>
@@ -130,70 +130,70 @@
 						img: '/static/image/goods/p1.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
 						price: '￥168',
-						slogan: '1235人付款'
+						slogan: '1235'
 					},
 					{
 						goods_id: 1,
 						img: '/static/image/goods/p2.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
 						price: '￥168',
-						slogan: '1235人付款'
+						slogan: '1235'
 					},
 					{
 						goods_id: 2,
 						img: '/static/image/goods/p3.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
 						price: '￥168',
-						slogan: '1235人付款'
+						slogan: '1235'
 					},
 					{
 						goods_id: 3,
 						img: '/static/image/goods/p4.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
 						price: '￥168',
-						slogan: '1235人付款'
+						slogan: '1235'
 					},
 					{
 						goods_id: 4,
 						img: '/static/image/goods/p5.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
 						price: '￥168',
-						slogan: '1235人付款'
+						slogan: '1235'
 					},
 					{
 						goods_id: 5,
 						img: '/static/image/goods/p6.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
 						price: '￥168',
-						slogan: '1235人付款'
+						slogan: '1235'
 					},
 					{
 						goods_id: 6,
 						img: '/static/image/goods/p7.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
 						price: '￥168',
-						slogan: '1235人付款'
+						slogan: '1235'
 					},
 					{
 						goods_id: 7,
 						img: '/static/image/goods/p8.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
 						price: '￥168',
-						slogan: '1235人付款'
+						slogan: '1235'
 					},
 					{
 						goods_id: 8,
 						img: '/static/image/goods/p9.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
 						price: '￥168',
-						slogan: '1235人付款'
+						slogan: '1235'
 					},
 					{
 						goods_id: 9,
 						img: '/static/image/goods/p10.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
 						price: '￥168',
-						slogan: '1235人付款'
+						slogan: '1235'
 					}
 				],
 				loadingText: "正在加载...",
@@ -244,7 +244,7 @@
 				let end_goods_id = this.goodsList[len-1].goods_id;
 				for(let i=1;i<=10;i++){
 					let goods_id = end_goods_id+i;
-					let p = { goods_id: goods_id, img: '/static/image/goods/p'+(goods_id%10==0?10:goods_id%10)+'.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan:'1235人付款' };
+					let p = { goods_id: goods_id, img: '/static/image/goods/p'+(goods_id%10==0?10:goods_id%10)+'.jpg', name: '商品名称商品名称商品名称商品名称商品名称', price: '￥168', slogan:'1235' };
 					this.goodsList.push(p);
 				}
 			},
@@ -374,10 +374,10 @@
 	}
 	.navbar{
 		position: fixed;
-		left: 24%;
+		left: 26%;
 		display: flex;
-		width: 76%;
-		height: 80upx;
+		width: 72%;
+		height: 90upx;
 		background: #fff;
 		z-index: 10;
 		.nav-item{
@@ -526,14 +526,15 @@
 					display: flex;
 					justify-content: space-between;
 					flex-wrap: wrap;
+					padding-top: 100upx;
 
 					.product {
+						width: 95%;
 						display: flex;
 						justify-content: flex-start;
 						background-color: #fff;
-						margin: 0 0 15upx 0;
+						margin: 0 auto 15upx auto;
 						padding: 10upx;
-						box-shadow: 0upx 5upx 25upx rgba(0, 0, 0, 0.1);
 
 						image {
 							width: 50%;

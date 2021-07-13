@@ -872,7 +872,7 @@ function initData(vueOptions, context) {
     try {
       data = data.call(context); // 支持 Vue.prototype 上挂的数据
     } catch (e) {
-      if (Object({"VUE_APP_NAME":"玖红天下","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"玖红天下","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.warn('根据 Vue 的 data 函数初始化小程序 data 失败，请尽量确保 data 函数中不访问 vm 对象，否则可能影响首次数据渲染速度。', data);
       }
     }
@@ -2051,9 +2051,9 @@ function normalizeComponent (
 /***/ }),
 
 /***/ 11:
-/*!*********************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/index.js ***!
-  \*********************************************************************************/
+/*!************************************!*\
+  !*** D:/jiuhong/uview-ui/index.js ***!
+  \************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2203,9 +2203,9 @@ var install = function install(Vue) {
 /***/ }),
 
 /***/ 12:
-/*!********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/mixin/mixin.js ***!
-  \********************************************************************************************/
+/*!***********************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/mixin/mixin.js ***!
+  \***********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2277,9 +2277,9 @@ var install = function install(Vue) {
 /***/ }),
 
 /***/ 13:
-/*!**********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/request/index.js ***!
-  \**********************************************************************************************/
+/*!*************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/request/index.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2459,9 +2459,9 @@ new Request();exports.default = _default;
 /***/ }),
 
 /***/ 14:
-/*!***************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/deepMerge.js ***!
-  \***************************************************************************************************/
+/*!******************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/deepMerge.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2500,9 +2500,9 @@ deepMerge;exports.default = _default;
 /***/ }),
 
 /***/ 15:
-/*!***************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/deepClone.js ***!
-  \***************************************************************************************************/
+/*!******************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/deepClone.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2534,9 +2534,9 @@ deepClone;exports.default = _default;
 /***/ }),
 
 /***/ 16:
-/*!**********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/test.js ***!
-  \**********************************************************************************************/
+/*!*************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/test.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2776,9 +2776,9 @@ function code(value) {var len = arguments.length > 1 && arguments[1] !== undefin
 /***/ }),
 
 /***/ 17:
-/*!*****************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/queryParams.js ***!
-  \*****************************************************************************************************/
+/*!********************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/queryParams.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2845,9 +2845,9 @@ queryParams;exports.default = _default;
 /***/ }),
 
 /***/ 18:
-/*!***********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/route.js ***!
-  \***********************************************************************************************/
+/*!**************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/route.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -8515,7 +8515,7 @@ function type(obj) {
 
 function flushCallbacks$1(vm) {
     if (vm.__next_tick_callbacks && vm.__next_tick_callbacks.length) {
-        if (Object({"VUE_APP_NAME":"玖红天下","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+        if (Object({"NODE_ENV":"development","VUE_APP_NAME":"玖红天下","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:flushCallbacks[' + vm.__next_tick_callbacks.length + ']');
@@ -8536,14 +8536,14 @@ function nextTick$1(vm, cb) {
     //1.nextTick 之前 已 setData 且 setData 还未回调完成
     //2.nextTick 之前存在 render watcher
     if (!vm.__next_tick_pending && !hasRenderWatcher(vm)) {
-        if(Object({"VUE_APP_NAME":"玖红天下","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"玖红天下","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + vm._uid +
                 ']:nextVueTick');
         }
         return nextTick(cb, vm)
     }else{
-        if(Object({"VUE_APP_NAME":"玖红天下","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG){
+        if(Object({"NODE_ENV":"development","VUE_APP_NAME":"玖红天下","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG){
             var mpInstance$1 = vm.$scope;
             console.log('[' + (+new Date) + '][' + (mpInstance$1.is || mpInstance$1.route) + '][' + vm._uid +
                 ']:nextMPTick');
@@ -8629,7 +8629,7 @@ var patch = function(oldVnode, vnode) {
     });
     var diffData = this.$shouldDiffData === false ? data : diff(data, mpData);
     if (Object.keys(diffData).length) {
-      if (Object({"VUE_APP_NAME":"玖红天下","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}).VUE_APP_DEBUG) {
+      if (Object({"NODE_ENV":"development","VUE_APP_NAME":"玖红天下","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}).VUE_APP_DEBUG) {
         console.log('[' + (+new Date) + '][' + (mpInstance.is || mpInstance.route) + '][' + this._uid +
           ']差量更新',
           JSON.stringify(diffData));
@@ -9818,9 +9818,9 @@ if (hadRuntime) {
 /***/ }),
 
 /***/ 22:
-/*!****************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/timeFormat.js ***!
-  \****************************************************************************************************/
+/*!*******************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/timeFormat.js ***!
+  \*******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9880,9 +9880,9 @@ timeFormat;exports.default = _default;
 /***/ }),
 
 /***/ 23:
-/*!**************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/timeFrom.js ***!
-  \**************************************************************************************************/
+/*!*****************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/timeFrom.js ***!
+  \*****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -9938,9 +9938,9 @@ timeFrom;exports.default = _default;
 /***/ }),
 
 /***/ 24:
-/*!*******************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/colorGradient.js ***!
-  \*******************************************************************************************************/
+/*!**********************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/colorGradient.js ***!
+  \**********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10082,9 +10082,9 @@ function colorToRgba(color) {var alpha = arguments.length > 1 && arguments[1] !=
 /***/ }),
 
 /***/ 25:
-/*!**********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/guid.js ***!
-  \**********************************************************************************************/
+/*!*************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/guid.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10134,9 +10134,9 @@ guid;exports.default = _default;
 /***/ }),
 
 /***/ 26:
-/*!***********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/color.js ***!
-  \***********************************************************************************************/
+/*!**************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/color.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10182,9 +10182,9 @@ color;exports.default = _default;
 /***/ }),
 
 /***/ 27:
-/*!***************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/type2icon.js ***!
-  \***************************************************************************************************/
+/*!******************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/type2icon.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10228,9 +10228,9 @@ type2icon;exports.default = _default;
 /***/ }),
 
 /***/ 28:
-/*!*****************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/randomArray.js ***!
-  \*****************************************************************************************************/
+/*!********************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/randomArray.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10246,9 +10246,9 @@ randomArray;exports.default = _default;
 /***/ }),
 
 /***/ 29:
-/*!*************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/addUnit.js ***!
-  \*************************************************************************************************/
+/*!****************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/addUnit.js ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10296,9 +10296,9 @@ module.exports = g;
 /***/ }),
 
 /***/ 30:
-/*!************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/random.js ***!
-  \************************************************************************************************/
+/*!***************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/random.js ***!
+  \***************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10317,9 +10317,9 @@ random;exports.default = _default;
 /***/ }),
 
 /***/ 31:
-/*!**********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/trim.js ***!
-  \**********************************************************************************************/
+/*!*************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/trim.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10343,9 +10343,9 @@ trim;exports.default = _default;
 /***/ }),
 
 /***/ 32:
-/*!***********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/toast.js ***!
-  \***********************************************************************************************/
+/*!**************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/toast.js ***!
+  \**************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10364,9 +10364,9 @@ toast;exports.default = _default;
 /***/ }),
 
 /***/ 33:
-/*!***************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/getParent.js ***!
-  \***************************************************************************************************/
+/*!******************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/getParent.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10422,9 +10422,9 @@ function getParent(name, keys) {
 /***/ }),
 
 /***/ 34:
-/*!*************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/$parent.js ***!
-  \*************************************************************************************************/
+/*!****************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/$parent.js ***!
+  \****************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10451,9 +10451,9 @@ function $parent() {var name = arguments.length > 0 && arguments[0] !== undefine
 /***/ }),
 
 /***/ 35:
-/*!*********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/sys.js ***!
-  \*********************************************************************************************/
+/*!************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/sys.js ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10469,10 +10469,147 @@ function sys() {
 
 /***/ }),
 
-/***/ 355:
-/*!*********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/util/emitter.js ***!
-  \*********************************************************************************************/
+/***/ 36:
+/*!*****************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/debounce.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var timeout = null;
+
+/**
+                                                                                                                         * 防抖原理：一定时间内，只有最后一次操作，再过wait毫秒后才执行函数
+                                                                                                                         * 
+                                                                                                                         * @param {Function} func 要执行的回调函数 
+                                                                                                                         * @param {Number} wait 延时的时间
+                                                                                                                         * @param {Boolean} immediate 是否立即执行 
+                                                                                                                         * @return null
+                                                                                                                         */
+function debounce(func) {var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+  // 清除定时器
+  if (timeout !== null) clearTimeout(timeout);
+  // 立即执行，此类情况一般用不到
+  if (immediate) {
+    var callNow = !timeout;
+    timeout = setTimeout(function () {
+      timeout = null;
+    }, wait);
+    if (callNow) typeof func === 'function' && func();
+  } else {
+    // 设置定时器，当最后一次操作后，timeout不会再被清除，所以在延时wait毫秒后执行func回调方法
+    timeout = setTimeout(function () {
+      typeof func === 'function' && func();
+    }, wait);
+  }
+}var _default =
+
+debounce;exports.default = _default;
+
+/***/ }),
+
+/***/ 37:
+/*!*****************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/function/throttle.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var timer, flag;
+/**
+                                                                                                                      * 节流原理：在一定时间内，只能触发一次
+                                                                                                                      * 
+                                                                                                                      * @param {Function} func 要执行的回调函数 
+                                                                                                                      * @param {Number} wait 延时的时间
+                                                                                                                      * @param {Boolean} immediate 是否立即执行
+                                                                                                                      * @return null
+                                                                                                                      */
+function throttle(func) {var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
+  if (immediate) {
+    if (!flag) {
+      flag = true;
+      // 如果是立即执行，则在wait毫秒内开始时执行
+      typeof func === 'function' && func();
+      timer = setTimeout(function () {
+        flag = false;
+      }, wait);
+    }
+  } else {
+    if (!flag) {
+      flag = true;
+      // 如果是非立即执行，则在wait毫秒内的结束处执行
+      timer = setTimeout(function () {
+        flag = false;
+        typeof func === 'function' && func();
+      }, wait);
+    }
+
+  }
+};var _default =
+throttle;exports.default = _default;
+
+/***/ }),
+
+/***/ 38:
+/*!*************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/config/config.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // 此版本发布于2020-03-17
+var version = '1.8.4';var _default =
+
+{
+  v: version,
+  version: version,
+  // 主题名称
+  type: [
+  'primary',
+  'success',
+  'info',
+  'error',
+  'warning'] };exports.default = _default;
+
+/***/ }),
+
+/***/ 39:
+/*!*************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/config/zIndex.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // uniapp在H5中各API的z-index值如下：
+/**
+ * actionsheet: 999
+ * modal: 999
+ * navigate: 998
+ * tabbar: 998
+ * toast: 999
+ */var _default =
+
+{
+  toast: 10090,
+  noNetwork: 10080,
+  // popup包含popup，actionsheet，keyboard，picker的值
+  popup: 10075,
+  mask: 10070,
+  navbar: 980,
+  topTips: 975,
+  sticky: 970,
+  indexListSticky: 965 };exports.default = _default;
+
+/***/ }),
+
+/***/ 394:
+/*!************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/util/emitter.js ***!
+  \************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10529,147 +10666,10 @@ function _broadcast(componentName, eventName, params) {
 
 /***/ }),
 
-/***/ 36:
-/*!**************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/debounce.js ***!
-  \**************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var timeout = null;
-
-/**
-                                                                                                                         * 防抖原理：一定时间内，只有最后一次操作，再过wait毫秒后才执行函数
-                                                                                                                         * 
-                                                                                                                         * @param {Function} func 要执行的回调函数 
-                                                                                                                         * @param {Number} wait 延时的时间
-                                                                                                                         * @param {Boolean} immediate 是否立即执行 
-                                                                                                                         * @return null
-                                                                                                                         */
-function debounce(func) {var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-  // 清除定时器
-  if (timeout !== null) clearTimeout(timeout);
-  // 立即执行，此类情况一般用不到
-  if (immediate) {
-    var callNow = !timeout;
-    timeout = setTimeout(function () {
-      timeout = null;
-    }, wait);
-    if (callNow) typeof func === 'function' && func();
-  } else {
-    // 设置定时器，当最后一次操作后，timeout不会再被清除，所以在延时wait毫秒后执行func回调方法
-    timeout = setTimeout(function () {
-      typeof func === 'function' && func();
-    }, wait);
-  }
-}var _default =
-
-debounce;exports.default = _default;
-
-/***/ }),
-
-/***/ 37:
-/*!**************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/function/throttle.js ***!
-  \**************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var timer, flag;
-/**
-                                                                                                                      * 节流原理：在一定时间内，只能触发一次
-                                                                                                                      * 
-                                                                                                                      * @param {Function} func 要执行的回调函数 
-                                                                                                                      * @param {Number} wait 延时的时间
-                                                                                                                      * @param {Boolean} immediate 是否立即执行
-                                                                                                                      * @return null
-                                                                                                                      */
-function throttle(func) {var wait = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 500;var immediate = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : true;
-  if (immediate) {
-    if (!flag) {
-      flag = true;
-      // 如果是立即执行，则在wait毫秒内开始时执行
-      typeof func === 'function' && func();
-      timer = setTimeout(function () {
-        flag = false;
-      }, wait);
-    }
-  } else {
-    if (!flag) {
-      flag = true;
-      // 如果是非立即执行，则在wait毫秒内的结束处执行
-      timer = setTimeout(function () {
-        flag = false;
-        typeof func === 'function' && func();
-      }, wait);
-    }
-
-  }
-};var _default =
-throttle;exports.default = _default;
-
-/***/ }),
-
-/***/ 38:
-/*!**********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/config/config.js ***!
-  \**********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // 此版本发布于2020-03-17
-var version = '1.8.4';var _default =
-
-{
-  v: version,
-  version: version,
-  // 主题名称
-  type: [
-  'primary',
-  'success',
-  'info',
-  'error',
-  'warning'] };exports.default = _default;
-
-/***/ }),
-
-/***/ 39:
-/*!**********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/config/zIndex.js ***!
-  \**********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // uniapp在H5中各API的z-index值如下：
-/**
- * actionsheet: 999
- * modal: 999
- * navigate: 998
- * tabbar: 998
- * toast: 999
- */var _default =
-
-{
-  toast: 10090,
-  noNetwork: 10080,
-  // popup包含popup，actionsheet，keyboard，picker的值
-  popup: 10075,
-  mask: 10070,
-  navbar: 980,
-  topTips: 975,
-  sticky: 970,
-  indexListSticky: 965 };exports.default = _default;
-
-/***/ }),
-
 /***/ 4:
-/*!**************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/pages.json ***!
-  \**************************************************************************/
+/*!*****************************!*\
+  !*** D:/jiuhong/pages.json ***!
+  \*****************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -10678,9 +10678,9 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ }),
 
 /***/ 40:
-/*!******************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/common/http.interceptor.js ***!
-  \******************************************************************************************/
+/*!*********************************************!*\
+  !*** D:/jiuhong/common/http.interceptor.js ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10689,8 +10689,8 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 var install = function install(Vue, vm) {
   // 此为自定义配置参数，具体参数见上方说明
   Vue.prototype.$u.http.setConfig({
-    // baseUrl: 'http://47.108.39.183:8083', //测试环境
-    baseUrl: 'http://47.109.84.60:8083', //生产环境 (这里、版本更新、二维码获取的统一地址)
+    baseUrl: 'http://47.106.123.165:8813', //测试环境
+    //baseUrl: 'http://47.109.84.60:8083', //生产环境 (这里、版本更新、二维码获取的统一地址)
     loadingText: '努力加载中~',
     loadingTime: 800 });
 
@@ -10762,9 +10762,9 @@ var install = function install(Vue, vm) {
 /***/ }),
 
 /***/ 41:
-/*!**********************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/common/http.api.js ***!
-  \**********************************************************************************/
+/*!*************************************!*\
+  !*** D:/jiuhong/common/http.api.js ***!
+  \*************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10777,7 +10777,7 @@ var install = function install(Vue, vm) {
                                           * --------------------------------------------------------------------
                                           * */
   var get_wxOpenAccount = function get_wxOpenAccount() {var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};return vm.$u.get('/user/ptUser/wxOpenAccount', params);}; //获取开放平台账号信息
-  var get_smsLogin = function get_smsLogin() {var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};return vm.$u.get('/user/ptUser/smsLogin', params);}; //获取短信验证码
+  var get_smsLogin = function get_smsLogin() {var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};return vm.$u.get('/sms/sendCode', params);}; //获取短信验证码
   var login = function login() {var params = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};return vm.$u.post('/user/ptUser/login', params);}; //登录
   /** 
    * 拼团
@@ -10913,10 +10913,10 @@ var install = function install(Vue, vm) {
 
 /***/ }),
 
-/***/ 454:
-/*!****************************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/components/u-parse/libs/MpHtmlParser.js ***!
-  \****************************************************************************************************************/
+/***/ 493:
+/*!*******************************************************************!*\
+  !*** D:/jiuhong/uview-ui/components/u-parse/libs/MpHtmlParser.js ***!
+  \*******************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -10927,9 +10927,9 @@ var install = function install(Vue, vm) {
  * @author JinYufeng
  * @listens MIT
  */
-var cfg = __webpack_require__(/*! ./config.js */ 455),
+var cfg = __webpack_require__(/*! ./config.js */ 494),
 blankChar = cfg.blankChar,
-CssHandler = __webpack_require__(/*! ./CssHandler.js */ 456),
+CssHandler = __webpack_require__(/*! ./CssHandler.js */ 495),
 windowWidth = uni.getSystemInfoSync().windowWidth;
 var emoji;
 
@@ -11504,10 +11504,10 @@ module.exports = MpHtmlParser;
 
 /***/ }),
 
-/***/ 455:
-/*!**********************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/components/u-parse/libs/config.js ***!
-  \**********************************************************************************************************/
+/***/ 494:
+/*!*************************************************************!*\
+  !*** D:/jiuhong/uview-ui/components/u-parse/libs/config.js ***!
+  \*************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -11594,14 +11594,14 @@ module.exports = cfg;
 
 /***/ }),
 
-/***/ 456:
-/*!**************************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/components/u-parse/libs/CssHandler.js ***!
-  \**************************************************************************************************************/
+/***/ 495:
+/*!*****************************************************************!*\
+  !*** D:/jiuhong/uview-ui/components/u-parse/libs/CssHandler.js ***!
+  \*****************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-var cfg = __webpack_require__(/*! ./config.js */ 455),
+var cfg = __webpack_require__(/*! ./config.js */ 494),
 isLetter = function isLetter(c) {return c >= 'a' && c <= 'z' || c >= 'A' && c <= 'Z';};
 
 function CssHandler(tagStyle) {
@@ -11704,10 +11704,10 @@ parser.prototype.Content = function () {
 
 /***/ }),
 
-/***/ 499:
-/*!*****************************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/util/async-validator.js ***!
-  \*****************************************************************************************************/
+/***/ 538:
+/*!********************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/util/async-validator.js ***!
+  \********************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11734,7 +11734,7 @@ parser.prototype.Content = function () {
 var formatRegExp = /%[sdj%]/g;
 var warning = function warning() {}; // don't print warning message when in production env or node runtime
 
-if (typeof process !== 'undefined' && Object({"VUE_APP_NAME":"玖红天下","VUE_APP_PLATFORM":"mp-weixin","NODE_ENV":"development","BASE_URL":"/"}) && "development" !== 'production' && typeof window !==
+if (typeof process !== 'undefined' && Object({"NODE_ENV":"development","VUE_APP_NAME":"玖红天下","VUE_APP_PLATFORM":"mp-weixin","BASE_URL":"/"}) && "development" !== 'production' && typeof window !==
 'undefined' && typeof document !== 'undefined') {
   warning = function warning(type, errors) {
     if (typeof console !== 'undefined' && console.warn) {
@@ -13067,11 +13067,11 @@ Schema.warning = warning;
 Schema.messages = messages;var _default =
 
 Schema;exports.default = _default;
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/node-libs-browser/mock/process.js */ 500)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/node-libs-browser/mock/process.js */ 539)))
 
 /***/ }),
 
-/***/ 500:
+/***/ 539:
 /*!********************************************************!*\
   !*** ./node_modules/node-libs-browser/mock/process.js ***!
   \********************************************************/
@@ -13102,7 +13102,7 @@ exports.binding = function (name) {
     var path;
     exports.cwd = function () { return cwd };
     exports.chdir = function (dir) {
-        if (!path) path = __webpack_require__(/*! path */ 501);
+        if (!path) path = __webpack_require__(/*! path */ 540);
         cwd = path.resolve(dir, cwd);
     };
 })();
@@ -13116,7 +13116,7 @@ exports.features = {};
 
 /***/ }),
 
-/***/ 501:
+/***/ 540:
 /*!***********************************************!*\
   !*** ./node_modules/path-browserify/index.js ***!
   \***********************************************/
@@ -13426,14 +13426,14 @@ var substr = 'ab'.substr(-1) === 'b'
     }
 ;
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 500)))
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./../node-libs-browser/mock/process.js */ 539)))
 
 /***/ }),
 
-/***/ 516:
-/*!**********************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/util/province.js ***!
-  \**********************************************************************************************/
+/***/ 555:
+/*!*************************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/util/province.js ***!
+  \*************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13442,10 +13442,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 517:
-/*!******************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/util/city.js ***!
-  \******************************************************************************************/
+/***/ 556:
+/*!*********************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/util/city.js ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -13454,10 +13454,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
 /***/ }),
 
-/***/ 518:
-/*!******************************************************************************************!*\
-  !*** D:/下载/玖红天下项目交付文件（客户端、后台PC端）/客户端/Famous-product-shop-app/uview-ui/libs/util/area.js ***!
-  \******************************************************************************************/
+/***/ 557:
+/*!*********************************************!*\
+  !*** D:/jiuhong/uview-ui/libs/util/area.js ***!
+  \*********************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 

@@ -6,7 +6,7 @@ const install = (Vue, vm) => {
 	 * --------------------------------------------------------------------
 	 * */
 	let get_wxOpenAccount = (params = {}) => vm.$u.get('/user/ptUser/wxOpenAccount', params); //获取开放平台账号信息
-	let get_smsLogin = (params = {}) => vm.$u.get('/user/ptUser/smsLogin', params);	//获取短信验证码
+	let get_smsLogin = (params = {}) => vm.$u.get('/sms/sendCode', params);	//获取短信验证码
 	let login = (params = {}) => vm.$u.post('/user/ptUser/login', params);	//登录
 	/** 
 	 * 拼团

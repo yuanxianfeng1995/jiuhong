@@ -29,9 +29,24 @@
 			}
 		},
 		{
+			"path" : "pages/cart/cart",
+			"style": {
+				"navigationBarTitleText": "",
+				"navigationStyle": "custom",
+				"enablePullDownRefresh": true
+			}
+		},
+		{
 			"path" : "pages/goods/goods-list/goods-list",
 			"style": {
 				"navigationBarTitleText": "商品列表",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path" : "pages/points-exchange/points-exchange",
+			"style": {
+				"navigationBarTitleText": "积分兑换",
 				"enablePullDownRefresh": false
 			}
 		},
@@ -279,26 +294,32 @@
 				"pagePath": "pages/category/category",
 				"iconPath": "static/tabbar/i_home@2x.png",
 				"selectedIconPath": "static/tabbar/i_home_fill@2x.png"
-			},{
-				"pagePath": "pages/index/index",
+			},
+			// {
+			// 	"pagePath": "pages/index/index",
+			// 	"iconPath": "static/tabbar/i_home@2x.png",
+			// 	"selectedIconPath": "static/tabbar/i_home_fill@2x.png"
+			// },
+			{
+				"pagePath": "pages/cart/cart",
 				"iconPath": "static/tabbar/i_home@2x.png",
 				"selectedIconPath": "static/tabbar/i_home_fill@2x.png"
 			},
-			{
-				"pagePath": "pages/find/find",
-				"iconPath": "static/tabbar/Search@2x.png",
-				"selectedIconPath": "static/tabbar/Search_fill@2x.png"
-			},
+			// {
+			// 	"pagePath": "pages/find/find",
+			// 	"iconPath": "static/tabbar/Search@2x.png",
+			// 	"selectedIconPath": "static/tabbar/Search_fill@2x.png"
+			// },
 			{
 				"pagePath": "pages/group-buy/group-buy",
 				"iconPath": "static/tabbar/Search@2x.png",
 				"selectedIconPath": "static/tabbar/Search_fill@2x.png"
 			},
-			{
-				"pagePath": "pages/message/message",
-				"iconPath": "static/tabbar/i_Chat@2x.png",
-				"selectedIconPath": "static/tabbar/i_Chat_fill@2x.png"
-			},
+			// {
+			// 	"pagePath": "pages/message/message",
+			// 	"iconPath": "static/tabbar/i_Chat@2x.png",
+			// 	"selectedIconPath": "static/tabbar/i_Chat_fill@2x.png"
+			// },
 			{
 				"pagePath": "pages/mine/mine",
 				"iconPath": "static/tabbar/Bag@2x.png",

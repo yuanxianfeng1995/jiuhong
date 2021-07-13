@@ -1,6 +1,11 @@
 {
   "pages": [
+    "pages/home/home",
+    "pages/category/category",
     "pages/index/index",
+    "pages/cart/cart",
+    "pages/goods/goods-list/goods-list",
+    "pages/points-exchange/points-exchange",
     "pages/login/login",
     "pages/login/privacy/privacy",
     "pages/mine/mine",
@@ -33,8 +38,7 @@
     "pages/mine/team/team",
     "pages/mine/qr-code/qr-code",
     "pages/mine/setting/setting",
-    "pages/mine/order/order",
-    "uni_modules/uni-upgrade-center-app/pages/upgrade-popup"
+    "pages/mine/order/order"
   ],
   "subPackages": [],
   "window": {
@@ -49,24 +53,24 @@
     "iconWidth": "30px",
     "list": [
       {
-        "pagePath": "pages/index/index",
+        "pagePath": "pages/home/home",
         "iconPath": "static/tabbar/i_home@2x.png",
         "selectedIconPath": "static/tabbar/i_home_fill@2x.png"
       },
       {
-        "pagePath": "pages/find/find",
-        "iconPath": "static/tabbar/Search@2x.png",
-        "selectedIconPath": "static/tabbar/Search_fill@2x.png"
+        "pagePath": "pages/category/category",
+        "iconPath": "static/tabbar/i_home@2x.png",
+        "selectedIconPath": "static/tabbar/i_home_fill@2x.png"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "iconPath": "static/tabbar/i_home@2x.png",
+        "selectedIconPath": "static/tabbar/i_home_fill@2x.png"
       },
       {
         "pagePath": "pages/group-buy/group-buy",
         "iconPath": "static/tabbar/Search@2x.png",
         "selectedIconPath": "static/tabbar/Search_fill@2x.png"
-      },
-      {
-        "pagePath": "pages/message/message",
-        "iconPath": "static/tabbar/i_Chat@2x.png",
-        "selectedIconPath": "static/tabbar/i_Chat_fill@2x.png"
       },
       {
         "pagePath": "pages/mine/mine",

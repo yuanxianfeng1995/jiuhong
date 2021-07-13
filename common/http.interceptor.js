@@ -2,8 +2,8 @@
 const install = (Vue, vm) => {
 	// 此为自定义配置参数，具体参数见上方说明
 	Vue.prototype.$u.http.setConfig({
-		// baseUrl: 'http://47.108.39.183:8083', //测试环境
-		baseUrl: 'http://47.109.84.60:8083', //生产环境 (这里、版本更新、二维码获取的统一地址)
+		baseUrl: 'http://47.106.123.165:8813', //测试环境
+		//baseUrl: 'http://47.109.84.60:8083', //生产环境 (这里、版本更新、二维码获取的统一地址)
 		loadingText: '努力加载中~',
 		loadingTime: 800,
 	});
@@ -28,10 +28,10 @@ const install = (Vue, vm) => {
 			 * ------------------------------------------------------------------------
 			 * */
 			config.header.Authorization = 'Bearer' + token;
-			// if(!uni.getStorageSync('token') || config.header.Authorization.length < 6 ){
-			// 	vm.$u.route('/pages/login/login') 
-			// 	return
-			// }
+			if(!uni.getStorageSync('token') || config.header.Authorization.length < 6 ){
+				vm.$u.route('/pages/login/login') 
+				return
+			}
 			
 		}
 		

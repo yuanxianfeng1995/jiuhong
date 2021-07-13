@@ -1,5 +1,9 @@
 <template>
 	<view>
+		<zy-update theme="green" ref="zyupgrade" :h5preview="true" oldversion="1.0.2" :appstoreflag="false"
+			:updateurl="update_url"></zy-update>
+		<!-- 更新组件 force 是否强制更新 有bug -->
+		<app-update ref="app_update" :force="true"></app-update>
 		<!-- 状态栏 -->
 		<view v-if="showHeader" class="status"
 			:style="{ position: headerPosition,top:statusTop,opacity: afterHeaderOpacity}"></view>
@@ -37,7 +41,7 @@
 		<view class="category-list">
 			<view class="category" v-for="(row, index) in categoryList" :key="index" @tap="toCategory(row)">
 				<view class="img">
-					<view :class="`icon iconfont ${row.icon}`" :style="{'background-color': row.background}"></view>
+					<view :class="['icon','iconfont',row.icon]" :style="{'background-color': row.background}"></view>
 				</view>
 				<view class="text">{{ row.name }}</view>
 			</view>
@@ -60,7 +64,7 @@
 		<view class="goods-list">
 			<view class="title">
 				<text>热卖产品</text>
-				<view class="icon iconfont  icon-jiantou"></view>
+				<view class="icon iconfont  icon-jiantou" @tap="toProductList()"></view>
 			</view>
 			<view class="product-list">
 				<view class="product" v-for="product in productList" :key="product.goods_id" @tap="toGoods(product)">
@@ -79,8 +83,18 @@
 </template>
 
 <script>
+	import ZyUpdate from '@/components/zy-upgrade/zy-upgrade.vue' //更新插件2
+	import appUpdate from "@/components/yzhua006-update/app-update.vue" //更新插件1
 	var ttt = 0;
 	export default {
+		components: {
+			ZyUpdate,
+			appUpdate,
+		},
+		mounted() {
+			this.$refs.zyupgrade.check_update()
+			this.$refs.app_update.update(); //调用子组件 检查更新 有bug
+		},
 		data() {
 			return {
 				showHeader: true,
@@ -115,7 +129,7 @@
 						iconPath: "/static/tabbar/i_Chat@2x.png",
 						selectedIconPath: "/static/tabbar/i_Chat_fill@2x.png",
 						customIcon: false,
-						"pagePath": "/pages/message/message",
+						"pagePath": "/pages/cart/cart",
 					},
 					{
 						iconPath: "/static/tabbar/Bag@2x.png",
@@ -250,7 +264,8 @@
 						slogan: '1235人付款'
 					}
 				],
-				loadingText: '正在加载...'
+				loadingText: '正在加载...',
+				update_url: '', // 升级url
 			};
 		},
 		onPageScroll(e) {
@@ -303,6 +318,7 @@
 			this.showHeader = false;
 			this.statusHeight = plus.navigator.getStatusbarHeight();
 			// #endif
+			this.update_url = this.$u.http.config.baseUrl + '/group/ptVersion/update'
 			// this.get_banner_list();
 			// this.get_notice_list();
 			// this.get_product_list();
@@ -376,6 +392,11 @@
 					title: e.src,
 					icon: 'none'
 				});
+			},
+			toProductList() {
+				uni.navigateTo({
+					url: '/pages/goods/goods-list/goods-list'
+				})
 			},
 			//分类跳转
 			toCategory(e) {

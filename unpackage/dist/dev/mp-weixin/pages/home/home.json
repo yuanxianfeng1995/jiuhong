@@ -1,7 +1,12 @@
 {
   "navigationBarTitleText": "",
   "navigationStyle": "custom",
-  "enablePullDownRefresh": true,
+  "enablePullDownRefresh": false,
   "onReachBottomDistance": 50,
-  "usingComponents": {}
+  "usingComponents": {
+    "u-notice-bar": "/uview-ui/components/u-notice-bar/u-notice-bar",
+    "u-tabbar": "/uview-ui/components/u-tabbar/u-tabbar",
+    "zy-update": "/components/zy-upgrade/zy-upgrade",
+    "app-update": "/components/yzhua006-update/app-update"
+  }
 }
