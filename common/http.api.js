@@ -7,15 +7,18 @@ const install = (Vue, vm) => {
 	 * */
 	let get_wxOpenAccount = (params = {}) => vm.$u.get('/user/ptUser/wxOpenAccount', params); //获取开放平台账号信息
 	let get_smsLogin = (params = {}) => vm.$u.get('/sms/sendCode', params);	//获取短信验证码
-	let login = (params = {}) => vm.$u.post('/user/ptUser/login', params);	//登录
+	let regist = (params = {}) => vm.$u.post('/member/regist', params);	//注册
+	let wxLogin = (params = {}) => vm.$u.post('/member/wxLogin', params);	//登录
 	/** 
 	 * 拼团
 	 * --------------------------------------------------------------------------
 	 * */
-	let get_headportrait = (params = {}) => vm.$u.get('/group/ptGroupRecord/home/headportrait', params);	//首页头像与拼团人数
-	let get_product_list = (params = {}) => vm.$u.get('/group/ptProduct/home/product', params);	//首页拼团轮播与首页热门专区
+	let get_headportrait = (params = {}) => vm.$u.get('/web/member/getLastList', params);	//首页头像与拼团人数
+	let get_openAndJoin_num = (params = {}) => vm.$u.get('/web/member/getMemberDailyModelData', params);
+
+	let get_product_list = (params = {}) => vm.$u.get('/web/group/getGroupProjectList', params);	//首页热门专区
 	let get_product_detail = (params = {}) => vm.$u.get('/group/ptProduct/detail', params);	//商品详情
-	let get_openAndJoin_num = (params = {}) => vm.$u.get('/group/ptGroupRecord/day/openAndJoin/num', params);	//今日可参团数量
+	//let get_openAndJoin_num = (params = {}) => vm.$u.get('/group/ptGroupRecord/day/openAndJoin/num', params);	//今日可参团数量
 	let openGroup = (params = {}) => vm.$u.post('/group/ptGroupRecord/openGroup', params);	//开团
 	let joinGroup = (params = {}) => vm.$u.post('/group/ptGroupRecord/joinGroup', params);	//加团
 	let group_square = (params = {}) => vm.$u.get('/group/ptGroupRecord/group/square', params);	//拼团广场
@@ -90,7 +93,8 @@ const install = (Vue, vm) => {
 		balanceBuy,
 		get_wxOpenAccount, 
 		get_smsLogin,
-		login,
+		regist,
+		wxLogin,
 		get_headportrait,
 		get_product_list,
 		get_product_detail,

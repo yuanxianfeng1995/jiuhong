@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "积分转余额",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "u-input": "/uview-ui/components/u-input/u-input"
-  }
-}

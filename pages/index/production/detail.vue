@@ -5,34 +5,34 @@
 				<u-swiper :list="list" mode="dot" indicator-pos="bottomRight" :height="472" :border-radius="0"></u-swiper>
 			</view>
 			<view class="title">
-				<text>{{detail.productName}}</text>
+				<text>{{detail.pname}}</text>
 			</view>
 			<view class="tag">
 				<view class="tag_left">
-					<text class="line_1">{{detail.groupPrice}}积分</text>
+					<text class="line_1">{{detail.ptPrice}}积分</text>
 					<text class="line_2">拼团价</text>
-					<text class="line_3">市场价 ￥{{detail.marketPrice}}</text>
+					<text class="line_3">市场价 ￥{{detail.marketprice}}</text>
 				</view>
 				<view class="inventory">
 					<text>剩余 {{detail.stock}}</text>
 				</view>
 			</view>
-			<view class="history" v-if="detail.headUrlsLength > 0">
+			<view class="history" v-if="detail.memberBaseVos > 0">
 				<view class="img_list">
-					<template v-for="(item,index) in detail.headUrls">
-						<image :src="item" mode="aspectFill" :key="index" v-if="index <= 10"></image>
+					<template v-for="(item,index) in detail.memberBaseVos">
+						<image :src="item.headPortrait" mode="aspectFill" :key="index" v-if="index <= 10"></image>
 					</template>
 				</view>
 				<view class="his_title">
-					<text>累计参团{{detail.totalJoinGroupNumber}}次</text>
+					<text>累计参团{{detail.joinsum}}次</text>
 				</view>
 			</view>
 		</view>
 		<view class="content">
 			<view class="group">
-				<view class="group_msg" v-if="groupDetailVoListLength > 0">
+				<view class="group_msg" v-if="detail.memberBaseVos&&detail.memberBaseVos.length > 0">
 					<view class="title">
-						<text>当前{{detail.groupDetailVoList ? detail.groupDetailVoList.length : 0}}人正在拼团，可直接参与</text>
+						<text>当前{{detail.memberBaseVos ? detail.memberBaseVos.length : 0}}人正在拼团，可直接参与</text>
 					</view>
 					<!-- <view class="more">
 						<text>查看更多</text>
@@ -74,14 +74,14 @@
 		</view>
 		<view class="footer">
 			<view class="warn_message">
-				<template v-if="detail.openGroupNumber > 0">
-					<text>温馨提示：您今日还可开团{{openAndJoin_num.openGroupNum}}次，参团{{openAndJoin_num.joinGroupNum}}次</text>
+				<template v-if="openAndJoin_num.surplusCreateGroupTotal > 0">
+					<text>温馨提示：您今日还可开团{{openAndJoin_num.surplusCreateGroupTotal}}次，参团{{openAndJoin_num.surplusJoinGroupTotal}}次</text>
 					<text @click="routeGroupInfo('open')">查看规则</text>
 				</template>
 				<text v-else>客官您好，今日开团次数已用完，暂不可发起拼团，只可参团。</text>
 			</view>
 			<view class="footer_handle">
-				<view class="explain" v-if="detail.openGroupNumber == 0">
+				<view class="explain" v-if="openAndJoin_num.surplusCreateGroupTotal == 0">
 					<view class="ask_text">
 						<text>如何获取开团券？</text>
 					</view>
@@ -90,9 +90,9 @@
 					</view>
 				</view>
 				<view class="btn_content">
-					<button class="btn" type="default" size="mini" v-if="detail.openGroupNumber > 0" @click="creatGroup()">发起拼团</button>
+					<button class="btn" type="default" size="mini" v-if="openAndJoin_num.surplusCreateGroupTotal > 0" @click="creatGroup()">发起拼团</button>
 					<view class=""></view>
-					<button :class="['btn','right',groupDetailVoListLength == 0 ? 'forbidden':'']" type="default" size="mini" @click.stop="routeBuy">随机参团</button>
+					<button :class="['btn','right',openAndJoin_num.surplusJoinGroupTotal == 0 ? 'forbidden':'']" type="default" size="mini" @click.stop="routeBuy">随机参团</button>
 				</view>
 			</view>
 		</view>
@@ -109,7 +109,47 @@
 					img: 'display:block;',
 				},
 				productId:'',
-				detail:{},
+				detail:{
+					"id": 4,
+					"userNo": "18569401914",
+					"username": null,
+					"realname": null,
+					"nickname": "橘生淮北",
+					"headPortrait": "https://thirdwx.qlogo.cn/mmopen/vi_32/BT0cJXL2cSEpVebSCsaoSvxuDvO2Y8gtic9wFnbWCBT7nk5FJh55yodVA1ibEEatuUymWtJlx7icZ7BVojP8rGbJQ/132",
+					"unionId": "oRrdQt6YLblCnWSlwY755mLev5C4",
+					"password": null,
+					"tradepwd": null,
+					"status": 1,
+					"mobile": "18569401914",
+					"regtime": null,
+					"iscase": 1,
+					"isreal": null,
+					"logintime": null,
+					"loginIp": "119.39.5.108",
+					"sourceType": null,
+					"sharepath": null,
+					"updatetime": null,
+					"createtime": null,
+					"tempUserId": null,
+					"upUser": null,
+					"remark": null,
+					"levelId": 1,
+					"token": "AVmJi5OZym20bhl3IzlcDHBAiUkl8+iODPyNCvnAG+x/rsvM/9eRSgIeZRk7fxk8Di3PQuzvnVL7pP7lThyt7B9YuxAZPQRG/rddzt0//jCclcYb3tY37JKkMcr3DfXywwVDKjb7N/UKJtjJk6wWGDO5/9AKwg84TrE6JwX5ZbE=",
+					"regKey": null,
+					"ztnum": 0,
+					"teamnum": 0,
+					"bonusid": 1,
+					"agentid": 1,
+					"isPartner": 0,
+					"isDirector": 0,
+					"isQualification": 0,
+					"isService": 0,
+					"joinnum": 0,
+					"launchnum": 0,
+					"isactiveuser": 0,
+					"ztactivenum": 0,
+					"teamactivenum": 0
+				},
 				openAndJoin_num:{},
 				groupDetailVoListLength:0,
 			}
@@ -135,7 +175,7 @@
 			creatGroup:function(){
 				let that = this
 				console.log('创建开团',this.detail)
-				if( that.openAndJoin_num.openGroupNum <= 0 ){
+				if( that.openAndJoin_num.surplusCreateGroupTotal <= 0 ){
 					uni.showToast({
 						title:'客官您好，您当前没有拼团次数，暂不可拼团。',
 						icon:'none'
@@ -159,7 +199,7 @@
 			 //拼团
 			joinGroup:function(item){
 				let that = this
-				if( that.openAndJoin_num.joinGroupNum <= 0 ){
+				if( that.openAndJoin_num.surplusJoinGroupTotal <= 0 ){
 					uni.showToast({
 						title:'客官您好，您当前没有拼团次数，暂不可拼团。',
 						icon:'none'
@@ -240,11 +280,14 @@
 					}
 				 })
 			},
-			//今日可参团 、开团
-			get_openAndJoin_num:function(){
-				this.$u.api.get_openAndJoin_num().then(res => {
+			// 获取会员每次拼团模式配置 今日可参团 、开团
+			get_openAndJoin_num(){
+				const userInfo = getApp().globalData.userInfo
+				this.$u.api.get_openAndJoin_num({
+					userId: userInfo.id
+				}).then(res => {
+					console.log(res)
 					this.openAndJoin_num = res.data
-					console.log('今日可',this.openAndJoin_num)
 				})
 			},
 			/**
@@ -261,7 +304,7 @@
 			routeBuy:function(){
 				let that = this
 				//没有开团券拦截
-				if( that.openAndJoin_num.joinGroupNum <= 0 ){
+				if( that.openAndJoin_num.surplusJoinGroupTotal <= 0 ){
 					uni.showToast({
 						title:'客官您好，您当前没有拼团次数，暂不可拼团。',
 						icon:'none'

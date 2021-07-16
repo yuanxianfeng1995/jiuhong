@@ -29,11 +29,13 @@
 			return {
 				tips: '',
 				mobile:'',
+				password: '',
 			}
 		},
 		onLoad(option) {
 			console.log('mobile',option.mobile)
-			this.mobile = option.mobile
+			this.mobile = option.mobile;
+			this.password = option.password;
 		},
 		onReady() {
 			this.getCode()
@@ -54,8 +56,6 @@
 					let that = this
 					this.$u.api.get_smsLogin({
 						mobile:that.mobile,
-						// mobile:'18798808568', 
-						method:2,
 					}).then(res => {
 						console.log('验证码',res);
 						if( res.code == 200 ){
@@ -80,36 +80,8 @@
 			},
 			//验证码
 			codeChangeInput(value){
-				console.log(value)
-				let that = this
-				let userInfo = getApp().globalData.userInfo
-				userInfo.mobile = this.mobile
-				userInfo.smscode = value
-				this.$u.api.login(userInfo).then(res => {
-					console.log(res);
-					if( res.code == 200 ){
-						console.log(res)
-						uni.setStorageSync('token', res.data);
-						uni.showLoading({
-							title:'登录中'
-						})
-						setTimeout(()=>{
-							uni.hideLoading()
-							wx.showToast({
-								title:'登录成功',
-								success() {
-									uni.reLaunch({
-										url:'../../index/index'
-									})
-								}
-							})
-						},2000)
-					}else{
-						wx.showToast({
-							title:res.msg,
-							icon:'none'
-						})
-					}
+				uni.navigateTo({
+					url:`/pages/login/password/password?mobile=${this.mobile||''}&smscode=${value||''}&password=${this.password||''}`
 				})
 			},
 		}

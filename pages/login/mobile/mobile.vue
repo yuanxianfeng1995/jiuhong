@@ -12,7 +12,8 @@
 			<view class="form">
 				<view class="tel">
 					<text>+86</text>
-					<input class="input" v-model="mobile" maxlength="11" type="number" placeholder="请输入手机号" @input="mobileChange" />
+					<input class="input" v-model="mobile" maxlength="11" type="number" placeholder="请输入手机号"
+						@input="mobileChange" />
 				</view>
 			</view>
 		</view>
@@ -24,27 +25,51 @@
 
 <script>
 	export default {
-		data() { 
+		data() {
 			return {
-				mobile:'',
+				mobile: '',
 			}
 		},
 		methods: {
 			//获取验证码
-			getCode(){
-				if( this.mobile.length != 11 ){
+			getCode() {
+				if (this.mobile.length != 11) {
 					wx.showToast({
-						title:'手机号输入错误',
-						icon:'none'
+						title: '手机号输入错误',
+						icon: 'none'
 					})
 					return
 				}
-				uni.navigateTo({
-					url:'../code/code?mobile=' + this.mobile 
+				let that = this
+				const app = getApp()
+				let userInfo = app.globalData.userInfo
+				that.$u.api.wxLogin({
+					headPortrait: userInfo.headimgurl,
+					mobile: this.mobile,
+					nickname: userInfo.nickname,
+					unionId: userInfo.unionid,
+				}).then(res => {
+					if (res.code === 0) {
+						app.globalData.userInfo = {
+							...userInfo,
+							...res.data
+						};
+						
+						// uni.navigateTo({
+						// 	url: '/pages/login/code/code?mobile='+(this.mobile||'')
+						// })
+						uni.navigateTo({
+							url:`/pages/login/password/password?mobile=${this.mobile||''}&smscode=${''}&password=${''}`
+						})
+
+					} else {
+						that.$u.toast(res.msg);
+					}
 				})
+
 			},
 			//手机号输入
-			mobileChange:function(e){
+			mobileChange: function(e) {
 				this.mobile = e.target.value
 			}
 		}
@@ -84,15 +109,15 @@
 		justify-content: space-between;
 		padding: 0 90rpx 24rpx;
 	}
-	
-	.tel text{
+
+	.tel text {
 		border-right: 2rpx solid #8A959A;
 		padding-right: 33rpx;
 		color: #000;
 		font-weight: bold;
 	}
-	
-	.tel .input{
+
+	.tel .input {
 		flex: 1;
 		padding-left: 33rpx;
 		color: #000;
@@ -107,7 +132,8 @@
 		flex-direction: column;
 		justify-content: flex-end;
 	}
-	.bottom .btn{
+
+	.bottom .btn {
 		width: 680rpx;
 		height: 120rpx;
 		line-height: 120rpx;

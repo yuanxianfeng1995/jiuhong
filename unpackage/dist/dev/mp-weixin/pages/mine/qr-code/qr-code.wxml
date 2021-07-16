@@ -1,1 +1,0 @@
-<view class="contain"><canvas style="width:682rpx;height:1134rpx;" canvas-id="my_qr" id="my_qr"></canvas><button class="submit" type="default" data-event-opts="{{[['tap',[['download_erweima']]]]}}" bindtap="__e">保存到相册</button></view>

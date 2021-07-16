@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "开团券",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "u-icon": "/uview-ui/components/u-icon/u-icon",
-    "u-loadmore": "/uview-ui/components/u-loadmore/u-loadmore"
-  }
-}

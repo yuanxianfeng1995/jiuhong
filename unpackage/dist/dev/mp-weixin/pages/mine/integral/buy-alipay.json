@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "支付宝购买",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "u-input": "/uview-ui/components/u-input/u-input"
-  }
-}

@@ -39,6 +39,7 @@
 		methods: {
 			 // 登录
 			login(){
+				const that=this;
 				if( !this.checked ){
 					uni.showToast({
 						title:'请同意用户协议',
@@ -56,7 +57,6 @@
 				      provider: 'weixin',
 				      success: function (infoRes) {
 							let userInfo = infoRes.userInfo
-							// app.globalData.userInfo = infoRes.userInfo
 							userInfo.headimgurl = userInfo.avatarUrl
 							for( let key in userInfo ){
 								let newKey = key.toLowerCase()
@@ -66,10 +66,9 @@
 								}
 							}
 							app.globalData.userInfo = userInfo
-							console.log('app',app.globalData.userInfo)
-							
+						
 							uni.navigateTo({
-								url:'./mobile/mobile'
+								url:'/pages/login/mobile/mobile'
 							})
 				      }
 				    });

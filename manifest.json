@@ -124,5 +124,20 @@
     },
     "uniStatistics" : {
         "enable" : false
+    },
+    "h5" : {
+				"devServer" : {
+				    "https" : false,
+				    "proxy" : {
+				        "/web" : {
+				            "target" : "http://47.106.123.165:8813",
+				            "changeOrigin" : true,
+				            "secure" : false,
+				            "pathRewrite" : {
+				                "^/web" : ""
+				            }
+				        }
+				    }
+				}
     }
 }

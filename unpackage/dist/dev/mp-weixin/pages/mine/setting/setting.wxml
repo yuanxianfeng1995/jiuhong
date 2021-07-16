@@ -1,1 +1,0 @@
-<view class="contain"><view class="content"><view class="list"><view class="item"><text>当前版本号</text><text>{{"v"+version}}</text></view></view></view><view class="bottom"><button class="btn" type="default" data-event-opts="{{[['tap',[['exit']]]]}}" bindtap="__e">退出登录</button></view></view>

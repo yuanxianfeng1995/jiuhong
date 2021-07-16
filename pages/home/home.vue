@@ -305,23 +305,13 @@
 			}
 		},
 		onLoad() {
-
-			// #ifdef APP-PLUS
-			this.nVueTitle = uni.getSubNVueById('homeTitleNvue');
-			this.nVueTitle.onMessage(res => {
-				let type = res.data.type;
-				if (type == 'focus') {
-					this.toSearch();
-				}
-			});
-
-			this.showHeader = false;
-			this.statusHeight = plus.navigator.getStatusbarHeight();
-			// #endif
 			this.update_url = this.$u.http.config.baseUrl + '/group/ptVersion/update'
 			// this.get_banner_list();
 			// this.get_notice_list();
 			// this.get_product_list();
+			// uni.navigateTo({
+			// 	url: '/pages/login/login'
+			// })
 		},
 		methods: {
 			//轮播图

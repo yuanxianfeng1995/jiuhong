@@ -1,7 +1,0 @@
-{
-  "navigationBarTitleText": "购买积分",
-  "enablePullDownRefresh": false,
-  "usingComponents": {
-    "u-input": "/uview-ui/components/u-input/u-input"
-  }
-}

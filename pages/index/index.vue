@@ -1,6 +1,7 @@
 <template>
 	<view class="contain">
-		<zy-update theme="green" ref="zyupgrade" :h5preview="true" oldversion="1.0.2" :appstoreflag="false" :updateurl="update_url"></zy-update>
+		<zy-update theme="green" ref="zyupgrade" :h5preview="true" oldversion="1.0.2" :appstoreflag="false"
+			:updateurl="update_url"></zy-update>
 		<!-- 更新组件 force 是否强制更新 有bug -->
 		<app-update ref="app_update" :force="true"></app-update>
 		<view class="nav">
@@ -23,14 +24,15 @@
 						<scroll-view scroll-x="true" style="white-space: nowrap;text-indent: 20rpx;">
 							<view class="his_img_scroll_item" v-for="(item,index) in headportrait.headPortraitList"
 								:key="index">
-								<image :src="item" mode="aspectFill"></image>
+								<image :src="item.headPortrait" mode="aspectFill"></image>
 							</view>
 						</scroll-view>
 					</view>
 				</view>
 			</view>
 			<view class="news">
-				<u-swiper :list="bannerList" name="picture" mode="none" :autoplay="true" :effect3d="true" :effect3d-previous-margin="36" @click="routeBanner"></u-swiper>
+				<u-swiper :list="bannerList" name="picture" mode="none" :autoplay="true" :effect3d="true"
+					:effect3d-previous-margin="36" @click="routeBanner"></u-swiper>
 			</view>
 			<view class="message">
 				<view class="message_icon">
@@ -58,30 +60,30 @@
 				</view>
 				<view class="area_content">
 					<view class="area_item" v-for="(item,index) in productionList" :key="index"
-						@click.stop="routeProdDetail(item.productId)">
+						@click.stop="routeProdDetail(item.productid)">
 						<view class="line_1">
 							<image class="detail_img" :src="item.picture" mode="aspectFill"></image>
 							<view class="prod_detail">
 								<view class="detail_title">
-									<text>{{item.productName}}</text>
+									<text>{{item.pname}}</text>
 								</view>
 								<view class="detail_price">
-									<text>￥{{item.marketPrice}}</text>
+									<text>￥{{item.marketprice}}</text>
 									<text>市场价</text>
 								</view>
 								<view class="group_buy">
-									<text class="group_price">{{item.groupPrice}}积分</text>
+									<text class="group_price">{{item.ptPrice}}积分</text>
 									<text>拼团价</text>
 								</view>
 							</view>
 						</view>
-						<view class="line_2" v-if="item.headUrls && item.headUrls.length > 0">
-							<text>累计参团{{item.totalJoinGroupNumber}}次</text>
+						<view class="line_2" v-if="item.joinsum">
+							<text>累计参团{{item.joinsum}}次</text>
 						</view>
-						<view class="line_3" v-if="item.headUrls && item.headUrls.length > 0">
+						<view class="line_3" v-if="item.memberBaseVos && item.memberBaseVos.length > 0">
 							<view class="photo_list">
-								<image :src="ite" mode="aspectFill" v-for="(ite,inde) in item.headUrls" :key="inde"
-									v-if="inde < 10"></image>
+								<image :src="ite.headPortrait" mode="aspectFill"
+									v-for="(ite,inde) in item.memberBaseVos" :key="inde" v-if="inde < 10"></image>
 							</view>
 							<view class="photo_icon">
 								<image src="/static/image/group@2x.png" mode=""></image>
@@ -96,16 +98,16 @@
 </template>
 
 <script>
-	import ZyUpdate from '@/components/zy-upgrade/zy-upgrade.vue'  //更新插件2
+	import ZyUpdate from '@/components/zy-upgrade/zy-upgrade.vue' //更新插件2
 	import appUpdate from "@/components/yzhua006-update/app-update.vue" //更新插件1
 	export default {
-		components:{
+		components: {
 			ZyUpdate,
 			appUpdate,
 		},
 		mounted() {
 			this.$refs.zyupgrade.check_update()
-			this.$refs.app_update.update();  //调用子组件 检查更新 有bug
+			this.$refs.app_update.update(); //调用子组件 检查更新 有bug
 		},
 		data() {
 			return {
@@ -147,7 +149,7 @@
 				messageList: [],
 				headportrait: {
 					groupFriendsCount: 0,
-					headPortraitList:[],
+					headPortraitList: [],
 				},
 				productionList: [],
 				bannerList: [],
@@ -160,19 +162,19 @@
 			this.update_url = this.$u.http.config.baseUrl + '/group/ptVersion/update'
 			this.get_headportrait()
 			this.get_product_list()
-			this.get_banner_list()
-			this.get_notice_list()
-			this.get_userCenter()
-			this.get_message_list()
+			// this.get_banner_list()
+			// this.get_notice_list()
+			// this.get_userCenter()
+			// this.get_message_list()
 		},
 		onPullDownRefresh() {
 			console.log('refresh');
 			this.get_headportrait()
 			this.get_product_list()
-			this.get_banner_list()
-			this.get_notice_list()
-			this.get_userCenter()
-			this.get_message_list()
+			// this.get_banner_list()
+			// this.get_notice_list()
+			// this.get_userCenter()
+			// this.get_message_list()
 			setTimeout(function() {
 				uni.stopPullDownRefresh();
 			}, 1000);
@@ -193,7 +195,7 @@
 					if (res.code == 200) {
 						getApp().globalData.user = res.data
 						uni.setStorageSync('user', res.data);
-					} 
+					}
 				})
 			},
 			/**
@@ -226,21 +228,15 @@
 			//首页头像与拼团人数
 			get_headportrait: function() {
 				let that = this
-				this.$u.api.get_headportrait({
-					size: 20
-				}).then(res => {
+				console.log('get_headportrait')
+				this.$u.api.get_headportrait().then(res => {
 					console.log(res);
-					if (res.code == 200) {
-						//Set数据结构，它类似于数组，其成员的值都是唯一的
-						function unique(arr){
-							return Array.from(new Set(arr)); // 利用Array.from将Set结构转换成数组
-						}
+					if (res.code == 0) {
 						let headportrait = res.data
-						headportrait.headPortraitList = unique(res.data.headPortraitList)
-						// console.log( headportrait )
-						headportrait.groupFriendsCount = parseInt(headportrait.groupFriendsCount) + 2000
+						headportrait.headPortraitList = headportrait
+						headportrait.groupFriendsCount = parseInt(headportrait.length) + 2000
 						that.headportrait = headportrait
-					} 
+					}
 				})
 			},
 			//轮播图
@@ -256,7 +252,7 @@
 					}
 				})
 			},
-			//首页拼团轮播与首页热门专区
+			//首页热门专区
 			get_product_list: function() {
 				let that = this
 				this.$u.api.get_product_list({
@@ -265,13 +261,8 @@
 					total: 1
 				}).then(res => {
 					console.log('llll', res.data);
-					if (res.code == 200) {
-						that.productionList = res.data.records.map( item => {
-							item.picture = item.picture.split(',')[0]
-							return item
-						})
-					} else {
-
+					if (res.code == 0) {
+						that.productionList = res.data;
 					}
 				})
 			},
@@ -344,9 +335,10 @@
 </script>
 
 <style>
-	/deep/uni-swiper .uni-swiper-slides{
+	/deep/uni-swiper .uni-swiper-slides {
 		width: 400rpx;
 	}
+
 	.nav {
 		position: fixed;
 		top: 0;
