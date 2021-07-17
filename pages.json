@@ -85,14 +85,15 @@
 				"enablePullDownRefresh": false
 			}
 
-		}, {
-			"path": "pages/login/password/password",
-			"style": {
-				"navigationBarTitleText": "",
-				"enablePullDownRefresh": false
-			}
-
-		}, {
+		}, 
+		// {
+		// 	"path": "pages/login/password/password",
+		// 	"style": {
+		// 		"navigationBarTitleText": "",
+		// 		"enablePullDownRefresh": false
+		// 	}
+		// },
+		{
 			"path": "pages/find/find",
 			"style": {
 				"navigationBarTitleText": "发现",

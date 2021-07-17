@@ -8,7 +8,7 @@
 			<view style="height: var(--status-bar-height);width: 100%;background-color: #F8F7F7;"></view>
 			<view class="history_title">
 				<view class="text">
-					已有<text>{{headportrait.groupFriendsCount}}</text>名拼友加入「玖红天下」拼团
+					已有<text>{{memberTotal}}</text>名拼友加入「玖红天下」拼团
 				</view>
 				<view class="icon">
 					<image src="../../static/icon/message-icon.png" @click="routeMessage" v-if="messageLength > 0">
@@ -144,6 +144,7 @@
 						"pagePath": "/pages/mine/mine",
 					},
 				],
+				memberTotal: 0,
 				current: 0,
 				//菜单
 				messageList: [],
@@ -160,8 +161,10 @@
 		},
 		onLoad: function() {
 			this.update_url = this.$u.http.config.baseUrl + '/group/ptVersion/update'
+			this.get_member_total()
 			this.get_headportrait()
 			this.get_product_list()
+			
 			// this.get_banner_list()
 			// this.get_notice_list()
 			// this.get_userCenter()
@@ -202,6 +205,11 @@
 			 * 接口请求
 			 * ------------------------------------------------------------
 			 * */
+			get_member_total() {
+				this.$u.api.get_member_total().then(res => {
+					this.memberTotal=res.data;
+				})
+			},
 			//获取消息中心
 			get_message_list: function() {
 				let that = this

@@ -13,11 +13,13 @@ const install = (Vue, vm) => {
 	 * 拼团
 	 * --------------------------------------------------------------------------
 	 * */
+	 
+	 let get_member_total = (params = {}) => vm.$u.get('/web/member/getMemberTotal', params);	//首页会员总数
 	let get_headportrait = (params = {}) => vm.$u.get('/web/member/getLastList', params);	//首页头像与拼团人数
 	let get_openAndJoin_num = (params = {}) => vm.$u.get('/web/member/getMemberDailyModelData', params);
 
 	let get_product_list = (params = {}) => vm.$u.get('/web/group/getGroupProjectList', params);	//首页热门专区
-	let get_product_detail = (params = {}) => vm.$u.get('/group/ptProduct/detail', params);	//商品详情
+	let get_product_detail = (params = {}) => vm.$u.get('/web/group/getGroupProductDetail', params);	//商品详情
 	//let get_openAndJoin_num = (params = {}) => vm.$u.get('/group/ptGroupRecord/day/openAndJoin/num', params);	//今日可参团数量
 	let openGroup = (params = {}) => vm.$u.post('/group/ptGroupRecord/openGroup', params);	//开团
 	let joinGroup = (params = {}) => vm.$u.post('/group/ptGroupRecord/joinGroup', params);	//加团
@@ -95,6 +97,7 @@ const install = (Vue, vm) => {
 		get_smsLogin,
 		regist,
 		wxLogin,
+		get_member_total,
 		get_headportrait,
 		get_product_list,
 		get_product_detail,
