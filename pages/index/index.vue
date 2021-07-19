@@ -60,7 +60,7 @@
 				</view>
 				<view class="area_content">
 					<view class="area_item" v-for="(item,index) in productionList" :key="index"
-						@click.stop="routeProdDetail(item.productid)">
+						@click.stop="routeProdDetail(item.id)">
 						<view class="line_1">
 							<image class="detail_img" :src="item.picture" mode="aspectFill"></image>
 							<view class="prod_detail">
@@ -91,6 +91,7 @@
 						</view>
 					</view>
 				</view>
+				<u-loadmore :status="loadingStatus" />
 			</view>
 		</view>
 		<u-tabbar v-model="current" :list="list" :mid-button="true"></u-tabbar>
@@ -106,8 +107,8 @@
 			appUpdate,
 		},
 		mounted() {
-			this.$refs.zyupgrade.check_update()
-			this.$refs.app_update.update(); //调用子组件 检查更新 有bug
+			// this.$refs.zyupgrade.check_update()
+			// this.$refs.app_update.update(); //调用子组件 检查更新 有bug
 		},
 		data() {
 			return {
@@ -116,36 +117,39 @@
 						iconPath: "/static/tabbar/i_home@2x.png",
 						selectedIconPath: "/static/tabbar/i_home_fill@2x.png",
 						customIcon: false,
-						pagePath: "/pages/index/index",
+						"pagePath":"/pages/index/index",
 					},
 					{
-						iconPath: "/static/tabBar/category.png",
-						selectedIconPath: "/static/tabBar/category-on.png",
+						iconPath: "/static/tabbar/Search@2x.png",
+						selectedIconPath: "/static/tabbar/Search_fill@2x.png",
 						customIcon: false,
-						pagePath: "/pages/category/category",
+						"pagePath":"/pages/find/find",
 					},
 					{
 						iconPath: "/static/tabbar/button_float_tap@2x.png",
 						selectedIconPath: "/static/tabbar/button_float_tap@2x.png",
 						midButton: true,
 						customIcon: false,
-						pagePath: "/pages/group-buy/group-buy",
+						"pagePath":"/pages/group-buy/group-buy",
 					},
 					{
 						iconPath: "/static/tabbar/i_Chat@2x.png",
 						selectedIconPath: "/static/tabbar/i_Chat_fill@2x.png",
 						customIcon: false,
-						pagePath: "/pages/message/message",
+						"pagePath":"/pages/message/message",
 					},
 					{
 						iconPath: "/static/tabbar/Bag@2x.png",
 						selectedIconPath: "/static/tabbar/Bag_fill@2x.png",
 						customIcon: false,
-						"pagePath": "/pages/mine/mine",
+						"pagePath":"/pages/mine/mine",
 					},
 				],
 				memberTotal: 0,
 				current: 0,
+				page: 1,
+				pageSize: 10,
+				loadingStatus: 'loadmore',
 				//菜单
 				messageList: [],
 				headportrait: {
@@ -160,24 +164,34 @@
 			}
 		},
 		onLoad: function() {
-			this.update_url = this.$u.http.config.baseUrl + '/group/ptVersion/update'
+			// this.update_url = this.$u.http.config.baseUrl + '/group/ptVersion/update'
 			this.get_member_total()
 			this.get_headportrait()
 			this.get_product_list()
-			
-			// this.get_banner_list()
-			// this.get_notice_list()
-			// this.get_userCenter()
-			// this.get_message_list()
+			this.get_notice_list()
+			this.get_userCenter()
+			this.get_message_list()
+			// uni.navigateTo({
+			// 	url: '/pages/login/login'
+			// })
+		},
+		//上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
+		onReachBottom() {
+			let len = this.productionList.length;
+			if (len < this.pageSize*this.page) {
+				this.loadingStatus = 'nomore'
+				return false;
+			}
+			this.page++
+			this.get_product_list()
 		},
 		onPullDownRefresh() {
 			console.log('refresh');
 			this.get_headportrait()
 			this.get_product_list()
-			// this.get_banner_list()
-			// this.get_notice_list()
-			// this.get_userCenter()
-			// this.get_message_list()
+			this.get_notice_list()
+			this.get_userCenter()
+			this.get_message_list()
 			setTimeout(function() {
 				uni.stopPullDownRefresh();
 			}, 1000);
@@ -195,8 +209,7 @@
 			get_userCenter: function() {
 				let that = this
 				this.$u.api.get_userCenter().then(res => {
-					if (res.code == 200) {
-						getApp().globalData.user = res.data
+					if (res.code == 0) {
 						uni.setStorageSync('user', res.data);
 					}
 				})
@@ -214,18 +227,15 @@
 			get_message_list: function() {
 				let that = this
 				this.$u.api.get_message_list({
-					current: 0,
-					size: 10,
-					params: {},
+					page: 1,
+					pageSize: 10
 				}).then(res => {
 					console.log(res);
-					if (res.code == 200) {
+					if (res.code == 0) {
 						// isRead
 						let messageLength = 0
-						res.data.records.map(item => {
-							if (!item.isRead) {
-								messageLength++
-							}
+						res.data.map(item => {
+							messageLength++
 						})
 						that.messageLength = messageLength
 					} else {
@@ -236,41 +246,28 @@
 			//首页头像与拼团人数
 			get_headportrait: function() {
 				let that = this
-				console.log('get_headportrait')
 				this.$u.api.get_headportrait().then(res => {
 					console.log(res);
 					if (res.code == 0) {
 						let headportrait = res.data
 						headportrait.headPortraitList = headportrait
-						headportrait.groupFriendsCount = parseInt(headportrait.length) + 2000
 						that.headportrait = headportrait
-					}
-				})
-			},
-			//轮播图
-			get_banner_list: function() {
-				let that = this
-				this.$u.api.get_banner_list().then(res => {
-					console.log(res);
-					if (res.code == 200) {
-						this.bannerList = res.data
-						console.log('轮播图', res.data)
-					} else {
-
 					}
 				})
 			},
 			//首页热门专区
 			get_product_list: function() {
 				let that = this
-				this.$u.api.get_product_list({
-					current: 1,
-					size: 10,
+				that.loadingStatusTab1 = 'loading'
+				that.$u.api.get_product_list({
+					current: that.page,
+					size: that.pageSize,
 					total: 1
 				}).then(res => {
-					console.log('llll', res.data);
 					if (res.code == 0) {
-						that.productionList = res.data;
+						that.productionList.push(...res.data)
+						if(that.page===1) this.bannerList=res.data
+						that.loadingStatus = res.data.length < that.pageSize*that.page ? 'nomore' : 'loadmore'
 					}
 				})
 			},
@@ -278,18 +275,17 @@
 			get_notice_list: function() {
 				let that = this
 				this.$u.api.get_notice_list({
-					current: 0,
-					size: 10,
-					params: {},
+					page: 1,
+					pageSize: 10
 				}).then(res => {
 					console.log('消息', res.data);
-					if (res.code == 200) {
-						res.data.records.map(item => {
-							that.messageList.push(item.content)
+					if (res.code == 0) {
+						that.messageList=res.data.map(item => {
+							return item.contents
 						})
-					} else {
-
+						console.log('that.messageList',that.messageList)
 					}
+					
 				})
 			},
 			/**
@@ -300,7 +296,7 @@
 			routeProdDetail: function(id) {
 				console.log('商品id', id)
 				uni.navigateTo({
-					url: '/pages/index/production/detail?productId=' + id,
+					url: '/pages/index/production/detail?groupProductId=' + id,
 					complete: function(res) {
 						console.log(res)
 					}
@@ -343,8 +339,8 @@
 </script>
 
 <style>
-	/deep/uni-swiper .uni-swiper-slides {
-		width: 400rpx;
+	/deep/ .uni-swiper .uni-swiper-slides {
+		width: 100%;
 	}
 
 	.nav {
@@ -378,7 +374,15 @@
 		justify-content: space-between;
 		padding: 20rpx 40rpx;
 	}
-
+	.loading-text {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: 60upx;
+		color: #979797;
+		font-size: 24upx;
+	}
 	.history_title .icon image {
 		width: 102rpx;
 		height: 102rpx;

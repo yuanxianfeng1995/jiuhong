@@ -1,6 +1,6 @@
 {
     "name" : "玖红天下",
-    "appid" : "__UNI__C96979C",
+    "appid" : "__UNI__B5C3A47",
     "description" : "玖红天下",
     "versionName" : "1.2.5",
     "versionCode" : 125,
@@ -45,7 +45,9 @@
                     "<uses-permission android:name=\"android.permission.WAKE_LOCK\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\"/>",
                     "<uses-permission android:name=\"android.permission.WRITE_SETTINGS\"/>"
-                ]
+                ],
+                "autoSdkPermissions" : true,
+                "abiFilters" : [ "armeabi-v7a", "x86" ]
             },
             /* ios打包配置 */
             "ios" : {
@@ -126,18 +128,19 @@
         "enable" : false
     },
     "h5" : {
-				"devServer" : {
-				    "https" : false,
-				    "proxy" : {
-				        "/web" : {
-				            "target" : "http://47.106.123.165:8813",
-				            "changeOrigin" : true,
-				            "secure" : false,
-				            "pathRewrite" : {
-				                "^/web" : ""
-				            }
-				        }
-				    }
-				}
+        "devServer" : {
+            "port" : 8000, //端口号
+            "disableHostCheck" : true,
+            "proxy" : {
+                "/web" : {
+                    "target" : "http://47.106.123.165:8813/", //目标接口域名
+                    "changeOrigin" : true, //是否跨域
+                    "secure" : false, // 设置支持https协议的代理
+                    "pathRewrite" : {
+                        "^/web" : ""
+                    }
+                }
+            }
+        }
     }
 }

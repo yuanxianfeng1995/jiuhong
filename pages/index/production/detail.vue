@@ -30,7 +30,7 @@
 		</view>
 		<view class="content">
 			<view class="group">
-				<view class="group_msg" v-if="detail.memberBaseVos&&detail.memberBaseVos.length > 0">
+				<view class="group_msg" v-if="groupDetailVoListLength > 0">
 					<view class="title">
 						<text>当前{{detail.memberBaseVos ? detail.memberBaseVos.length : 0}}人正在拼团，可直接参与</text>
 					</view>
@@ -40,7 +40,7 @@
 					</view> -->
 				</view>
 				<view class="group_content">
-					<template v-for="(item,index) in detail.groupDetailVoList">
+					<template v-for="(item,index) in detail.memberBaseVos">
 						<view class="group_item" :key="index" v-if="index < 10">
 								<view class="name">
 									<image :src="item.headPortrait" mode=""></image>
@@ -68,7 +68,7 @@
 				</view>
 				<view class="detail_parse">
 					<!-- <image :src="item" style="width: 100%;" v-for="(item,index) in detail.detailArr" :key="index"></image> -->
-					<u-parse :html="detail.detail" :tag-style="parseStyle"></u-parse>
+					<u-parse :html="detail.productDetail" :tag-style="parseStyle"></u-parse>
 				</view>
 			</view>
 		</view>
@@ -92,7 +92,7 @@
 				<view class="btn_content">
 					<button class="btn" type="default" size="mini" v-if="openAndJoin_num.surplusCreateGroupTotal > 0" @click="creatGroup()">发起拼团</button>
 					<view class=""></view>
-					<button :class="['btn','right',openAndJoin_num.surplusJoinGroupTotal == 0 ? 'forbidden':'']" type="default" size="mini" @click.stop="routeBuy">随机参团</button>
+					<button :class="['btn','right']" type="default" size="mini" @click.stop="routeBuy">随机参团</button>
 				</view>
 			</view>
 		</view>
@@ -108,16 +108,16 @@
 				parseStyle: {
 					img: 'display:block;',
 				},
-				productId:'',
+				groupProductId:'',
 				detail:{},
 				openAndJoin_num:{},
-				groupDetailVoListLength:0,
+				groupDetailVoListLength: 0
 			}
 		},
 		onLoad:function(option){
-			console.log('详情商品id',option.productId)
+			console.log('详情商品id',option.groupProductId)
 			// console.log('用户信息',getApp().globalData.user)
-			this.productId = option.productId
+			this.groupProductId = option.groupProductId
 			this.get_product_detail()
 		},
 		onShow:function(){
@@ -204,17 +204,11 @@
 			get_product_detail:function(){
 				 let that = this
 				 this.$u.api.get_product_detail({
-					productId:that.productId
+					groupProductId:that.groupProductId
 				 }).then(res => {
 					console.log(res.data);
-					if( res.code == 200 ){
-						let groupDetailVoList = res.data.groupDetailVoList.map( ite => {
-							ite.surplusTime = parseInt(ite.surplusTime)/1000
-							return ite
-						})
+					if( res.code == 0 ){
 						that.detail = res.data
-						that.detail.headUrlsLength = res.data.headUrls.length
-						that.detail.groupDetailVoList = groupDetailVoList
 						//商品图片
 						let pictureArr = res.data.picture.split(',')
 						pictureArr.map( ite => {
@@ -231,7 +225,7 @@
 						// 	content += '<img src="' +item+ '" />'	
 						// })
 						// that.content = content
-						that.groupDetailVoListLength = res.data.groupDetailVoList.length
+						that.groupDetailVoListLength = res.data.memberBaseVos?res.data.memberBaseVos.length:0
 					}else{
 						uni.showToast({
 							title:'服务器繁忙，请稍后重试',
@@ -242,9 +236,9 @@
 			},
 			// 获取会员每次拼团模式配置 今日可参团 、开团
 			get_openAndJoin_num(){
-				const userInfo = getApp().globalData.userInfo
+				let id = getApp().globalData.user.id||uni.getStorageSync('user').userId
 				this.$u.api.get_openAndJoin_num({
-					userId: userInfo.id
+					userId: id
 				}).then(res => {
 					console.log(res)
 					this.openAndJoin_num = res.data
@@ -264,32 +258,32 @@
 			routeBuy:function(){
 				let that = this
 				//没有开团券拦截
-				if( that.openAndJoin_num.surplusJoinGroupTotal <= 0 ){
-					uni.showToast({
-						title:'客官您好，您当前没有拼团次数，暂不可拼团。',
-						icon:'none'
-					})
-					return
-				}
-				if( that.detail.groupDetailVoList.length == 0 ){
-					uni.showToast({
-						title:'此商品当前无人开团，暂不可参团，请稍后再试。',
-						icon:'none'
-					})
-					return
-				}
-				if( that.detail.stock <= 0 ){
-					uni.showToast({
-						title:'库存不足，暂不可购买',
-						icon:'none'
-					})
-					return
-				}
-				console.log('创建拼团',that.detail.productId)
+				// if( that.openAndJoin_num.surplusJoinGroupTotal <= 0 ){
+				// 	uni.showToast({
+				// 		title:'客官您好，您当前没有拼团次数，暂不可拼团。',
+				// 		icon:'none'
+				// 	})
+				// 	return
+				// }
+				// if( !that.detail.memberBaseVos||(that.detail.memberBaseVos&&that.detail.memberBaseVos.length == 0) ){
+				// 	uni.showToast({
+				// 		title:'此商品当前无人开团，暂不可参团，请稍后再试。',
+				// 		icon:'none'
+				// 	})
+				// 	return
+				// }
+				// if( that.detail.stock <= 0 ){
+				// 	uni.showToast({
+				// 		title:'库存不足，暂不可购买',
+				// 		icon:'none'
+				// 	})
+				// 	return
+				// }
+				console.log('创建拼团',that.detail.groupProductId)
 				this.$u.api.group_random({
-					productId:that.detail.productId
+					groupProductId:that.detail.id
 				}).then( re => {
-					if( re.code == 200 && re.data ){
+					if( re.code == 0 && re.data ){
 						uni.navigateTo({
 							url:'buy',
 							success:function(res){
@@ -299,7 +293,7 @@
 						})
 					}else{
 						uni.showToast({
-							title:'当前无可参加的团',
+							title: re.msg,
 							icon:'none'
 						})
 					}

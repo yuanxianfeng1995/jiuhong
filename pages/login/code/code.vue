@@ -58,7 +58,7 @@
 						mobile:that.mobile,
 					}).then(res => {
 						console.log('验证码',res);
-						if( res.code == 200 ){
+						if( res.code == 0 ){
 							uni.hideLoading();
 							// 这里此提示会被this.start()方法中的提示覆盖
 							this.$u.toast('验证码已发送');

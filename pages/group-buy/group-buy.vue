@@ -13,16 +13,16 @@
 				</view>
 			</view>
 			<view class="warn_message">
-				<text>温馨提示：您今日还可开团{{openAndJoin_num.openGroupNum}}次，参团{{openAndJoin_num.joinGroupNum}}次</text>
+				<text>温馨提示：您今日还可开团{{openAndJoin_num.surplusCreateGroupTotal}}次，参团{{openAndJoin_num.surplusJoinGroupTotal}}次</text>
 				<text @click="routeRole">查看规则</text>
 			</view>
 		</view>
 		<view class="content" v-if="tabActive == 1">
-			<swiper :indicator-dots="false" :autoplay="true" :circular="true" :interval="3000" :duration="1000" style="height: 364rpx;" v-if="group_banner_list.length > 0">
-				<swiper-item v-for="(item,index) in group_banner_list" :key="index">
+			<swiper :indicator-dots="false" :autoplay="true" :circular="true" :interval="3000" :duration="1000" style="height: 364rpx;" v-if="group_pt_successList_list.length > 0">
+				<swiper-item v-for="(item,index) in group_pt_successList_list" :key="index">
 					<view class="recommend" @click.stop="routeDetailHose(item.status,item)">
 						<view class="line_1">
-							<text class="date">开团时间：{{item.openCreateTime}}</text>
+							<text class="date">开团时间：{{item.createtime}}</text>
 							<!-- <text>团号：{{item.groupNo}}</text> -->
 						</view>
 						<view class="line_2">
@@ -32,29 +32,29 @@
 									<image class="headimg" :src="item.isWinningHeadUrl" mode="aspectFill"></image>
 								</view>
 								<view class="author_name">
-									<view class="u-line-1" style="width: 110rpx;">{{item.isWinningNickName.substr(0,1)}}**</view>
+									<view class="u-line-1" style="width: 110rpx;">{{item.winUserno.substr(0,1)}}**</view>
 									<!-- <text>贵阳</text> -->
 								</view>
 							</view>
 							<view class="success">
 								<view class="prod">
-									<text>{{item.productName}}</text>
+									<text>{{item.pname}}</text>
 								</view>
 								<view class="coupon">
 									<text>获得开团券：</text>
 									<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
-									<text class="num">+ {{item.couponNum ? item.couponNum : 0}}</text>
+									<text class="num">+ {{item.giveCoupon ? item.giveCoupon : 0}}</text>
 								</view>
 							</view>
 						</view>
 						<view class="line_3">
 							<view class="img_list">
-								<block  v-for="(ite,inde) in item.headUrls" :key="inde">
-									<image :src="ite" mode="aspectFill" v-if="item.isWinningHeadUrl != ite"></image>
+								<block  v-for="(ite,inde) in item.members" :key="inde">
+									<image :src="ite.headPortrait" mode="aspectFill" v-if="item.isWinningHeadUrl != ite"></image>
 								</block>
 							</view>
 							<view class="award">
-								<text>获得积分奖励：+{{item.rewardIntegral}}</text>
+								<text>获得积分奖励：+{{item.ptPrice}}</text>
 							</view>
 						</view>
 					</view>
@@ -68,28 +68,28 @@
 							<text><!--{{item.openGroupNickname.substr(0,1)}}-->***发起拼团</text>
 						</view>
 						<view class="item_num">
-							<text class="color_red">{{item.joinGroupNumber}}人团</text>
-							<text>还差{{item.surpNumber}}人</text>
+							<text class="color_red">{{item.joinNum}}人团</text>
+							<text>还差{{item.joinNumRemind}}人</text>
 						</view>
 					</view>
 					<view class="item_middle">
 						<view class="img_box">
 							<image class="img" :src="item.picture" mode="aspectFill"></image>
-							<view class="history" v-if="item.headUrls.length > 0">
-								<image class="history_item" :src="ite" mode="aspectFill" v-for="(ite,inde) in item.headUrls" :key="inde"></image>
+							<view class="history" v-if="item.headUrls&&item.headUrls.length > 0">
+								<image class="history_item" :src="ite.headPortrait" mode="aspectFill" v-for="(ite,inde) in item.headUrls" :key="inde"></image>
 							</view>
 						</view>
 						<!-- <image :src="item.picture" mode="aspectFill"></image>、 -->
 						<view class="item_detail prod_detail">
 							<view class="detail_title">
-								<text>{{item.productName}}</text>
+								<text>{{item.gname}}</text>
 							</view>
 							<view class="detail_price">
 								<text>￥{{item.marketPrice}}</text>
 								<text>市场价</text>
 							</view>
 							<view class="group_buy">
-								<text class="group_price">{{item.groupPrice}}积分</text>
+								<text class="group_price">{{item.ptPrice}}积分</text>
 								<text>拼团价</text>
 							</view>
 						</view>
@@ -97,7 +97,7 @@
 					<view class="item_bottom">
 						<view class="time">
 							<text class="time_title">倒计时：</text>
-							<u-count-down :timestamp="item.countDown" font-size="24" bg-color="none" v-if="item.countDown > 0"></u-count-down>
+							<u-count-down :timestamp="time" font-size="24" bg-color="none" v-if="time"></u-count-down>
 							<text v-else>开团失败</text>
 						</view>
 						<view class="handle">
@@ -122,83 +122,46 @@
 			</view>
 			<view class="list">
 				<block v-for="(item,index) in group_participate_list" :key="index">
-					<view class="recommend" v-if="(item.status == 2 && item.isWinning == 1) || tab2_current == 2" @click="routeDetailHose(2,item)">
+					
+					<view class="recommend" v-if="item.status == 2 || tab2_current == 2" @click="routeDetailHose(2,item)">
 						<view class="line_1">
-							<text class="date">开团时间：{{item.openCreateTime}}</text>
+							<text class="date">开团时间：{{item.startTime}}</text>
 							<!-- <text>团号：{{item.groupNo}}</text> -->
 						</view>
 						<view class="line_2">
 							<view class="author">
 								<view class="author_img">
 									<image class="icon" src="../../static/icon/crown-icon@2x.png"></image>
-									<image class="headimg" :src="item.isWinningHeadUrl" mode="aspectFill"></image>
+									<image class="headimg" :src="item.winUserHeadPortrait" mode="aspectFill"></image>
 								</view>
 								<view class="author_name">
-									<view class="u-line-1" style="width: 110rpx;">{{item.isWinningNickName.substr(0,1)}}**</view>
+									<view class="u-line-1" style="width: 110rpx;">{{item.winUserName.substr(0,1)}}**</view>
 									<!-- <text>贵阳</text> -->
 								</view>
 							</view>
 							<view class="success">
 								<view class="prod">
-									<text>获得商品：{{item.productName}}</text>
+									<text>获得商品：{{item.pname}}</text>
 								</view>
 								<view class="coupon">
 									<text>获得开团券：</text>
 									<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
-									<text class="num">+ {{item.couponNum}}</text>
+									<text class="num">+ {{item.giveCoupon}}</text>
 								</view>
 							</view>
 						</view>
 						<view class="line_3">
 							<view class="img_list">
-								<block  v-for="(ite,inde) in item.headUrls" :key="inde">
-									<image :src="ite" mode="aspectFill" v-if="item.isWinningHeadUrl != ite"></image>
+								<block  v-for="(ite,inde) in item.members" :key="inde">
+									<image :src="ite.headPortrait" mode="aspectFill" v-if="item.winUserHeadPortrait != ite"></image>
 								</block>
 							</view>
 							<view class="award">
-								<text>获得积分奖励：+{{item.rewardIntegral ? item.rewardIntegral : 0}}</text>
+								<text>获得积分奖励：+{{item.ptPrice ? item.ptPrice : 0}}</text>
 							</view>
 						</view>
 					</view>
-					<view class="recommend background_green" v-else-if="(item.status == 2 && (item.isWinning == 0 || !item.isWinning)) || tab2_current == 3"
-						@click="routeDetailHose(3,item)">
-						<view class="line_1">
-							<text class="date">开团时间：{{item.openCreateTime}}</text>
-							<!-- <text>团号：{{item.groupNo}}</text> -->
-						</view>
-						<view class="line_2">
-							<view class="author">
-								<view class="author_img">
-									<image class="icon" src="../../static/icon/crown-icon-white@2x.png"></image>
-									<image class="headimg" :src="item.isWinningHeadUrl" mode="aspectFill"></image>
-								</view>
-								<view class="author_name">
-									<view class="u-line-1" style="width: 110rpx;color: #FFFFFF;">{{item.isWinningNickName.substr(0,1)}}**</view>
-									<!-- <text>贵阳</text> -->
-								</view>
-							</view>
-							<view class="success">
-								<view class="prod">
-									<text>获得商品：{{item.productName}}</text>
-								</view>
-								<view class="coupon">
-									<text>获得开团券：</text>
-									<u-icon name="/static/icon/mine-data-icon2@2x.png" size="30"></u-icon>
-									<text class="num">+ {{item.couponNum ? item.couponNum : 0}}</text>
-								</view>
-							</view>
-						</view>
-						<view class="line_3">
-							<view class="img_list">
-								<block  v-for="(ite,inde) in item.headUrls" :key="inde">
-									<image :src="ite" mode="aspectFill" v-if="item.isWinningHeadUrl != ite"></image>
-								</block>
-							</view>
-							<view class="award">
-								<text>获得积分奖励：+{{item.rewardIntegral ? item.rewardIntegral : 0}}</text>
-							</view>
-						</view>
-					</view>
+					
 					<view class="item" v-else @click="routeDetailHose(1, item)">
 						<view class="item_top">
 							<view class="item_name">
@@ -206,27 +169,27 @@
 								<text><!--{{item.openGroupNickname.substr(0,1)}}-->***发起拼团</text>
 							</view>
 							<view class="item_num">
-								<text class="color_red">{{item.joinGroupNumber}}人团</text>
-								<text>还差{{item.surpNumber}}人</text>
+								<text class="color_red">{{item.joinNum}}人团</text>
+								<text>还差{{item.joinRemindNum}}人</text>
 							</view>
 						</view>
 						<view class="item_middle">
 							<view class="img_box">
 								<image class="img" :src="item.picture" mode="aspectFill"></image>
-								<view class="history" v-if="item.headUrls.length > 0">
-									<image class="history_item" :src="ite" mode="aspectFill" v-for="(ite,inde) in item.headUrls" :key="inde"></image>
+								<view class="history" v-if="item.members.length > 0">
+									<image class="history_item" :src="ite.headPortrait" mode="aspectFill" v-for="(ite,inde) in item.members" :key="inde"></image>
 								</view>
 							</view>
 							<view class="item_detail prod_detail">
 								<view class="detail_title">
-									<text>{{item.productName}}</text>
+									<text>{{item.pname}}</text>
 								</view>
 								<view class="detail_price">
 									<text>￥{{item.marketPrice}}</text>
 									<text>市场价</text>
 								</view>
 								<view class="group_buy">
-									<text class="group_price">{{item.groupPrice}}积分</text>
+									<text class="group_price">{{item.ptPrice}}积分</text>
 									<text>拼团价</text>
 								</view>
 							</view>
@@ -235,17 +198,17 @@
 							<view class="time">
 								<text class="time_title">倒计时：</text>
 								<text v-if="item.status == 3">开团失败</text>
-								<u-count-down :timestamp="item.countDown" font-size="24" bg-color="none" v-else></u-count-down>
+								<u-count-down :timestamp="time" font-size="24" bg-color="none" v-else></u-count-down>
 							</view>
 							<view class="handle">
 								<!-- <text>团号：{{item.groupNo}}</text> -->
-								<button class="btn btn_active" type="default" v-if="item.isJoinGroup">您已加入</button>
+								<button class="btn btn_active" type="default" v-if="!item.createBySelf">您已加入</button>
 								<button class="btn btn_active" type="default" v-else>您开的团</button>
 							</view>
 						</view>
 						<u-line margin="24rpx 0"></u-line>
 						<view class="item_bottom join_time">
-							<text>加入时间：{{$u.timeFrom(item.joinCreateTime)}}</text>
+							<text>加入时间：{{$u.timeFrom(item.joinTime)}}</text>
 							<text class="color_red">{{item.status == 3 ? '因人数不满拼团失败' : '待开奖'}}</text>
 						</view>
 					</view>
@@ -299,12 +262,15 @@
 					},
 				],
 				current: 2,
+				page: 1,
+				page1: 1,
+				pageSize: 20,
 				//菜单
-				loadingStatus: 'nomore',
-				loadingStatusTab1: 'nomore',
+				loadingStatus: 'loadmore',
+				loadingStatusTab1: 'loadmore',
 				group_square_list: [],
-				group_banner_list: [],
-				group_participate_list: {},
+				group_pt_successList_list: [],
+				group_participate_list: [],
 				ptGroupRecordStaticData:{},
 				openAndJoin_num: {},
 				tabActive: 1,
@@ -329,13 +295,35 @@
 						num: 0,
 						name: '拼团失败',
 					},
-				]
+				],
+				time: ''
 			}
 		},
 		onLoad: function() {
 			this.get_openAndJoin_num()
 			this.group_square()
-			this.group_banner()
+			this.get_group_time_config()
+			this.group_pt_successList()
+		},
+		//上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
+		onReachBottom() {
+			if(this.tabActive == 1){
+				let len = this.group_square_list.length;
+				if (len < this.pageSize*this.page) {
+					this.loadingStatusTab1 = 'nomore'
+					return false;
+				}
+				this.page++
+				this.group_square()
+			}else{
+				let len = this.group_participate_list.length;
+				if (len < this.pageSize*this.page1) {
+					this.loadingStatus = 'nomore'
+					return false;
+				}
+				this.page1++
+				this.group_participate()
+			}
 		},
 		onPullDownRefresh() {
 			//定时器节流
@@ -346,10 +334,12 @@
 				}, 500);
 				return
 			}
+			this.page = 1
 			this.pullDownRefreshOnoff = false
 			this.get_openAndJoin_num()
 			this.group_square()
-			this.group_banner()
+			this.get_group_time_config()
+			this.group_pt_successList()
 			setTimeout(function () {
 				uni.stopPullDownRefresh();
 			}, 1000);
@@ -366,29 +356,29 @@
 			},1000)
 		},
 		methods: {
+			get_group_time_config(){
+				this.$u.api.get_group_time_config().then((res)=>{
+					console.log('res get_group_time_config',res)
+					this.time=(new Date(res.data.end).getTime()-new Date(res.data.start).getTime())/1000
+				  console.log('this.time',this.time)
+				})
+			},
 			//我参与的 - (1:全部,2:拼团中,3:中奖,4:未中奖,5:拼团失败)
-			group_participate: function(status) {
+			group_participate: function(status,isWin) {
 				let that = this
 				that.loadingStatus = 'loading'
+					let id = getApp().globalData.user.id||uni.getStorageSync('user').userId
 				this.$u.api.group_participate({
+					userId: id,
+					isWin: isWin,
 					status: status,
-					current: 1,
-					size: 20,
+					page: this.page1,
+					pageSize: this.pageSize,
 				}).then(res => {
 					// (1:开团中,2:开团成功,3：开团失败)
-					that.group_participate_list = res.data.records.map( item => {
-						item.openCreateTime = that.$u.timeFormat(parseInt(item.openCreateTime), 'mm-dd hh:MM:ss')
-						item.countDown = parseInt(item.countDown)/1000
-						item.picture = item.picture.split(',')[0]
-						item.isJoinGroup = false
-						item.headUrls.map( ite => {
-							if( ite == item.openGroupHeadPortrait ){
-								item.isJoinGroup = true
-							}
-						})
-						return item
-					})
-					that.loadingStatus = 'nomore'
+					that.group_participate_list = res.data||[]
+					that.loadingStatus = that.group_participate_list.length < that.pageSize*that.page1 ? 'nomore' : 'loadmore'
+					console.log('that.loadingStatus',that.loadingStatus)
 				})
 			},
 			//我参与的上面的数字统计
@@ -408,27 +398,23 @@
 				let that = this
 				that.loadingStatusTab1 = 'loading'
 				this.$u.api.group_square({
-					current: 0,
-					size: 20,
-					// total: 1
+					page: this.page,
+					pageSize: this.pageSize,
 				}).then(res => {
-					if (res.code == 200) {
-						that.group_square_list = res.data.records.map( item => {
-							item.openCreateTime = that.$u.timeFormat(parseInt(item.openCreateTime), 'mm-dd hh:MM:ss')
-							item.countDown = parseInt(item.countDown)/1000
-							item.picture = item.picture.split(',')[0]
-							return item
-						})
-						that.loadingStatusTab1 = 'nomore'
+					if (res.code == 0) {
+						if(res.data) that.group_square_list.push(...res.data)
+						that.loadingStatusTab1 = res.data.length < that.pageSize*that.page ? 'nomore' : 'loadmore'
 					}
-					// console.log(this.openAndJoin_num)
 				})
 			},
 			//今日可参团 、开团
 			get_openAndJoin_num: function() {
-				this.$u.api.get_openAndJoin_num().then(res => {
+				let id = getApp().globalData.user.id||uni.getStorageSync('user').userId
+				this.$u.api.get_openAndJoin_num({
+					userId: id
+				}).then(res => {
+					console.log(res)
 					this.openAndJoin_num = res.data
-					// console.log(this.openAndJoin_num)
 				})
 			},
 			//Tab切换
@@ -440,7 +426,7 @@
 				if (index == 2) {
 					this.tab2_current = 0 //重置下标
 					this.group_participate(1)
-					this.ptGroupRecord_staticData()
+					// this.ptGroupRecord_staticData()
 				}
 			},
 			//我参与的 菜单切换
@@ -470,10 +456,10 @@
 				}
 				// console.log('剩下开团次数',this.openAndJoin_num)
 				//开团失败判断
-				if( item.countDown == 0 && item.surpNumber > 0 ){ //拼团失败
-					this.$u.toast('因人数不满开团失败，请选择其他商品继续拼团!');
-					return
-				}
+				// if( item.countDown == 0 && item.surpNumber > 0 ){ //拼团失败
+				// 	this.$u.toast('因人数不满开团失败，请选择其他商品继续拼团!');
+				// 	return
+				// }
 				uni.navigateTo({
 					url: '/pages/index/production/buy?type=2',
 					success: function(res) {
@@ -495,18 +481,15 @@
 					url: '/pages/group-buy/group-detail?status=' + status + '&id=' + item.groupNo
 				})
 			},
-			//轮播图
-			group_banner: function() {
+			//开团成功列表
+			group_pt_successList: function() {
 				let that = this
-				this.$u.api.group_banner({
-					current: 0,
-					size: 10
+				this.$u.api.group_pt_successList({
+					offset: 50,
+					page: 1
 				}).then(res => {
-					if (res.code == 200) {
-						that.group_banner_list = res.data.records.map( item => {
-							item.openCreateTime = that.$u.timeFormat(parseInt(item.openCreateTime), 'mm-dd hh:MM:ss')
-							return item
-						})
+					if (res.code == 0) {
+						that.group_pt_successList_list = res.data
 					}
 				})
 			},

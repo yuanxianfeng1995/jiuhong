@@ -57,7 +57,9 @@
 			</scroll-view>
 		</view>
 		
-			<u-tabbar v-model="current" :list="list" :mid-button="true"></u-tabbar>
+		<view  class="footer-tabbar">
+			<image class="img" :src="item.selectedIconPath" v-for="(item,index) in list" :key="index" @tap="toPage(item)"></image>
+		</view>
 	</view>
 </template>
 <script>
@@ -84,24 +86,11 @@
 						"pagePath": "/pages/category/category",
 					},
 					{
-						iconPath: "/static/tabbar/button_float_tap@2x.png",
-						selectedIconPath: "/static/tabbar/button_float_tap@2x.png",
-						midButton: true,
-						customIcon: false,
-						"pagePath": "/pages/group-buy/group-buy",
-					},
-					{
 						iconPath: "/static/tabbar/i_Chat@2x.png",
 						selectedIconPath: "/static/tabbar/i_Chat_fill@2x.png",
 						customIcon: false,
-						"pagePath": "/pages/message/message",
-					},
-					{
-						iconPath: "/static/tabbar/Bag@2x.png",
-						selectedIconPath: "/static/tabbar/Bag_fill@2x.png",
-						customIcon: false,
-						"pagePath": "/pages/mine/mine",
-					},
+						"pagePath": "/pages/cart/cart",
+					}
 				],
 				//分类列表
 				categoryList: [{
@@ -210,6 +199,11 @@
 		onLoad() {
 		},
 		methods: {
+			toPage(data){
+				uni.navigateTo({
+					url: data.pagePath
+				})
+			},
 			toGoods(){
 				
 			},
@@ -233,7 +227,6 @@
 				})
 			},
 			scrolltolower(){
-				uni.showToast({title: '触发上拉加载'});
 				let len = this.goodsList.length;
 				if(len>=40){
 					this.loadingText="到底了";
@@ -266,9 +259,6 @@
 			},
 			//搜索跳转
 			toSearch() {
-				uni.showToast({
-					title: "建议跳转到新页面做搜索功能"
-				});
 			}
 		}
 	}
@@ -286,6 +276,21 @@
 		/*  #endif  */
 
 	}
+	.footer-tabbar{
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			height: 100upx;
+			background-color: #FFFFFF;
+			width: 100%;
+			align-items: center;
+			justify-content: space-around;
+			display: flex;
+			.img{
+				height: 80upx;
+				width: 80upx;
+			}
+		}
 
 	.header {
 		width: 100%;

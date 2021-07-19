@@ -3,17 +3,18 @@
 		<view class="content">
 			<view class="item" v-for="(item,index) in messageList" :key="index">
 				<view class="time">
-					<text>{{item.createTime}}</text>
+					<text>{{item.createtime}}</text>
 					<text>系统消息</text>
 				</view>
 				<view class="item_detail" @click="readMessage(item,index)">
 					<view class="detail_title">
 						<text>{{item.title}}</text>
-						<text class="status" v-if="item.isRead">已读</text>
-						<text class="status fail" v-else>未读</text>
+						<!-- <text class="status" v-if="item.isRead">已读</text>
+						<text class="status fail" v-else>未读</text> -->
 					</view>
 					<view class="detail_content">
-						<text>{{item.content}}</text>
+						<!-- <text>{{item.contents}}</text> -->
+						<u-parse :html="item.contents"></u-parse>
 					</view>
 				</view>
 			</view>
@@ -67,17 +68,12 @@
 		onLoad:function(){
 			let that = this
 			this.$u.api.get_message_list({
-				current: 0,
-				size: 10,
-				params: {},
+				page: 1,
+				pageSize: 10
 			}).then(res => {
 				console.log(res);
-				if( res.code == 200 ){
-					let messageList = res.data.records.map( item => {
-						item.createTime = item.createTime.replace('T',' ')
-						return item
-					})
-					that.messageList = messageList
+				if( res.code == 0 ){
+					that.messageList = res.data
 				}
 			})
 		},

@@ -42,7 +42,56 @@
 				}
 				let that = this
 				const app = getApp()
-				let userInfo = app.globalData.userInfo
+				let userInfo = app.globalData.userInfo || {
+					"gender": 0,
+					"city": "",
+					"province": "",
+					"country": "",
+					"headimgurl": "",
+					"openid": "oRrdQt6Tau75ETteYhNJz5-m1qO4",
+					"nickname": "旋风",
+					"avatarurl": "",
+					"unionid": "oU5Yyt4oGlJqTXaVpmhXo21nGWuk",
+					"id": 4,
+					"userNo": "18569401914",
+					"username": null,
+					"realname": null,
+					"headPortrait": "",
+					"unionId": "oU5Yyt4oGlJqTXaVpmhXo21nGWuk",
+					"password": null,
+					"tradepwd": null,
+					"status": 1,
+					"mobile": "18569401914",
+					"regtime": null,
+					"iscase": 1,
+					"isreal": null,
+					"logintime": null,
+					"loginIp": "43.250.201.119",
+					"sourceType": null,
+					"sharepath": null,
+					"updatetime": null,
+					"createtime": null,
+					"tempUserId": null,
+					"upUser": null,
+					"remark": null,
+					"levelId": 1,
+					"token": "Msd9Rm9c3dHbHrqQJ3/hpKVUOmgxNGJHf5UlynS4Uq6F7IRp6e3AxnCGvP0H3QqgrSlgCCnKq8JQXTmT2PnqaLFrYYS4RRwAw6J34BYEvllSPolCq7db2msj1BZ5/3fy2uILZ54VeL/ZXr5sQaFWSiXVWklFZIguLaBhR5gFvn0=",
+					"regKey": null,
+					"ztnum": 0,
+					"teamnum": 0,
+					"bonusid": 1,
+					"agentid": 1,
+					"isPartner": 0,
+					"isDirector": 0,
+					"isQualification": 0,
+					"isService": 0,
+					"joinnum": 1,
+					"launchnum": 5,
+					"isactiveuser": 0,
+					"ztactivenum": 0,
+					"teamactivenum": 0
+				}
+
 				that.$u.api.wxLogin({
 					headPortrait: userInfo.headimgurl,
 					mobile: this.mobile,
@@ -54,13 +103,13 @@
 							...userInfo,
 							...res.data
 						};
-						
-						// uni.navigateTo({
-						// 	url: '/pages/login/code/code?mobile='+(this.mobile||'')
-						// })
+						console.log('res.data',res.data)
 						uni.navigateTo({
 							url:`/pages/login/password/password?mobile=${this.mobile||''}&smscode=${''}&password=${''}`
 						})
+						// uni.navigateTo({
+						// 	url: `/pages/login/code/code?mobile=${this.mobile||''}&smscode=${''}&password=${''}`
+						// })
 
 					} else {
 						that.$u.toast(res.msg);

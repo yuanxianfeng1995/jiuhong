@@ -4,22 +4,22 @@
 			<!-- <view class="status_bar"></view> -->
 			<view class="mine_bg">
 				<view class="mine_bg_view"></view>
-				<image class="mine_bg_img" :src="userInfo.user.headPortrait" mode="aspectFill"></image>
+				<image class="mine_bg_img" :src="user.headPortrait" mode="aspectFill"></image>
 			</view>
 			<view class="mine_detail">
 				 <view class="status_bar">
 					<!-- 这里是状态栏 -->
 				</view>
-				<image class="author" :src="userInfo.user.headPortrait" mode="aspectFill"></image>
+				<image class="author" :src="user.headPortrait" mode="aspectFill"></image>
 				<view class="detail_text">
-					<text>{{userInfo.user.nickname}} {{userInfo.level.levelName}}</text>
-					<text>ID: {{userInfo.user.id}}</text>
+					<text>{{userInfo.nickname}} {{user.levelName}}</text>
+					<text>ID: {{user.id}}</text>
 					<!-- <text>{{userInfo.level ? userInfo.level.levelName : '普通用户'}}</text> -->
 				</view>
 				<view class="mine_balance">
 					<view class="balance_price" @click="routeWallet">
-						<text class="num">￥{{userInfo.account.accountAmount.toFixed(2)}}</text>
-						<text>钱包可用余额{{userInfo.account.accountAvailableAmount.toFixed(2)}}</text>
+						<text class="num">￥{{user.accountAmount}}</text>
+						<text>钱包可用余额{{user.accountAvailableAmount}}</text>
 					</view>
 					<view class="balance_btn">
 						<button class="btn" type="default" size="mini" @click="routeChargeMoney">充值</button>
@@ -29,49 +29,14 @@
 			</view>
 		</view>
 		<view class="content">
-			<view class="mine_data">
-				<view class="mine_data_item" @click="routeIntegral">
-					<image class="data_icon" src="/static/icon/mine-data-icon1@2x.png"></image>
-					<view class="data_num">
-						<text>{{userInfo.account.accountIntegral}}</text>
-					</view>
-					<view class="data_name">
-						<text>拼团积分</text>
-					</view>
-				</view>
-				<view class="mine_data_item" @click="routeCoupon">
-					<image class="data_icon" src="/static/icon/mine-data-icon2@2x.png"></image>
-					<view class="data_num">
-						<text>{{userInfo.account.accountCoupon}}</text>
-					</view>
-					<view class="data_name">
-						<text>开团券</text>
-					</view>
-				</view>
-				<view class="mine_data_item" @click="routeParticipation">
-					<image class="data_icon" src="/static/icon/mine-data-icon3@2x.png"></image>
-					<view class="data_num">
-						<text>{{userInfo.account.accountShareBonus}}</text>
-					</view>
-					<view class="data_name">
-						<text>分红</text>
-					</view>
-				</view>
-			</view>
 			<view class="order_status">
 				<u-grid :col="4" :border="false">
 					<u-grid-item @click="routeOrder(1)">
-						<view class="status_icon">
-							<u-badge count="0" :offset="[-10, -10]" bgColor="#532DA3"></u-badge>
-							<u-icon name="/static/icon/mine-order-icon1@2x.png" :size="46"></u-icon>
-						</view>
+						<u-icon name="/static/icon/mine-order-icon1@2x.png" :size="46"></u-icon>
 						<view class="order_status_text">待发货</view>
 					</u-grid-item>
 					<u-grid-item @click="routeOrder(2)">
-						<view class="status_icon">
-							<u-badge count="0" :offset="[-10, -10]" bgColor="#532DA3"></u-badge>
 							<u-icon name="/static/icon/mine-order-icon2@2x.png" :size="46"></u-icon>
-						</view>
 						<view class="order_status_text">已发货</view>
 					</u-grid-item>
 					<u-grid-item @click="routeOrder(3)">
@@ -87,6 +52,9 @@
 			<view class="menu_list">
 				<view class="menu_list_block">
 					<u-cell-group>
+						<u-cell-item title="我的资产" :title-style="menuListTitleStyle" :value="userInfo.fansCount" :border-bottom="false" @click="myAssets">
+							<u-icon name="/static/icon/mine-menu1@2x.png" slot="icon" size="40" ></u-icon>
+						</u-cell-item>
 						<u-cell-item title="我的粉丝" :title-style="menuListTitleStyle" :value="userInfo.fansCount" :border-bottom="false" @click="routeTeam">
 							<u-icon name="/static/icon/mine-menu1@2x.png" slot="icon" size="40" ></u-icon>
 						</u-cell-item>
@@ -167,60 +135,14 @@
 					fontWeight:'600',
 					paddingLeft:'20rpx'
 				},
-				userInfo:{
-					account:{
-						accountAmount: 0,
-						accountAvailableAmount: 0,
-						accountAvailableCoupon: 0,
-						accountAvailableIntegral: 0,
-						accountAvailableShareBonus: 0,
-						accountCoupon: 0,
-						accountFreezeAmount: 0,
-						accountFreezeCoupon: 0,
-						accountFreezeIntegral: 0,
-						accountFreezeShareBonus: 0,
-						accountIntegral: 0,
-						accountShareBonus: 0,
-						accountTotalShareBonus: 0,
-						createTime: null,
-						id: "",
-						updateTime: null,
-						userId: "0",
-					},
-					fansCount: 0,
-					level:{
-						createTime: null,
-						id: "",
-						levelName: "",
-					},
-					user:{
-						headPortrait: "",
-						id: "",
-						isReal: 1,
-						levelId: "",
-						loginIp: "",
-						loginTime: "",
-						mobile: "",
-						nickname: "",
-						password: null,
-						realname: null,
-						regKey: null,
-						regTime: "",
-						remark: "",
-						sourceType: "",
-						status: false,
-						tempUserId: null,
-						token: null,
-						unionId: "",
-						updateTime: "",
-						userNo: null,
-						username: "",
-					},
-				},
+				user: {},
+				userInfo:{},
 			}
 		},
 		onLoad() {
-			this.userInfo = uni.getStorageSync('user');
+			const data=getApp().globalData.userInfo||{};
+			this.userInfo = data.id?getApp().globalData.userInfo.id:uni.getStorageSync('userInfo');
+			console.log('this.userInfo',this.userInfo)
 		},
 		onShow:function(){
 			 this.get_userCenter()
@@ -236,9 +158,9 @@
 			get_userCenter:function(){
 				 let that = this
 				 this.$u.api.get_userCenter().then(res => {
-					if( res.code == 200 ){
+					if( res.code == 0 ){
 						console.log('用户',res)
-						that.userInfo = res.data
+						that.user= res.data
 						uni.setStorageSync('user', res.data);
 					}
 				 })
@@ -265,6 +187,12 @@
 			routeCoupon:function(){
 				uni.navigateTo({
 					url:"coupon/coupon"
+				})
+			},
+			//我的资产
+			myAssets:function(){
+				uni.navigateTo({
+					url:"assets/assets"
 				})
 			},
 			//路由 - 拼团积分
@@ -461,7 +389,7 @@
 	height: 60rpx;
 }
 .order_status{
-	margin: 40rpx 0 20rpx;
+	margin: -80px 0 30rpx 0;
 	padding: 0 30rpx;
 	background-color: #FFFFFF;
 }

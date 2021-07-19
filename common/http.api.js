@@ -1,31 +1,35 @@
 // 此处第二个参数vm，就是我们在页面使用的this，你可以通过vm获取vuex等操作，更多内容详见uView对拦截器的介绍部分：
 // https://uviewui.com/js/http.html#%E4%BD%95%E8%B0%93%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%EF%BC%9F
 const install = (Vue, vm) => {
+	const url='/web'
+	//const url=''
 	/** 
 	 * 用户管理
 	 * --------------------------------------------------------------------
 	 * */
 	let get_wxOpenAccount = (params = {}) => vm.$u.get('/user/ptUser/wxOpenAccount', params); //获取开放平台账号信息
-	let get_smsLogin = (params = {}) => vm.$u.get('/sms/sendCode', params);	//获取短信验证码
-	let regist = (params = {}) => vm.$u.post('/member/regist', params);	//注册
-	let wxLogin = (params = {}) => vm.$u.post('/member/wxLogin', params);	//登录
+	let get_smsLogin = (params = {}) => vm.$u.get(url+'/sms/sendCode', params);	//获取短信验证码
+	let regist = (params = {}) => vm.$u.post(url+'/member/regist', params);	//注册
+	let wxLogin = (params = {}) => vm.$u.post(url+'/member/wxLogin', params);	//登录
 	/** 
 	 * 拼团
 	 * --------------------------------------------------------------------------
 	 * */
 	 
-	 let get_member_total = (params = {}) => vm.$u.get('/web/member/getMemberTotal', params);	//首页会员总数
-	let get_headportrait = (params = {}) => vm.$u.get('/web/member/getLastList', params);	//首页头像与拼团人数
-	let get_openAndJoin_num = (params = {}) => vm.$u.get('/web/member/getMemberDailyModelData', params);
+	 let get_member_total = (params = {}) => vm.$u.get(url+'/member/getMemberTotal', params);	//首页会员总数
+	let get_headportrait = (params = {}) => vm.$u.get(url+'/member/getLastList', params);	//首页头像与拼团人数
+	let get_openAndJoin_num = (params = {}) => vm.$u.get(url+'/member/getMemberDailyModelData', params);
 
-	let get_product_list = (params = {}) => vm.$u.get('/web/group/getGroupProjectList', params);	//首页热门专区
-	let get_product_detail = (params = {}) => vm.$u.get('/web/group/getGroupProductDetail', params);	//商品详情
+	let get_product_list = (params = {}) => vm.$u.get(url+'/group/getGroupProjectList', params);	//首页热门专区
+	let get_product_detail = (params = {}) => vm.$u.get(url+'/group/getGroupProductDetail', params);	//商品详情
 	//let get_openAndJoin_num = (params = {}) => vm.$u.get('/group/ptGroupRecord/day/openAndJoin/num', params);	//今日可参团数量
-	let openGroup = (params = {}) => vm.$u.post('/group/ptGroupRecord/openGroup', params);	//开团
+	let openGroup = (params = {}) => vm.$u.post(url+'/group/ktSubmit', params);	//开团
 	let joinGroup = (params = {}) => vm.$u.post('/group/ptGroupRecord/joinGroup', params);	//加团
-	let group_square = (params = {}) => vm.$u.get('/group/ptGroupRecord/group/square', params);	//拼团广场
-	let group_participate = (params = {}) => vm.$u.get('/group/ptGroupRecord/group/participate', params);	//我参与的
-	let group_random = (params = {}) => vm.$u.get('/group/ptGroupRecord/group/random', params);	//我参与的
+	let group_square = (params = {}) => vm.$u.get(url+'/group/getGroupBuyList', params);	//拼团广场
+	let get_group_time_config = (params = {}) => vm.$u.get(url+'/group/getGroupTimeConfig', params); //倒计时
+	let group_participate = (params = {}) => vm.$u.get(url+'/group/getMemberGroupBuyList', params);	//我参与的
+	let group_pt_successList = (params = {}) => vm.$u.get(url+'/group/getPtSuccessList', params);	//拼团成功列表
+	let group_random = (params = {}) => vm.$u.post(url+'/group/randomJoin', params);	//创建拼团
 	let openGroup_fail = (params = {}) => vm.$u.post('/group/ptGroupRecord/openGroup/failure', params);	//开团失败
 	let openGroup_success = (params = {}) => vm.$u.post('/group/ptGroupRecord/openGroup/success', params);	//开团成功
 	let ptGroupRecord_view = (params = {}) => vm.$u.get('/group/ptGroupRecord/view', params);	//查询团信息
@@ -40,8 +44,8 @@ const install = (Vue, vm) => {
 	 * 消息中心
 	 * --------------------------------------------------------------------------
 	 * */
-	let get_notice_list = (params = {}) => vm.$u.post('/sys/notice/list', params);	//公告列表
-	let get_message_list = (params = {}) => vm.$u.post('/sys/message/list', params);	//消息列表
+	let get_notice_list = (params = {}) => vm.$u.get(url+'/notice/getNoticeList', params);	//公告列表
+	let get_message_list = (params = {}) => vm.$u.get(url+'/notice/getNoticeList', params);	//消息列表
 	let set_message_readed = (params = {}) => vm.$u.get('/sys/message/read', params);	//消息设置为已读
 	//地址管理 -----------------------------------------------------------------------------
 	let get_ptAddress_list = (params = {}) => vm.$u.post('/user/ptAddress/list', params);	//地址列表
@@ -50,7 +54,7 @@ const install = (Vue, vm) => {
 	let default_ptAddress =  (params = {}) => vm.$u.post('/user/ptAddress/' + params.id);	//设置默认
 	let delete_ptAddress =  (params = {}) => vm.$u.delete('/user/ptAddress/' + params.id);	//删除
 	//用户中心 ---------------------------------------
-	let get_userCenter = (params = {}) => vm.$u.get('/user/ptUser/userCenter', params);	//个人中心信息	
+	let get_userCenter = (params = {}) => vm.$u.get(url+'/member/getMemberAccountDetail', params);	//个人中心信息	
 	let get_userCenter_integral = (params = {}) => vm.$u.get('/user/ptUserAccount/integral/record', params);	//积分记录	
 	let get_ptOrder_list = (params = {}) => vm.$u.post('/group/ptOrder/list', params);	//全部订单	
 	let get_ptOrder_receive = (params = {}) => vm.$u.post('/group/ptOrder/receive', params);	//已收货		
@@ -70,8 +74,8 @@ const install = (Vue, vm) => {
 	let get_ptFans_count = (params = {}) => vm.$u.get('/user/ptFans/count', params);	//我的粉丝数
 	let add_ptFans = (params = {}) => vm.$u.post('/user/ptFans/add', params);	//锁粉
 	//文章管理
-	let ptArticle_list =  (params = {}) => vm.$u.post('/user/ptArticle/list', params);	//文章列表
-	let ptArticle_detail =  (params = {}) => vm.$u.get('/user/ptArticle/detail', params);	//文章列表
+	let ptArticle_list =  (params = {}) => vm.$u.get(url+'/article/getArticleList', params);	//文章列表
+	let ptArticle_detail =  (params = {}) => vm.$u.get(url+'/article/getArticleDetail', params);	//文章列表
 	//充值 - 支付
 	let appPrePay =  (params = {}) => vm.$u.post('/WxPay/appPrePay', params);	//充值
 	let cashMoney =  (params = {}) => vm.$u.post('/WxPay/cash', params);	//提现
@@ -123,7 +127,9 @@ const install = (Vue, vm) => {
 		chargeList,
 		cashList,
 		group_square,
+		get_group_time_config,
 		group_participate,
+		group_pt_successList,
 		group_random,
 		openGroup_fail,
 		openGroup_success,

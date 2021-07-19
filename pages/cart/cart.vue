@@ -51,19 +51,25 @@
         </view>
 		<!-- 脚部菜单 -->
 		<view class="footer" :style="{bottom:footerbottom}">
-			<view class="checkbox-box" @tap="allSelect">
-				<view class="checkbox">
-					<view :class="[isAllselected?'on':'']"></view>
+			<view class="content">
+				<view class="checkbox-box" @tap="allSelect">
+					<view class="checkbox">
+						<view :class="[isAllselected?'on':'']"></view>
+					</view>
+					<view class="text">全选</view>
 				</view>
-				<view class="text">全选</view>
+				<view class="delBtn" @tap="deleteList" v-if="selectedList.length>0">删除</view>
+				<view class="settlement">
+					<view class="sum">合计:<view class="money">￥{{sumPrice}}</view></view>
+					<view class="btn" @tap="toConfirmation">结算({{selectedList.length}})</view>
+				</view>
 			</view>
-			<view class="delBtn" @tap="deleteList" v-if="selectedList.length>0">删除</view>
-			<view class="settlement">
-				<view class="sum">合计:<view class="money">￥{{sumPrice}}</view></view>
-				<view class="btn" @tap="toConfirmation">结算({{selectedList.length}})</view>
+		
+			<view  class="footer-tabbar">
+				<image class="img" :src="item.selectedIconPath" v-for="(item,index) in list" :key="index" @tap="toPage(item)"></image>
 			</view>
 		</view>
-		<u-tabbar v-model="current" :list="list" :mid-button="true"></u-tabbar>
+		
 	</view>
 </template>
 
@@ -88,24 +94,11 @@
 						"pagePath": "/pages/category/category",
 					},
 					{
-						iconPath: "/static/tabbar/button_float_tap@2x.png",
-						selectedIconPath: "/static/tabbar/button_float_tap@2x.png",
-						midButton: true,
-						customIcon: false,
-						"pagePath": "/pages/group-buy/group-buy",
-					},
-					{
 						iconPath: "/static/tabbar/i_Chat@2x.png",
 						selectedIconPath: "/static/tabbar/i_Chat_fill@2x.png",
 						customIcon: false,
 						"pagePath": "/pages/cart/cart",
-					},
-					{
-						iconPath: "/static/tabbar/Bag@2x.png",
-						selectedIconPath: "/static/tabbar/Bag_fill@2x.png",
-						customIcon: false,
-						"pagePath": "/pages/mine/mine",
-					},
+					}
 				],
 				current: 1,
 				headerTop:null,
@@ -144,11 +137,16 @@
 				this.footerbottom = document.getElementsByTagName('uni-tabbar')[0].offsetHeight+'px';
 			// #endif
 			// #ifdef APP-PLUS
-			this.showHeader = false;
+			// this.showHeader = false;
 			this.statusHeight = plus.navigator.getStatusbarHeight();
 			// #endif
 		},
 		methods: {
+			toPage(data){
+				uni.navigateTo({
+					url: data.pagePath
+				})
+			},
 			//加入商品 参数 goods:商品数据
 			joinGoods(goods){
 				/*
@@ -363,6 +361,18 @@
 			margin-left: 10upx;
 		}
 	}
+	.footer-tabbar{
+			height: 100upx;
+			background-color: #FFFFFF;
+			width: 100%;
+			align-items: center;
+			justify-content: space-around;
+			display: flex;
+			.img{
+				height: 80upx;
+				width: 80upx;
+			}
+		}
 .status {
 		width: 100%;
 		height: 0;
@@ -403,7 +413,7 @@
 	}
 	.goods-list{
 		width: 100%;
-		padding: 20upx 0 120upx 0;
+		padding: 20upx 0 220upx 0;
 		.tis{
 			width: 100%;
 			height: 60upx;
@@ -565,17 +575,20 @@
 		}
 	}
 	.footer{
-		width: 92%;
+		width: 100%;
 		padding: 0 4%;
 		background-color: #fbfbfb;
-		height: 100upx;
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
+		height: 200upx;
 		font-size: 28upx;
 		position: fixed;
 		bottom: 0upx;
 		z-index: 5;
+		.content{
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			height: 100upx;
+		}
 		.delBtn{
 			border: solid 1upx #f06c7a;
 			color: #f06c7a;

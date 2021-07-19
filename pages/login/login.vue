@@ -39,6 +39,7 @@
 		methods: {
 			 // 登录
 			login(){
+				uni.hideLoading();
 				const that=this;
 				if( !this.checked ){
 					uni.showToast({
@@ -47,11 +48,19 @@
 					})
 					return
 				}
+				if(true){
+					uni.navigateTo({
+						url:'/pages/login/mobile/mobile'
+					})
+					return;
+				}
+				
 				//微信登录
 				uni.login({
 				  provider: 'weixin',
 				  success: function (loginRes) {
 					app.globalData.wx_authResult = loginRes.authResult
+					
 				    // 获取用户信息
 				    uni.getUserInfo({
 				      provider: 'weixin',
@@ -66,7 +75,7 @@
 								}
 							}
 							app.globalData.userInfo = userInfo
-						
+						  console.log('userInfo', userInfo)
 							uni.navigateTo({
 								url:'/pages/login/mobile/mobile'
 							})

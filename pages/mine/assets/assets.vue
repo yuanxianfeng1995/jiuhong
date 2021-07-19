@@ -1,0 +1,128 @@
+<template>
+	<view class="assets-content">
+		<view class="assets-list">
+			<view v-for="(item,index) in list" :key="item.id" class="assets-list-item" @click="goPage(item)">
+				<view class="list-header">
+					<view class="text">
+						<image class="data_icon" :src="item.src"></image>
+						<text class="name">{{item.lable}}</text>
+					</view>
+					<view class="icon iconfont  icon-jiantou"></view>
+				</view>
+				<view class="content">
+					<view class="label">可用</view>
+					<text class="value">222</text>
+				</view>
+			</view>
+		</view>
+	</view>
+	
+</template>
+
+<script>
+	export default {
+		data() {
+			return {
+				menuListTitleStyle:{
+					color:'#000000',
+					fontWeight:'600',
+					paddingLeft:'20rpx'
+				},
+				list: [
+					{
+						id: 1,
+						lable: '拼团积分',
+						src: '/static/icon/mine-data-icon1@2x.png',
+						url:"../integral/integral"
+					},
+					{
+						id: 2,
+						lable: '开团卷',
+						src: '/static/icon/mine-data-icon2@2x.png',
+						url:"../coupon/coupon"
+					},
+					{
+						id: 3,
+						lable: '玖花',
+						src: '/static/icon/mine-data-icon3@2x.png',
+						url:"../integral/integral"
+					},
+					{
+						id: 4,
+						lable: '分红',
+						src: '/static/icon/mine-data-icon3@2x.png',
+						url:"../participation/participation"
+					},
+				]
+			}
+		},
+		methods:{
+			goPage(item){
+				uni.navigateTo({
+					url: item.url
+				})
+			}
+		}
+	}
+</script>
+
+<style scoped lang="scss">
+	.assets-content{
+		height: 100vh;
+		.header {
+			background-image: linear-gradient(#0396ff, #ffffff);
+			//background-color: #0396ff;
+			height: 300upx;
+			color: #FFFFFF;
+			text-align: center;
+			font-size: 40rpx;
+			padding-top: 30rpx;
+			/*  #ifdef  APP-PLUS  */
+			margin-top: var(--status-bar-height);
+			/*  #endif  */
+		}
+		.assets-list{
+			// position: relative;
+			// top: -230rpx;
+			margin-top: 20rpx;
+			.assets-list-item{
+				margin: 0 2%;
+				margin-bottom: 20rpx;
+				border-radius: 10rpx;
+				padding: 20rpx;
+				font-size: 30rpx;
+				background: #532da3;
+				border: 1px solid #6d2ef3;
+				color: #ffffff;
+				.list-header{
+					display: flex;
+					justify-content: space-between;
+					align-items: center;
+					margin-bottom: 10rpx;
+					font-size: 30rpx;
+					.name{
+						font-size: 35rpx;
+					}
+					.text{
+						display: flex;
+						align-items: center;
+					}
+				}
+				.content{
+					padding-left: 20rpx;
+					color: #f3d66c;
+					.label{
+						color: #FFFFFF;
+						font-size: 35rpx;
+						margin-bottom: 10rpx;
+					}
+				}
+				.data_icon{
+					width: 100rpx;
+					height: 100rpx;
+				}
+			}
+		}
+	}
+	
+</style>

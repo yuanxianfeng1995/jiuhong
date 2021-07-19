@@ -26,10 +26,10 @@
 				<image class="prod_img" :src="detail.picture" mode="aspectFill"></image>
 				<view class="detail_text">
 					<view class="title">
-						<text class="u-line-2">{{detail.productName}}</text>
+						<text class="u-line-2">{{detail.pname}}</text>
 					</view>
 					<view class="price">
-						<text>{{detail.groupPrice}}积分</text>
+						<text>{{detail.ptPrice}}积分</text>
 					</view>
 					<view class="num">
 						<text>数量：1</text>
@@ -41,8 +41,8 @@
 					<text>说明</text>
 				</view>
 				<view class="value">
-					<text v-if="!groupItem.groupNo">该商品开团需开团券{{detail.openGroupCoupon}}张</text>
-					<text v-else>该商品开团需拼团积分{{detail.groupPrice}}</text>
+					<text v-if="!groupItem.groupNo">该商品开团需开团券{{detail.coupon}}张</text>
+					<text v-else>该商品开团需拼团积分{{detail.ptPrice}}</text>
 				</view>
 			</view>
 			<!-- <view class="block_item">
@@ -61,8 +61,8 @@
 					</view>
 				</view>
 				<view class="coupon_num">
-					<text>剩余：{{userInfo.account.accountAvailableCoupon}}张</text>
-					<text class="message">当前最大可抵扣{{userInfo.account.accountAvailableCoupon}}张</text>
+					<text>剩余：{{userInfo.accountAvailableCoupon}}张</text>
+					<text class="message">当前最大可抵扣{{detail.coupon}}张</text>
 					<u-switch v-model="couponChecked" size="36" active-color="#532DA3" @change="switchChange">
 					</u-switch>
 				</view>
@@ -78,7 +78,7 @@
 					</view>
 				</view>
 				<view class="coupon_num">
-					<text>剩余：{{userInfo.account.accountAvailableIntegral}}</text>
+					<text>剩余：{{userInfo.accountAvailableIntegral}}</text>
 					<u-switch v-model="couponChecked" size="36" active-color="#532DA3" @change="switchChange">
 					</u-switch>
 				</view>
@@ -96,7 +96,7 @@
 			<!-- <view class="warn_message warn_message_warn" v-if="userInfo.account.accountAvailableCoupon > 0 && warn_message_show">
 				<text>每次开团之前需参团1次及以上哦~，赶紧先去参团后再来把~</text>
 			</view> -->
-			<view class="warn_message" v-if="groupItem.groupNo && detail.groupPrice > userInfo.account.accountAvailableIntegral">
+			<view class="warn_message" v-if="groupItem.groupNo && detail.ptPrice > userInfo.accountAvailableIntegral">
 				<text>客官您好，您当前积分不足，暂不可参团。</text>
 			</view>
 			<view class="handle" v-if="false">
@@ -116,8 +116,8 @@
 							<u-icon name="checkmark-circle" size="60" color="#532DA3"></u-icon>
 							<view class="result_text"><text>支付成功</text></view>
 							<view class="result_price">
-								<text v-if="groupItem.groupNo">积分抵扣 -{{detail.groupPrice}}</text>
-								<text v-else>开团券抵扣 -{{detail.openGroupCoupon}}</text>
+								<text v-if="groupItem.groupNo">积分抵扣 -{{detail.ptPrice}}</text>
+								<text v-else>开团券抵扣 -{{detail.coupon}}</text>
 							</view>
 						</view>
 						<view class="result_bottom" style="text-align: center;">
@@ -145,7 +145,6 @@
 				total: 0,
 				second: 3,
 				type: 1,
-				openAndJoin_num:''
 			}
 		},
 		onLoad: function(option) {
@@ -160,7 +159,7 @@
 				eventChannel.on('groupData', function(data) {
 					console.log('获取详情数据222', data)
 					that.detail = data.data
-					that.detail.picture = data.data.picture.split(',')[0]
+					that.detail.picture = data.data.picture?data.data.picture.split(',')[0]:''
 					that.groupItem = data.data
 				})
 			} else {
@@ -170,13 +169,13 @@
 					that.detail = data.data
 					that.detail.picture = data.data.picture.split(',')[0]
 				})
+				
 				eventChannel.on('groupItem', function(data) {
 					console.log('获取拼团数据', data)
 					that.groupItem = data.data
 				})
 			}
-			this.get_ptAddress_list()
-			// this.get_openAndJoin_num()
+			// this.get_ptAddress_list()
 		},
 		methods: {
 			//进入房间
@@ -225,13 +224,6 @@
 					},
 				})
 			},
-			//今日可参团 、开团
-			get_openAndJoin_num:function(){
-				this.$u.api.get_openAndJoin_num().then(res => {
-					this.openAndJoin_num = res.data
-					console.log('今日可',this.openAndJoin_num)
-				})
-			},
 			//微信支付
 			wxPay: function(type) {
 				console.log('开团类型', type)
@@ -249,7 +241,7 @@
 					}
 					//拼团
 					//积分拦截
-					if (that.detail.groupPrice > that.userInfo.account.accountAvailableIntegral) {
+					if (that.detail.ptPrice > that.userInfo.accountAvailableIntegral) {
 						uni.showModal({
 							title: '提示',
 							content: '您的积分不足，是否去充值！',
@@ -300,7 +292,7 @@
 					}
 				} else {
 					console.log('详情',that.detail)
-					if( that.detail.openGroupCoupon > that.userInfo.account.accountAvailableCoupon ){
+					if( that.detail.coupon > that.userInfo.accountAvailableCoupon ){
 						uni.showToast({
 							title:'您当前开团券不足，暂不可开团。',
 							icon:'none'
@@ -311,9 +303,9 @@
 					 * 开团
 					 * */
 					this.$u.api.openGroup({
-						"productId": parseInt(that.detail.productId),
+						"groupProductId": parseInt(that.detail.id),
 					}).then(res => {
-						if (res.code == 200) {
+						if (res.code == 0) {
 							that.payResult = true
 							let time = setInterval(() => {
 								that.second = that.second - 1

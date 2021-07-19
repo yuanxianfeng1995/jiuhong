@@ -78,7 +78,9 @@
 			</view>
 			<view class="loading-text">{{ loadingText }}</view>
 		</view>
-		<u-tabbar v-model="current" :list="list" :mid-button="true"></u-tabbar>
+		<view  class="footer-tabbar">
+			<image class="img" :src="item.selectedIconPath" v-for="(item,index) in list" :key="index" @tap="toPage(item)"></image>
+		</view>
 	</view>
 </template>
 
@@ -92,8 +94,8 @@
 			appUpdate,
 		},
 		mounted() {
-			this.$refs.zyupgrade.check_update()
-			this.$refs.app_update.update(); //调用子组件 检查更新 有bug
+			// this.$refs.zyupgrade.check_update()
+			// this.$refs.app_update.update(); //调用子组件 检查更新 有bug
 		},
 		data() {
 			return {
@@ -119,24 +121,11 @@
 						"pagePath": "/pages/category/category",
 					},
 					{
-						iconPath: "/static/tabbar/button_float_tap@2x.png",
-						selectedIconPath: "/static/tabbar/button_float_tap@2x.png",
-						midButton: true,
-						customIcon: false,
-						"pagePath": "/pages/group-buy/group-buy",
-					},
-					{
 						iconPath: "/static/tabbar/i_Chat@2x.png",
 						selectedIconPath: "/static/tabbar/i_Chat_fill@2x.png",
 						customIcon: false,
 						"pagePath": "/pages/cart/cart",
-					},
-					{
-						iconPath: "/static/tabbar/Bag@2x.png",
-						selectedIconPath: "/static/tabbar/Bag_fill@2x.png",
-						customIcon: false,
-						"pagePath": "/pages/mine/mine",
-					},
+					}
 				],
 				current: 1,
 				// 轮播图片
@@ -282,9 +271,6 @@
 		},
 		//上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
 		onReachBottom() {
-			uni.showToast({
-				title: '触发上拉加载'
-			});
 			let len = this.productList.length;
 			if (len >= 40) {
 				this.loadingText = '到底了';
@@ -305,15 +291,14 @@
 			}
 		},
 		onLoad() {
-			this.update_url = this.$u.http.config.baseUrl + '/group/ptVersion/update'
-			// this.get_banner_list();
-			// this.get_notice_list();
-			// this.get_product_list();
-			// uni.navigateTo({
-			// 	url: '/pages/login/login'
-			// })
+			
 		},
 		methods: {
+			toPage(data){
+				uni.navigateTo({
+					url: data.pagePath
+				})
+			},
 			//轮播图
 			get_banner_list: function() {
 				let that = this
@@ -372,9 +357,6 @@
 			},
 			//搜索跳转
 			toSearch() {
-				uni.showToast({
-					title: '建议跳转到新页面做搜索功能'
-				});
 			},
 			//轮播图跳转
 			toSwiper(e) {
@@ -395,6 +377,9 @@
 				uni.navigateTo({
 					url: e.url,
 				})
+				uni.switchTab({
+					url: e.url,
+				})
 			},
 			//推荐商品跳转
 			toPromotion(e) {
@@ -409,8 +394,8 @@
 					title: '商品' + e.goods_id,
 					icon: 'none'
 				});
-				uni.navigateTo({
-					url: '/pages/goods/goods-list/goods-list'
+				uni.switchTab({
+					url: '/pages/index/index'
 				})
 			},
 			//轮播图指示器
@@ -424,8 +409,23 @@
 	page {
 		position: relative;
 		background-color: #fff;
+		padding-bottom: 60upx;
 	}
-
+  .footer-tabbar{
+			position: fixed;
+			bottom: 0;
+			left: 0;
+			height: 100upx;
+			background-color: #FFFFFF;
+			width: 100%;
+			align-items: center;
+			justify-content: space-around;
+			display: flex;
+			.img{
+				height: 80upx;
+				width: 80upx;
+			}
+		}
 	.pullDown-effects {
 		position: fixed;
 		//top: calc(100upx - 36vw);
@@ -842,5 +842,6 @@
 				}
 			}
 		}
+		
 	}
 </style>

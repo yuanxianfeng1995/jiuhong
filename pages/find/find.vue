@@ -15,11 +15,11 @@
 						</view>
 						<view class="tag">
 							<text class="category">官方新闻</text>
-							<text class="time">{{$u.timeFormat(item.createTime, 'mm/dd')}}</text>
+							<text class="time">{{item.createtime}}</text>
 						</view>
 					</view>
 					<view class="item_img">
-						<image :src="item.mainPic" mode="aspectFill"></image>
+						<image :src="item.img" mode="aspectFill"></image>
 					</view>
 				</view>
 			</view>
@@ -86,11 +86,10 @@
 			ptArticle_list:function(){
 				let that = this
 				this.$u.api.ptArticle_list({
-					current: 0,
-					size: 10,
-					params: {},
+					page: 1,
+					pageSize: 10
 				}).then(res => {
-					that.articleList = res.data.records
+					that.articleList = res.data
 				})
 			},
 			//路由 - 详情FF
