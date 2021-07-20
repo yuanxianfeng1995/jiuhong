@@ -11,7 +11,7 @@
 				</view>
 				<view class="content">
 					<view class="label">可用</view>
-					<text class="value">222</text>
+					<text class="value">{{item.value}}</text>
 				</view>
 			</view>
 		</view>
@@ -33,28 +33,45 @@
 						id: 1,
 						lable: '拼团积分',
 						src: '/static/icon/mine-data-icon1@2x.png',
-						url:"../integral/integral"
+						url:"../integral/integral",
+						value: 0
 					},
 					{
 						id: 2,
 						lable: '开团卷',
 						src: '/static/icon/mine-data-icon2@2x.png',
-						url:"../coupon/coupon"
+						url:"../coupon/coupon",
+						value: 0
 					},
 					{
 						id: 3,
 						lable: '玖花',
 						src: '/static/icon/mine-data-icon3@2x.png',
-						url:"../integral/integral"
+						url:"../integral/integral",
+						value: 0
 					},
 					{
 						id: 4,
 						lable: '分红',
 						src: '/static/icon/mine-data-icon3@2x.png',
-						url:"../participation/participation"
+						url:"../participation/participation",
+						value: 0
 					},
 				]
 			}
+		},
+		onLoad: function(option) {
+			let that = this
+			//用户信息
+			const eventChannel = this.getOpenerEventChannel()
+			eventChannel.on('detail', function(data) {
+				console.log('获取详情数据222', data)
+				that.detail = data.data
+				that.list[0].value=data.data.accountAvailableIntegral
+				that.list[1].value=data.data.accountAvailableCoupon
+				that.list[2].value=data.data.accountIntegral
+				that.list[3].value=data.data.accountIntegral
+			})
 		},
 		methods:{
 			goPage(item){

@@ -187,6 +187,8 @@
 		},
 		onPullDownRefresh() {
 			console.log('refresh');
+			this.productionList=[];
+			this.bannerList=[];
 			this.get_headportrait()
 			this.get_product_list()
 			this.get_notice_list()
@@ -281,9 +283,9 @@
 					console.log('消息', res.data);
 					if (res.code == 0) {
 						that.messageList=res.data.map(item => {
-							return item.contents
+							const reg=/<\/?.+?\/?>/g;
+							return item.contents.replace(reg,'')
 						})
-						console.log('that.messageList',that.messageList)
 					}
 					
 				})
@@ -328,11 +330,7 @@
 			},
 			//路由 - 轮播图
 			routeBanner: function(index) {
-				// console.log('轮播图下标',index)
-				// console.log('轮播图数据',this.bannerList)
-				uni.navigateTo({
-					url: this.bannerList[index].url,
-				})
+				this.routeProdDetail(this.bannerList[index].id)
 			},
 		}
 	}

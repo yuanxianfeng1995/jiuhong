@@ -1,0 +1,31 @@
+C:\Users\qu_da\Desktop\新建文件夹>keytool -list -v -keystore release.jks
+输入密钥库口令:hong123456
+别名: releasealias
+创建日期: 2021-7-20
+条目类型: PrivateKeyEntry
+证书链长度: 1
+证书[1]:
+所有者: CN=Eugene Hong, OU=JIUHONGTIANXIA, O=JIUHONGTIANXIA, L=GUIZHOU, ST=GUIYANG, C=ZH
+发布者: CN=Eugene Hong, OU=JIUHONGTIANXIA, O=JIUHONGTIANXIA, L=GUIZHOU, ST=GUIYANG, C=ZH
+序列号: 56db3aab
+有效期开始日期: Tue Jul 20 10:41:49 CST 2021, 截止日期: Thu Jun 26 10:41:49 CST 2121
+证书指纹:
+         MD5: CD:B9:71:DB:C1:4E:52:FD:D2:05:2B:61:27:70:61:D0
+         SHA1: 22:ED:27:0E:35:9E:3D:B5:9C:35:A5:0E:6B:7F:9D:F4:46:C5:A5:13
+         SHA256: CE:08:0F:EC:22:11:03:3B:42:7C:63:0E:AF:C5:4B:04:45:24:E3:47:91:66:BE:9B:CE:90:22:D4:8D:2D:AE:3B
+         签名算法名称: SHA256withRSA
+         版本: 3
+
+扩展:
+
+#1: ObjectId: 2.5.29.14 Criticality=false
+SubjectKeyIdentifier [
+KeyIdentifier [
+0000: 3D 38 D0 ED 94 CA 00 D3   76 BA BA 54 73 29 60 2C  =8......v..Ts)`,
+0010: 55 C5 ED E7                                        U...
+]
+]
+
+
+*******************************************
+*******************************************

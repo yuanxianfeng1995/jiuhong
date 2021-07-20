@@ -6,8 +6,8 @@
 					<view class="line_1" @click="chooseAddress(item)">
 						<u-icon name="/static/icon/local@2x.png" size="40"></u-icon>
 						<view class="item_detail">
-							<text>{{item.receiverName}} {{item.receiverPhone}}</text>
-							<text>{{item.receiverProvince}} {{item.receiverCity}} {{item.receiverArea}} {{item.receiverAddress}}</text>
+							<text>{{item.consignee}} {{item.tel}}</text>
+							<text>{{item.province}} {{item.city}} {{item.area}} {{item.address}}</text>
 						</view>
 						<u-icon name="/static/icon/sure@2x.png" size="40" v-if="false"></u-icon>
 					</view>
@@ -37,15 +37,15 @@
 				</view>
 				<view class="form">
 					<u-form :model="form" ref="uForm" label-width="130">
-						<u-form-item label="收货人"><u-input v-model="form.receiverName" /></u-form-item>
-						<u-form-item label="手机号"><u-input v-model="form.receiverPhone" :maxlength="11" /></u-form-item>
+						<u-form-item label="收货人"><u-input v-model="form.consignee" /></u-form-item>
+						<u-form-item label="手机号"><u-input v-model="form.tel" :maxlength="11" /></u-form-item>
 						<u-form-item label="地区">
 							<view class="right" @click="regionShow = true">
-								<text>{{form.receiverProvince ? form.receiverProvince + form.receiverCity + form.receiverArea : '请选择'}}</text>
+								<text>{{form.province ? form.province + form.city + form.area : '请选择'}}</text>
 								<u-icon name="arrow-right" size="26"></u-icon>
 							</view>
 						</u-form-item>
-						<u-form-item label="详细地址"><u-input v-model="form.receiverAddress" /></u-form-item>
+						<u-form-item label="详细地址"><u-input v-model="form.address" /></u-form-item>
 						<button class="form_btn" @click="submit">保存</button>
 					</u-form>
 				</view>
@@ -62,12 +62,12 @@
 				radioValue:'',
 				formShow:false,
 				form:{
-					receiverName:'',
-					receiverPhone:'',
-					receiverAddress:'',
-					receiverProvince:'',
-					receiverCity:'',
-					receiverArea:'',
+					consignee:'',
+					tel:'',
+					address:'',
+					province:'',
+					city:'',
+					area:'',
 				},
 				regionShow:false,
 				addressList:[],
@@ -97,7 +97,7 @@
 				 let that = this
 				 this.$u.api.get_ptAddress_list().then(res => {
 					console.log(res);
-					if( res.code == 200 ){
+					if( res.code == 0 ){
 						console.log('地址',res)
 						that.addressList = res.data
 						res.data.map( (item,index) => {
@@ -114,12 +114,12 @@
 			add:function(){
 				this.formTitle = '添加'
 				this.form = {
-					receiverName:'',
-					receiverPhone:'',
-					receiverAddress:'',
-					receiverProvince:'',
-					receiverCity:'',
-					receiverArea:'',
+					consignee:'',
+					tel:'',
+					address:'',
+					province:'',
+					city:'',
+					area:'',
 				}
 				this.formShow = true
 			},
@@ -127,9 +127,9 @@
 			deleteAddress:function(value){
 				let that = this
 				this.$u.api.delete_ptAddress({
-					id:value.id
+					addressId:value.id
 				}).then(res => {
-					if( res.code == 200 ){
+					if( res.code == 0 ){
 						uni.showToast({
 							title:'删除成功'
 						})
@@ -150,7 +150,7 @@
 				let form = value
 				let that = this
 				this.$u.api.default_ptAddress(form).then(res => {
-					if( res.code == 200 ){
+					if( res.code == 0 ){
 						that.get_ptAddress_list()
 						uni.showToast({
 							title:'设置成功'
@@ -168,28 +168,28 @@
 				console.log('form数据',this.form)
 				let formData = this.form
 				//表单验证
-				if( !formData.receiverName ){
+				if( !formData.consignee ){
 					uni.showToast({
 						title:'请填写姓名',
 						icon:'none'
 					})
 					return
 				}
-				if( !formData.receiverPhone || formData.receiverPhone.length != 11 ){
+				if( !formData.tel || formData.tel.length != 11 ){
 					uni.showToast({
 						title:'请检查手机号',
 						icon:'none'
 					})
 					return
 				}
-				if( !formData.receiverProvince || !formData.receiverArea || !formData.receiverCity ){
+				if( !formData.province || !formData.area || !formData.city ){
 					uni.showToast({
 						title:'请选择省市区',
 						icon:'none'
 					})
 					return
 				}
-				if( !formData.receiverAddress ){
+				if( !formData.address ){
 					uni.showToast({
 						title:'请填写详细地址',
 						icon:'none'
@@ -199,7 +199,7 @@
 				let that = this
 				if( this.formTitle == '编辑' ){
 					this.$u.api.edit_ptAddress(this.form).then(res => {
-						if( res.code == 200 ){
+						if( res.code == 0 ){
 							uni.showToast({
 								title:'修改成功'
 							})
@@ -220,7 +220,7 @@
 			addAddress:function(form){
 				let that = this
 				this.$u.api.add_ptAddress(form).then(res => {
-					if( res.code == 200 ){
+					if( res.code == 0 ){
 						that.get_ptAddress_list()
 						uni.showToast({
 							title:'操作成功'
@@ -237,16 +237,24 @@
 			//省市区改变
 			regionChange:function(e){
 				 // console.log(e)
-				 this.form.receiverProvince = e.province.label
-				 this.form.receiverCity = e.city.label
-				 this.form.receiverArea = e.area.label
+				 this.form.province = e.province.label
+				 this.form.city = e.city.label
+				 this.form.area = e.area.label
 			},
 			//事件 - 选择地址
 			chooseAddress:function(item){
 				 console.log(item)
 				 if( this.chooseRadio ){
 					 const eventChannel = this.getOpenerEventChannel()
-					 eventChannel.emit('chooseAddressEmit', {data: item});
+					 eventChannel.emit('chooseAddressEmit', {data: {
+						 "receiverAddress": item.address,
+						 "receiverArea": item.area,
+						 "receiverCity": item.city,
+						 "receiverName": item.consignee,
+						 "receiverPhone": item.tel,
+						 "receiverProvince": item.province,
+						 "addressId": item.id,
+					 }});
 					 uni.navigateBack({
 					 	delta:1
 					 })

@@ -2,7 +2,7 @@
 	<view class="contain">
 		<view class="content">
 			<view class="title">
-				<text>{{article.title}}</text>
+				<text>{{article.titles}}</text>
 			</view>
 			<view class="date">
 				<text>{{article.createTime}}</text>

@@ -7,7 +7,7 @@
 		</view>
 		<view class="content">
 			<view class="address" v-if="groupItem.groupNo">
-				<view class="none" v-if="addressList.length == 0" @click="routeAddress">
+				<view class="none" v-if="addressList.length == 0&&chooseAddress" @click="routeAddress">
 					<image src="/static/icon/add@2x.png"></image>
 					<text>手动添加收货地址</text>
 					<u-icon name="arrow-right" size="24"></u-icon>
@@ -18,6 +18,9 @@
 						<text class="name">{{chooseAddress.receiverName}} {{chooseAddress.receiverPhone}}</text>
 						<text>{{chooseAddress.receiverProvince}} {{chooseAddress.receiverCity}}
 							{{chooseAddress.receiverArea}} {{chooseAddress.receiverAddress}}</text>
+							<!-- <text class="name">{{chooseAddress.receiverName}} {{chooseAddress.receiverPhone}}</text>
+							<text>{{chooseAddress.receiverProvince}} {{chooseAddress.receiverCity}}
+								{{chooseAddress.receiverArea}} {{chooseAddress.receiverAddress}}</text> -->
 					</view>
 					<u-icon name="arrow-right" size="30"></u-icon>
 				</view>
@@ -110,7 +113,7 @@
 				</text>
 				<button class="btn open" type="default" @click.stop="wxPay('join')" v-if="groupItem.groupNo">支付</button>
 				<button class="btn open" type="default" @click.stop="wxPay('open')" v-else>立即开团</button>
-				<u-popup v-model="payResult" mode="center" border-radius="12" width="526rpx" height="690rpx">	
+				<u-popup v-model="payResult" mode="center" border-radius="12" width="526rpx" height="690rpx">
 					<view class="pay_result">
 						<view class="result_top">
 							<u-icon name="checkmark-circle" size="60" color="#532DA3"></u-icon>
@@ -159,7 +162,7 @@
 				eventChannel.on('groupData', function(data) {
 					console.log('获取详情数据222', data)
 					that.detail = data.data
-					that.detail.picture = data.data.picture?data.data.picture.split(',')[0]:''
+					that.detail.picture = data.data.picture ? data.data.picture.split(',')[0] : ''
 					that.groupItem = data.data
 				})
 			} else {
@@ -169,22 +172,29 @@
 					that.detail = data.data
 					that.detail.picture = data.data.picture.split(',')[0]
 				})
-				
+
 				eventChannel.on('groupItem', function(data) {
 					console.log('获取拼团数据', data)
 					that.groupItem = data.data
 				})
 			}
-			// this.get_ptAddress_list()
+			const eventChannel = this.getOpenerEventChannel()
+			eventChannel.on('groupData', function(data) {
+				console.log('获取详情数据222', data)
+				that.detail = data.data
+				that.detail.picture = data.data.picture ? data.data.picture.split(',')[0] : ''
+				that.groupItem = data.data
+			})
+			this.get_ptAddress_list()
 		},
 		methods: {
 			//进入房间
-			routeHouse:function(e){
-				if( this.groupItem && this.groupItem.groupNo ){
+			routeHouse: function(e) {
+				if (this.groupItem && this.groupItem.groupNo) {
 					uni.redirectTo({
 						url: '/pages/group-buy/group-detail?id=' + this.groupItem.groupNo
 					})
-				}else{
+				} else {
 					uni.switchTab({
 						url: '/pages/group-buy/group-buy'
 					})
@@ -201,10 +211,14 @@
 				let that = this
 				this.$u.api.get_ptAddress_list().then(res => {
 					console.log(res);
-					if (res.code == 200) {
+					if (res.code == 0) {
 						console.log('地址', res)
 						that.addressList = res.data
-						that.chooseAddress = res.data[0]
+						console.log('that.groupItem.groupNo',that.groupItem.groupNo)
+						const arr=res.data.find(item=>item.isDefault===1);
+						console.log('arr',arr)
+						that.chooseAddress=that.groupItem.groupNo&&arr?res.data.find(item=>item.isDefault===1)[0]||{}:null
+						console.log('that.chooseAddress',that.chooseAddress)
 					} else {
 						that.chooseAddress = {}
 					}
@@ -217,9 +231,9 @@
 					url: '/pages/mine/address/address?type=choose',
 					events: {
 						chooseAddressEmit: function(data) {
-							console.log(data)
-							that.chooseAddress = data.data
-							that.get_ptAddress_list() //重新刷新地址
+							that.chooseAddress = data.data||{}
+							that.get_ptAddress_list()
+							console.log('chooseAddressEmit', that.chooseAddress)
 						},
 					},
 				})
@@ -256,18 +270,17 @@
 						return
 					}
 					console.log(this.payResult, '微信支付')
-					
+
 					uni.showLoading({
 						title: '拼团中...',
-						mask:true
+						mask: true
 					})
-					if (this.groupItem.groupNo) { //拼团
-						this.$u.api.joinGroup({
-							"addressId": parseInt(that.chooseAddress.id),
+					if (that.groupItem.groupNo) { //拼团
+						that.$u.api.joinGroup({
 							"groupNo": that.groupItem.groupNo,
-							"productId": parseInt(that.detail.productId),
+							...that.chooseAddress
 						}).then(res => {
-							if (res.code == 200) {
+							if (res.code == 0) {
 								that.payResult = true
 								let time = setInterval(() => {
 									that.second = that.second - 1
@@ -275,7 +288,8 @@
 								}, 1000)
 								setTimeout(() => {
 									uni.redirectTo({
-										url: '/pages/group-buy/group-detail?id=' + that.groupItem.groupNo
+										url: '/pages/group-buy/group-detail?id=' + that
+											.groupItem.groupNo
 									})
 									clearInterval(time)
 									uni.hideLoading()
@@ -291,11 +305,11 @@
 						return
 					}
 				} else {
-					console.log('详情',that.detail)
-					if( that.detail.coupon > that.userInfo.accountAvailableCoupon ){
+					console.log('详情', that.detail)
+					if (that.detail.coupon > that.userInfo.accountAvailableCoupon) {
 						uni.showToast({
-							title:'您当前开团券不足，暂不可开团。',
-							icon:'none'
+							title: '您当前开团券不足，暂不可开团。',
+							icon: 'none'
 						})
 						return
 					}

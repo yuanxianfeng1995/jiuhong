@@ -191,8 +191,12 @@
 			},
 			//我的资产
 			myAssets:function(){
+				let that = this
 				uni.navigateTo({
-					url:"assets/assets"
+					url:"assets/assets",
+					success:function(res){
+						res.eventChannel.emit('detail', { data: that.user })
+					},
 				})
 			},
 			//路由 - 拼团积分

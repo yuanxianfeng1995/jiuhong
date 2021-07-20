@@ -13,12 +13,13 @@
 				</view>
 			</view>
 			<view class="warn_message">
-				<text>温馨提示：您今日还可开团{{openAndJoin_num.surplusCreateGroupTotal}}次，参团{{openAndJoin_num.surplusJoinGroupTotal}}次</text>
+				<text>温馨提示：您今日还可开团{{openAndJoin_num.surplusCreateGroupTotal<0?0:openAndJoin_num.surplusCreateGroupTotal}}次，参团{{openAndJoin_num.surplusJoinGroupTotal}}次</text>
 				<text @click="routeRole">查看规则</text>
 			</view>
 		</view>
 		<view class="content" v-if="tabActive == 1">
-			<swiper :indicator-dots="false" :autoplay="true" :circular="true" :interval="3000" :duration="1000" style="height: 364rpx;" v-if="group_pt_successList_list.length > 0">
+			<swiper :indicator-dots="false" :autoplay="true" :circular="true" :interval="3000" :duration="1000"
+				style="height: 364rpx;" v-if="group_pt_successList_list.length > 0">
 				<swiper-item v-for="(item,index) in group_pt_successList_list" :key="index">
 					<view class="recommend" @click.stop="routeDetailHose(item.status,item)">
 						<view class="line_1">
@@ -32,7 +33,8 @@
 									<image class="headimg" :src="item.isWinningHeadUrl" mode="aspectFill"></image>
 								</view>
 								<view class="author_name">
-									<view class="u-line-1" style="width: 110rpx;">{{item.winUserno.substr(0,1)}}**</view>
+									<view class="u-line-1" style="width: 110rpx;">{{item.winUserno.substr(0,1)}}**
+									</view>
 									<!-- <text>贵阳</text> -->
 								</view>
 							</view>
@@ -49,8 +51,9 @@
 						</view>
 						<view class="line_3">
 							<view class="img_list">
-								<block  v-for="(ite,inde) in item.members" :key="inde">
-									<image :src="ite.headPortrait" mode="aspectFill" v-if="item.isWinningHeadUrl != ite"></image>
+								<block v-for="(ite,inde) in item.members" :key="inde">
+									<image :src="ite.headPortrait" mode="aspectFill"
+										v-if="item.isWinningHeadUrl != ite"></image>
 								</block>
 							</view>
 							<view class="award">
@@ -60,12 +63,17 @@
 					</view>
 				</swiper-item>
 			</swiper>
+
+
 			<view class="list">
-				<view class="item" v-for="(item,index) in group_square_list" :key="index" @click.stop="routeDetailHose(item.status,item)">
+				<view class="item" v-for="(item,index) in group_square_list" :key="index"
+					@click.stop="routeDetailHose(item.status,item)">
 					<view class="item_top">
 						<view class="item_name">
 							<!-- <image :src="item.openGroupHeadPortrait" mode="aspectFill"></image> -->
-							<text><!--{{item.openGroupNickname.substr(0,1)}}-->***发起拼团</text>
+							<text>
+								<!--{{item.openGroupNickname.substr(0,1)}}-->***发起拼团
+							</text>
 						</view>
 						<view class="item_num">
 							<text class="color_red">{{item.joinNum}}人团</text>
@@ -76,7 +84,8 @@
 						<view class="img_box">
 							<image class="img" :src="item.picture" mode="aspectFill"></image>
 							<view class="history" v-if="item.headUrls&&item.headUrls.length > 0">
-								<image class="history_item" :src="ite.headPortrait" mode="aspectFill" v-for="(ite,inde) in item.headUrls" :key="inde"></image>
+								<image class="history_item" :src="ite.headPortrait" mode="aspectFill"
+									v-for="(ite,inde) in item.headUrls" :key="inde"></image>
 							</view>
 						</view>
 						<!-- <image :src="item.picture" mode="aspectFill"></image>、 -->
@@ -114,16 +123,19 @@
 				<u-grid :col="5" :border="false" @click="tab2MenuClick">
 					<u-grid-item v-for="(item,index) in tab2_menu" :index="index" :key="index">
 						<view :class="['tab2_menu_num',tab2_current == index ? 'tab2_menu_num_active' : '']">
-							{{item.num ? item.num : 0}}</view>
+							{{item.num ? item.num : 0}}
+						</view>
 						<view :class="['tab2_menu_name',tab2_current == index ? 'tab2_menu_name_active' : '']">
-							{{item.name}}</view>
+							{{item.name}}
+						</view>
 					</u-grid-item>
 				</u-grid>
 			</view>
 			<view class="list">
 				<block v-for="(item,index) in group_participate_list" :key="index">
-					
-					<view class="recommend" v-if="item.status == 2 || tab2_current == 2" @click="routeDetailHose(2,item)">
+
+					<view class="recommend" v-if="item.status == 2 || tab2_current == 2"
+						@click="routeDetailHose(item)">
 						<view class="line_1">
 							<text class="date">开团时间：{{item.startTime}}</text>
 							<!-- <text>团号：{{item.groupNo}}</text> -->
@@ -135,7 +147,8 @@
 									<image class="headimg" :src="item.winUserHeadPortrait" mode="aspectFill"></image>
 								</view>
 								<view class="author_name">
-									<view class="u-line-1" style="width: 110rpx;">{{item.winUserName.substr(0,1)}}**</view>
+									<view class="u-line-1" style="width: 110rpx;">{{item.winUserName.substr(0,1)}}**
+									</view>
 									<!-- <text>贵阳</text> -->
 								</view>
 							</view>
@@ -152,8 +165,9 @@
 						</view>
 						<view class="line_3">
 							<view class="img_list">
-								<block  v-for="(ite,inde) in item.members" :key="inde">
-									<image :src="ite.headPortrait" mode="aspectFill" v-if="item.winUserHeadPortrait != ite"></image>
+								<block v-for="(ite,inde) in item.members" :key="inde">
+									<image :src="ite.headPortrait" mode="aspectFill"
+										v-if="item.winUserHeadPortrait != ite"></image>
 								</block>
 							</view>
 							<view class="award">
@@ -161,12 +175,14 @@
 							</view>
 						</view>
 					</view>
-					
-					<view class="item" v-else @click="routeDetailHose(1, item)">
+
+					<view class="item" v-else @click="routeDetailHose(item)">
 						<view class="item_top">
 							<view class="item_name">
 								<!-- <image :src="item.openGroupHeadPortrait" mode="aspectFill"></image> -->
-								<text><!--{{item.openGroupNickname.substr(0,1)}}-->***发起拼团</text>
+								<text>
+									<!--{{item.openGroupNickname.substr(0,1)}}-->***发起拼团
+								</text>
 							</view>
 							<view class="item_num">
 								<text class="color_red">{{item.joinNum}}人团</text>
@@ -177,7 +193,8 @@
 							<view class="img_box">
 								<image class="img" :src="item.picture" mode="aspectFill"></image>
 								<view class="history" v-if="item.members.length > 0">
-									<image class="history_item" :src="ite.headPortrait" mode="aspectFill" v-for="(ite,inde) in item.members" :key="inde"></image>
+									<image class="history_item" :src="ite.headPortrait" mode="aspectFill"
+										v-for="(ite,inde) in item.members" :key="inde"></image>
 								</view>
 							</view>
 							<view class="item_detail prod_detail">
@@ -226,39 +243,38 @@
 			return {
 				//下拉刷新开关
 				pullDownRefreshOnoff: true,
-				pullDownRefreshTime:10, //下拉刷新定时
+				pullDownRefreshTime: 10, //下拉刷新定时
 				//菜单
-				list: [
-					{
+				list: [{
 						iconPath: "/static/tabbar/i_home@2x.png",
 						selectedIconPath: "/static/tabbar/i_home_fill@2x.png",
 						customIcon: false,
-						"pagePath":"/pages/index/index",
+						"pagePath": "/pages/index/index",
 					},
 					{
 						iconPath: "/static/tabbar/Search@2x.png",
 						selectedIconPath: "/static/tabbar/Search_fill@2x.png",
 						customIcon: false,
-						"pagePath":"/pages/find/find",
+						"pagePath": "/pages/find/find",
 					},
 					{
 						iconPath: "/static/tabbar/button_float_tap@2x.png",
 						selectedIconPath: "/static/tabbar/button_float_tap@2x.png",
 						midButton: true,
 						customIcon: false,
-						"pagePath":"/pages/group-buy/group-buy",
+						"pagePath": "/pages/group-buy/group-buy",
 					},
 					{
 						iconPath: "/static/tabbar/i_Chat@2x.png",
 						selectedIconPath: "/static/tabbar/i_Chat_fill@2x.png",
 						customIcon: false,
-						"pagePath":"/pages/message/message",
+						"pagePath": "/pages/message/message",
 					},
 					{
 						iconPath: "/static/tabbar/Bag@2x.png",
 						selectedIconPath: "/static/tabbar/Bag_fill@2x.png",
 						customIcon: false,
-						"pagePath":"/pages/mine/mine",
+						"pagePath": "/pages/mine/mine",
 					},
 				],
 				current: 2,
@@ -271,7 +287,7 @@
 				group_square_list: [],
 				group_pt_successList_list: [],
 				group_participate_list: [],
-				ptGroupRecordStaticData:{},
+				ptGroupRecordStaticData: {},
 				openAndJoin_num: {},
 				tabActive: 1,
 				tab2_current: 0,
@@ -307,17 +323,17 @@
 		},
 		//上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
 		onReachBottom() {
-			if(this.tabActive == 1){
+			if (this.tabActive == 1) {
 				let len = this.group_square_list.length;
-				if (len < this.pageSize*this.page) {
+				if (len < this.pageSize * this.page) {
 					this.loadingStatusTab1 = 'nomore'
 					return false;
 				}
 				this.page++
 				this.group_square()
-			}else{
+			} else {
 				let len = this.group_participate_list.length;
-				if (len < this.pageSize*this.page1) {
+				if (len < this.pageSize * this.page1) {
 					this.loadingStatus = 'nomore'
 					return false;
 				}
@@ -327,9 +343,9 @@
 		},
 		onPullDownRefresh() {
 			//定时器节流
-			if( !this.pullDownRefreshOnoff ){
+			if (!this.pullDownRefreshOnoff) {
 				this.$u.toast('请在' + this.pullDownRefreshTime + '秒后再刷新');
-				setTimeout(function () {
+				setTimeout(function() {
 					uni.stopPullDownRefresh();
 				}, 500);
 				return
@@ -340,45 +356,77 @@
 			this.group_square()
 			this.get_group_time_config()
 			this.group_pt_successList()
-			setTimeout(function () {
+			setTimeout(function() {
 				uni.stopPullDownRefresh();
 			}, 1000);
-			
-			this.timer = setInterval( () => {
-				if( this.pullDownRefreshTime <= 0 ){
+
+			this.timer = setInterval(() => {
+				if (this.pullDownRefreshTime <= 0) {
 					this.pullDownRefreshTime = 10
 					this.pullDownRefreshOnoff = true
 					clearInterval(this.timer)
-				}else{
+				} else {
 					this.pullDownRefreshTime--
 				}
 				// console.log(this.pullDownRefreshTime)
-			},1000)
+			}, 1000)
 		},
 		methods: {
-			get_group_time_config(){
-				this.$u.api.get_group_time_config().then((res)=>{
-					console.log('res get_group_time_config',res)
-					this.time=(new Date(res.data.end).getTime()-new Date(res.data.start).getTime())/1000
-				  console.log('this.time',this.time)
+			get_group_time_config() {
+				this.$u.api.get_group_time_config().then((res) => {
+					console.log('res get_group_time_config', res)
+					this.time = (new Date(res.data.end).getTime() - new Date().getTime()) / 1000
+					console.log('this.time', this.time)
 				})
 			},
 			//我参与的 - (1:全部,2:拼团中,3:中奖,4:未中奖,5:拼团失败)
-			group_participate: function(status,isWin) {
+			group_participate: function(status) {
 				let that = this
 				that.loadingStatus = 'loading'
-					let id = getApp().globalData.user.id||uni.getStorageSync('user').userId
+				let id = getApp().globalData.user.id || uni.getStorageSync('user').userId
+				let parma = {}
+				switch (status) {
+					case 1:
+						parma = {
+							isWin: null,
+							status: null,
+						}
+						break;
+					case 2:
+						parma = {
+							isWin: null,
+							status: 1,
+						}
+						break;
+					case 3:
+						parma = {
+							isWin: 1,
+							status: null,
+						}
+						break;
+					case 4:
+						parma = {
+							isWin: 0,
+							status: null,
+						}
+						break;
+					default:
+						parma = {
+							isWin: null,
+							status: 3,
+						}
+				}
 				this.$u.api.group_participate({
 					userId: id,
-					isWin: isWin,
-					status: status,
+					...parma,
 					page: this.page1,
 					pageSize: this.pageSize,
 				}).then(res => {
 					// (1:开团中,2:开团成功,3：开团失败)
-					that.group_participate_list = res.data||[]
-					that.loadingStatus = that.group_participate_list.length < that.pageSize*that.page1 ? 'nomore' : 'loadmore'
-					console.log('that.loadingStatus',that.loadingStatus)
+					that.group_participate_list = res.data || []
+					that.loadingStatus = that.group_participate_list.length < that.pageSize * that.page1 ?
+						'nomore' : 'loadmore'
+					console.log('that.loadingStatus', that.loadingStatus)
 				})
 			},
 			//我参与的上面的数字统计
@@ -402,14 +450,15 @@
 					pageSize: this.pageSize,
 				}).then(res => {
 					if (res.code == 0) {
-						if(res.data) that.group_square_list.push(...res.data)
-						that.loadingStatusTab1 = res.data.length < that.pageSize*that.page ? 'nomore' : 'loadmore'
+						if (res.data) that.group_square_list.push(...res.data)
+						that.loadingStatusTab1 = res.data.length < that.pageSize * that.page ? 'nomore' :
+							'loadmore'
 					}
 				})
 			},
 			//今日可参团 、开团
 			get_openAndJoin_num: function() {
-				let id = getApp().globalData.user.id||uni.getStorageSync('user').userId
+				let id = getApp().globalData.user.id || uni.getStorageSync('user').userId
 				this.$u.api.get_openAndJoin_num({
 					userId: id
 				}).then(res => {
@@ -450,7 +499,7 @@
 			//路由 - 拼团购买
 			joinGroup: function(item) {
 				console.log('拼团item', item)
-				if( this.openAndJoin_num.joinGroupNum <= 0 ){
+				if (this.openAndJoin_num.joinGroupNum <= 0) {
 					this.$u.toast('您当前拼团次数不足哦')
 					return
 				}
@@ -470,10 +519,10 @@
 				})
 			},
 			//路由 - 拼团房间
-			routeDetailHose: function(status, item) {
+			routeDetailHose: function(item) {
 				let that = this
 				//开团失败判断
-				if( item.countDown == 0 && item.surpNumber > 0 ){ //拼团失败
+				if (item.status == 3) { //拼团失败
 					this.$u.toast('因人数不满开团失败，请选择其他商品继续拼团!');
 					return
 				}
@@ -506,11 +555,13 @@
 		z-index: 996;
 		width: 100%;
 	}
+
 	.header .tab {
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
+
 	.content {
 		padding-bottom: 30rpx;
 		padding-top: var(--status-bar-height);
@@ -655,9 +706,9 @@
 		padding: 0 34rpx;
 		line-height: 48rpx;
 	}
-	
-	.background_green .success{
-		background:url(../../static/image/group-green-bg.png) no-repeat top left;
+
+	.background_green .success {
+		background: url(../../static/image/group-green-bg.png) no-repeat top left;
 		background-size: contain;
 	}
 
@@ -689,6 +740,7 @@
 		align-items: center;
 		justify-content: space-between;
 	}
+
 	.img_list image {
 		width: 40rpx;
 		height: 40rpx;
@@ -883,23 +935,25 @@
 	.color_red {
 		color: #FF0000;
 	}
-	
-	.img_box{
+
+	.img_box {
 		position: relative;
 	}
-	.img_box .history{
+
+	.img_box .history {
 		position: absolute;
 		left: 0;
 		bottom: 0;
 		width: 320rpx;
 		height: 48rpx;
-		background: rgba(0,0,0,0.47);
+		background: rgba(0, 0, 0, 0.47);
 		border-radius: 0px 0px 12rpx 12rpx;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
-	.img_box .history image{
+
+	.img_box .history image {
 		width: 30rpx;
 		height: 30rpx;
 		border: 2rpx solid #ffffff;

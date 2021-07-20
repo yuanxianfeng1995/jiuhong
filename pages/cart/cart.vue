@@ -66,7 +66,7 @@
 			</view>
 		
 			<view  class="footer-tabbar">
-				<image class="img" :src="item.selectedIconPath" v-for="(item,index) in list" :key="index" @tap="toPage(item)"></image>
+				<image class="img" :src="current === index?item.selectedIconPath:item.iconPath" v-for="(item,index) in list" :key="index" @tap="toPage(item)"></image>
 			</view>
 		</view>
 		
@@ -82,25 +82,25 @@
 				headerPosition:"fixed",
 				//菜单
 				list: [{
-						iconPath: "/static/tabbar/i_home@2x.png",
-						selectedIconPath: "/static/tabbar/i_home_fill@2x.png",
+						iconPath: "/static/tabbar/tab-home.png",
+						selectedIconPath: "/static/tabbar/tab-home-current.png",
 						customIcon: false,
 						"pagePath": "/pages/home/home",
 					},
 					{
-						iconPath: "/static/tabbar/Search@2x.png",
-						selectedIconPath: "/static/tabbar/Search_fill@2x.png",
+						iconPath: "/static/tabbar/tab-cate.png",
+						selectedIconPath: "/static/tabbar/tab-cate-current.png",
 						customIcon: false,
 						"pagePath": "/pages/category/category",
 					},
 					{
-						iconPath: "/static/tabbar/i_Chat@2x.png",
-						selectedIconPath: "/static/tabbar/i_Chat_fill@2x.png",
+						iconPath: "/static/tabbar/tab-cart.png",
+						selectedIconPath: "/static/tabbar/tab-cart-current.png",
 						customIcon: false,
 						"pagePath": "/pages/cart/cart",
 					}
 				],
-				current: 1,
+				current: 2,
 				headerTop:null,
 				statusTop:null,
 				showHeader:true,
@@ -369,8 +369,8 @@
 			justify-content: space-around;
 			display: flex;
 			.img{
-				height: 80upx;
-				width: 80upx;
+				height: 60upx;
+				width: 60upx;
 			}
 		}
 .status {

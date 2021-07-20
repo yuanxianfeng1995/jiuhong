@@ -24,7 +24,7 @@ const install = (Vue, vm) => {
 	let get_product_detail = (params = {}) => vm.$u.get(url+'/group/getGroupProductDetail', params);	//商品详情
 	//let get_openAndJoin_num = (params = {}) => vm.$u.get('/group/ptGroupRecord/day/openAndJoin/num', params);	//今日可参团数量
 	let openGroup = (params = {}) => vm.$u.post(url+'/group/ktSubmit', params);	//开团
-	let joinGroup = (params = {}) => vm.$u.post('/group/ptGroupRecord/joinGroup', params);	//加团
+	let joinGroup = (params = {}) => vm.$u.post(url+'/group/joinGroup', params);	//加团
 	let group_square = (params = {}) => vm.$u.get(url+'/group/getGroupBuyList', params);	//拼团广场
 	let get_group_time_config = (params = {}) => vm.$u.get(url+'/group/getGroupTimeConfig', params); //倒计时
 	let group_participate = (params = {}) => vm.$u.get(url+'/group/getMemberGroupBuyList', params);	//我参与的
@@ -48,11 +48,11 @@ const install = (Vue, vm) => {
 	let get_message_list = (params = {}) => vm.$u.get(url+'/notice/getNoticeList', params);	//消息列表
 	let set_message_readed = (params = {}) => vm.$u.get('/sys/message/read', params);	//消息设置为已读
 	//地址管理 -----------------------------------------------------------------------------
-	let get_ptAddress_list = (params = {}) => vm.$u.post('/user/ptAddress/list', params);	//地址列表
-	let add_ptAddress =  (params = {}) => vm.$u.post('/user/ptAddress/add', params);	//新增地址
-	let edit_ptAddress =  (params = {}) => vm.$u.post('/user/ptAddress/edit', params);	//编辑地址
-	let default_ptAddress =  (params = {}) => vm.$u.post('/user/ptAddress/' + params.id);	//设置默认
-	let delete_ptAddress =  (params = {}) => vm.$u.delete('/user/ptAddress/' + params.id);	//删除
+	let get_ptAddress_list = (params = {}) => vm.$u.get(url+'/address/getMemberAddressList', params);	//地址列表
+	let add_ptAddress =  (params = {}) => vm.$u.post(url+'/address/saveReceiveAddress', params);	//新增地址
+	let edit_ptAddress =  (params = {}) => vm.$u.post(url+'/address/updateReceiveAddress', params);	//编辑地址
+	let default_ptAddress =  (params = {}) => vm.$u.post('/user/ptAddress/', params);	//设置默认
+	let delete_ptAddress =  (params = {}) => vm.$u.post(url+'/address/remove', params);	//删除
 	//用户中心 ---------------------------------------
 	let get_userCenter = (params = {}) => vm.$u.get(url+'/member/getMemberAccountDetail', params);	//个人中心信息	
 	let get_userCenter_integral = (params = {}) => vm.$u.get('/user/ptUserAccount/integral/record', params);	//积分记录	

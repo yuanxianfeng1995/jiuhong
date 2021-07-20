@@ -17,7 +17,7 @@ const install = (Vue, vm, bon) => {
 		// 所以哪怕您重新登录修改了Storage，下一次的请求将会是最新值
 		//uni.setStorageSync('token',null);
 		const token = uni.getStorageSync('token');
-		
+		config.header.Authorization = token?'Bearer '+token:null;
 		// const urls=[];
 		const urls = ['/member/regist', '/member/wxLogin', '/sms/sendCode'] //白名单
 		if (!urls.includes(config.url)) {
@@ -30,7 +30,6 @@ const install = (Vue, vm, bon) => {
 			 * 生产环境打开 - 未登录跳转
 			 * ------------------------------------------------------------------------
 			 * */
-			config.header.Authorization = 'Bearer '+token;
 			if(!token || config.header.Authorization.length < 6 ){
 				vm.$u.route('/pages/login/login') 
 				return

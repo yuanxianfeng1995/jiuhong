@@ -11,7 +11,7 @@
 				<view class="item" v-for="(item,index) in articleList" :key="index" @click="routeDetail(item)">
 					<view class="left">
 						<view class="title u-line-2">
-							<text>{{item.title}}</text>
+							<text>{{item.titles}}</text>
 						</view>
 						<view class="tag">
 							<text class="category">官方新闻</text>
