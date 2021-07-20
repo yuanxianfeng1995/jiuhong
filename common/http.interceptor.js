@@ -18,6 +18,7 @@ const install = (Vue, vm, bon) => {
 		//uni.setStorageSync('token',null);
 		const token = uni.getStorageSync('token');
 		config.header.Authorization = token?'Bearer '+token:null;
+		console.log('config.header.Authorization',config.header.Authorization)
 		// const urls=[];
 		const urls = ['/member/regist', '/member/wxLogin', '/sms/sendCode'] //白名单
 		if (!urls.includes(config.url)) {

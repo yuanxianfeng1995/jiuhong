@@ -78,8 +78,9 @@
 			</view>
 			<view class="loading-text">{{ loadingText }}</view>
 		</view>
+	
 		<view  class="footer-tabbar">
-			<image class="img" :src="current === index?item.selectedIconPath:item.iconPath" v-for="(item,index) in list" :key="index" @tap="toPage(item)"></image>
+			<image class="img" :style="{width: item.size,height: item.size}" :src="current === index?item.selectedIconPath:item.iconPath" v-for="(item,index) in list" :key="index" @tap="toPage(item)"></image>
 		</view>
 	</view>
 </template>
@@ -109,8 +110,8 @@
 
 				//菜单
 				list: [{
-						iconPath: "/static/tabbar/tab-home.png",
-						selectedIconPath: "/static/tabbar/tab-home-current.png",
+						iconPath: "/static/tabbar/i_home@2x.png",
+						selectedIconPath: "/static/tabbar/i_home_fill@2x.png",
 						customIcon: false,
 						"pagePath": "/pages/home/home",
 					},
@@ -118,12 +119,14 @@
 						iconPath: "/static/tabbar/tab-cate.png",
 						selectedIconPath: "/static/tabbar/tab-cate-current.png",
 						customIcon: false,
+						size: '40upx',
 						"pagePath": "/pages/category/category",
 					},
 					{
 						iconPath: "/static/tabbar/tab-cart.png",
 						selectedIconPath: "/static/tabbar/tab-cart-current.png",
 						customIcon: false,
+						size: '40upx',
 						"pagePath": "/pages/cart/cart",
 					}
 				],

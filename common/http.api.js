@@ -1,8 +1,8 @@
 // 此处第二个参数vm，就是我们在页面使用的this，你可以通过vm获取vuex等操作，更多内容详见uView对拦截器的介绍部分：
 // https://uviewui.com/js/http.html#%E4%BD%95%E8%B0%93%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%EF%BC%9F
 const install = (Vue, vm) => {
-	const url='/web'
-	//const url=''
+	//const url='/web'
+	const url=''
 	/** 
 	 * 用户管理
 	 * --------------------------------------------------------------------
@@ -32,9 +32,9 @@ const install = (Vue, vm) => {
 	let group_random = (params = {}) => vm.$u.post(url+'/group/randomJoin', params);	//创建拼团
 	let openGroup_fail = (params = {}) => vm.$u.post('/group/ptGroupRecord/openGroup/failure', params);	//开团失败
 	let openGroup_success = (params = {}) => vm.$u.post('/group/ptGroupRecord/openGroup/success', params);	//开团成功
-	let ptGroupRecord_view = (params = {}) => vm.$u.get('/group/ptGroupRecord/view', params);	//查询团信息
+	let ptGroupRecord_view = (params = {}) => vm.$u.get(url+'/group/getGroupHouseInfo', params);	//查询团信息
 	let group_banner = (params = {}) => vm.$u.get('/group/ptGroupRecord/group/square/shuffling', params);	//拼团广场轮播团
-	let ptGroupRecord_staticData = (params = {}) => vm.$u.get('/group/ptGroupRecord/staticData', params);	//我参与的上面的数字统计
+	let ptGroupRecord_staticData = (params = {}) => vm.$u.get(url+'/group/getMemberGroupCount', params);	//我参与的上面的数字统计
 	/** 
 	 * banner
 	 * --------------------------------------------------------------------------
@@ -52,7 +52,7 @@ const install = (Vue, vm) => {
 	let add_ptAddress =  (params = {}) => vm.$u.post(url+'/address/saveReceiveAddress', params);	//新增地址
 	let edit_ptAddress =  (params = {}) => vm.$u.post(url+'/address/updateReceiveAddress', params);	//编辑地址
 	let default_ptAddress =  (params = {}) => vm.$u.post('/user/ptAddress/', params);	//设置默认
-	let delete_ptAddress =  (params = {}) => vm.$u.post(url+'/address/remove', params);	//删除
+	let delete_ptAddress =  (params = {}) => vm.$u.get(url+'/address/remove', params);	//删除
 	//用户中心 ---------------------------------------
 	let get_userCenter = (params = {}) => vm.$u.get(url+'/member/getMemberAccountDetail', params);	//个人中心信息	
 	let get_userCenter_integral = (params = {}) => vm.$u.get('/user/ptUserAccount/integral/record', params);	//积分记录	

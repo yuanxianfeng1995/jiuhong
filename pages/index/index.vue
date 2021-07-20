@@ -94,6 +94,9 @@
 				<u-loadmore :status="loadingStatus" />
 			</view>
 		</view>
+		<view class="go-home">
+			<image class="img" src="/static/tabbar/go-home.png" @click="goHome"></image>
+		</view>
 		<u-tabbar v-model="current" :list="list" :mid-button="true"></u-tabbar>
 	</view>
 </template>
@@ -117,32 +120,32 @@
 						iconPath: "/static/tabbar/i_home@2x.png",
 						selectedIconPath: "/static/tabbar/i_home_fill@2x.png",
 						customIcon: false,
-						"pagePath":"/pages/index/index",
+						"pagePath": "/pages/index/index",
 					},
 					{
 						iconPath: "/static/tabbar/Search@2x.png",
 						selectedIconPath: "/static/tabbar/Search_fill@2x.png",
 						customIcon: false,
-						"pagePath":"/pages/find/find",
+						"pagePath": "/pages/find/find",
 					},
 					{
 						iconPath: "/static/tabbar/button_float_tap@2x.png",
 						selectedIconPath: "/static/tabbar/button_float_tap@2x.png",
 						midButton: true,
 						customIcon: false,
-						"pagePath":"/pages/group-buy/group-buy",
+						"pagePath": "/pages/group-buy/group-buy",
 					},
 					{
 						iconPath: "/static/tabbar/i_Chat@2x.png",
 						selectedIconPath: "/static/tabbar/i_Chat_fill@2x.png",
 						customIcon: false,
-						"pagePath":"/pages/message/message",
+						"pagePath": "/pages/message/message",
 					},
 					{
 						iconPath: "/static/tabbar/Bag@2x.png",
 						selectedIconPath: "/static/tabbar/Bag_fill@2x.png",
 						customIcon: false,
-						"pagePath":"/pages/mine/mine",
+						"pagePath": "/pages/mine/mine",
 					},
 				],
 				memberTotal: 0,
@@ -164,16 +167,7 @@
 			}
 		},
 		onLoad: function() {
-			// this.update_url = this.$u.http.config.baseUrl + '/group/ptVersion/update'
-			this.get_member_total()
-			this.get_headportrait()
-			this.get_product_list()
-			this.get_notice_list()
-			this.get_userCenter()
-			this.get_message_list()
-			// uni.navigateTo({
-			// 	url: '/pages/login/login'
-			// })
+			this.init()
 		},
 		//上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
 		onReachBottom() {
@@ -199,6 +193,21 @@
 			}, 1000);
 		},
 		methods: {
+			init(){
+				console.log('onLoad')
+				this.get_member_total()
+				this.get_headportrait()
+				this.get_product_list()
+				this.get_notice_list()
+				this.get_userCenter()
+				this.get_message_list()
+			},
+			goHome(){
+				console.log('goHome')
+				uni.navigateTo({
+					url: '/pages/home/home',
+				})
+			},
 			//吸顶
 			stickyFixed: function() {
 				this.statusBarHeight = true
@@ -336,7 +345,7 @@
 	}
 </script>
 
-<style>
+<style lang="scss">
 	/deep/ .uni-swiper .uni-swiper-slides {
 		width: 100%;
 	}
@@ -354,6 +363,17 @@
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+	}
+	.go-home{
+		position: fixed;
+		right: 5upx;
+		width: 60upx;
+		height: 60upx;
+		top: 71%;
+		.img{
+				width: 100%;
+				height: 100%;
+		}
 	}
 
 	/**

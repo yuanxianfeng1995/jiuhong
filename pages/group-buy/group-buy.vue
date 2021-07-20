@@ -159,7 +159,7 @@
 								<view class="coupon">
 									<text>获得开团券：</text>
 									<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
-									<text class="num">+ {{item.giveCoupon}}</text>
+									<text class="num">+ {{detail.giveCoupon ? detail.giveCoupon : 0}}</text>
 								</view>
 							</view>
 						</view>
@@ -352,6 +352,7 @@
 			}
 			this.page = 1
 			this.pullDownRefreshOnoff = false
+			this.group_square_list=[]
 			this.get_openAndJoin_num()
 			this.group_square()
 			this.get_group_time_config()
@@ -434,11 +435,11 @@
 				let that = this
 				this.$u.api.ptGroupRecord_staticData().then(res => {
 					that.ptGroupRecordStaticData = res.data
-					that.tab2_menu[0].num = res.data.allData
-					that.tab2_menu[1].num = res.data.waitData
-					that.tab2_menu[2].num = res.data.winningData
-					that.tab2_menu[3].num = res.data.notWinningData
-					that.tab2_menu[4].num = res.data.failureData
+					that.tab2_menu[0].num = res.data.ptAll
+					that.tab2_menu[1].num = res.data.dkj
+					that.tab2_menu[2].num = res.data.zj
+					that.tab2_menu[3].num = res.data.wzj
+					that.tab2_menu[4].num = res.data.ptFailed
 				})
 			},
 			//拼团广场
@@ -475,7 +476,7 @@
 				if (index == 2) {
 					this.tab2_current = 0 //重置下标
 					this.group_participate(1)
-					// this.ptGroupRecord_staticData()
+					this.ptGroupRecord_staticData()
 				}
 			},
 			//我参与的 菜单切换
@@ -505,10 +506,10 @@
 				}
 				// console.log('剩下开团次数',this.openAndJoin_num)
 				//开团失败判断
-				// if( item.countDown == 0 && item.surpNumber > 0 ){ //拼团失败
-				// 	this.$u.toast('因人数不满开团失败，请选择其他商品继续拼团!');
-				// 	return
-				// }
+				if (item.status == 3) { //拼团失败
+					this.$u.toast('因人数不满开团失败，请选择其他商品继续拼团!');
+					return
+				}
 				uni.navigateTo({
 					url: '/pages/index/production/buy?type=2',
 					success: function(res) {

@@ -1,83 +1,43 @@
 <template>
 	<view class="contain">
 		<view class="header">
-			<view class="recommend" v-if="detail.status == 2 && detail.selfHeadPortrait == detail.isWinningHeadPortrait">
+			<view class="recommend" v-if="detail.status == 2 && detail.selfHeadPortrait == detail.winUserHeadPortrait">
 				<view class="line_1">
-					<text class="date">开团时间：{{$u.timeFormat(parseInt(detail.openCreateTime), 'mm-dd hh:MM:ss')}}</text>
+					<text class="date">开团时间：{{detail.startTime}}</text>
 					<!-- <text>团号：{{detail.groupNo}}</text> -->
 				</view>
 				<view class="line_2">
 					<view class="author">
 						<view class="author_img">
 							<image class="icon" src="../../static/icon/crown-icon@2x.png"></image>
-							<image class="headimg" :src="detail.isWinningHeadPortrait" mode="aspectFill"></image>
+							<image class="headimg" :src="detail.winUserHeadPortrait" mode="aspectFill"></image>
 						</view>
 						<view class="author_name">
-							<text>{{detail.isWinningNikeName.substr(0,1)}}**</text>
+							<text>{{detail.winUserName.substr(0,1)}}**</text>
 							<!-- <text>贵阳</text> -->
 						</view>
 					</view>
 					<view class="success">
 						<view class="prod">
-							<text>拼中商品: {{detail.productName}}</text>
+							<text>拼中商品: {{detail.pname}}</text>
 						</view>
 						<view class="coupon">
 							<text>获得开团券：</text>
 							<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
-							<text class="num">+ {{detail.couponNum ? detail.couponNum : 0}}</text>
+							<text class="num">+ {{detail.giveCoupon ? detail.giveCoupon : 0}}</text>
 						</view>
 					</view>
 				</view>
 				<view class="line_3">
 					<view class="img_list">
 						<scroll-view scroll-x="true" style="white-space: nowrap;">
-							<image :src="item" mode="aspectFill" v-for="(item,index) in detail.headUrls" :key="index" 
-							v-if="index < detail.headUrlsLength && item != detail.isWinningHeadPortrait">
+							<image :src="item.headPortrait" mode="aspectFill" v-for="(item,index) in detail.members" :key="index" 
+							v-if="index < detail.headUrlsLength && item.headPortrait != detail.winUserHeadPortrait">
 							</image>
 						</scroll-view>
 					</view>
 					<view class="award">
-						<text>获得积分奖励：+{{detail.rewardIntegral ? detail.rewardIntegral : 0}}</text>
-					</view>
-				</view>
-			</view>
-			<view class="recommend background_green" v-else-if="detail.status == 2 && detail.selfHeadPortrait != detail.isWinningHeadPortrait">
-				<view class="line_1">
-					<text class="date">开团时间：{{$u.timeFormat(parseInt(detail.openCreateTime), 'yyyy-mm-dd hh:MM:ss')}}</text>
-					<!-- <text>团号：{{detail.groupNo}}</text> -->
-				</view>
-				<view class="line_2">
-					<view class="author">
-						<view class="author_img">
-							<image class="icon" src="../../static/icon/crown-icon-white@2x.png"></image>
-							<image class="headimg" :src="detail.isWinningHeadPortrait" mode="aspectFill"></image>
-						</view>
-						<view class="author_name">
-							<text>{{detail.isWinningNikeName.substr(0,1)}}**</text>
-							<!-- <text>贵阳</text> -->
-						</view>
-					</view>
-					<view class="success">
-						<view class="prod">
-							<text>拼中商品: {{detail.productName}}</text>
-						</view>
-						<view class="coupon">
-							<text>获得开团券：</text>
-							<u-icon name="/static/icon/mine-data-icon2@2x.png" size="30"></u-icon>
-							<text class="num">+ {{detail.couponNum ? detail.couponNum : 0}}</text>
-						</view>
-					</view>
-				</view>
-				<view class="line_3">
-					<view class="img_list">
-						<scroll-view scroll-x="true" style="white-space: nowrap;">
-							<image :src="item" mode="aspectFill" v-for="(item,index) in detail.headUrls" :key="index" 
-							v-if="index < detail.headUrlsLength && item != detail.isWinningHeadPortrait">
-							</image>
-						</scroll-view>
-					</view>
-					<view class="award">
-						<text>获得积分奖励：+{{detail.rewardIntegral ? detail.rewardIntegral : 0}}</text>
+						<text>获得积分奖励：+{{detail.ptPrice ? detail.ptPrice : 0}}</text>
 					</view>
 				</view>
 			</view>
@@ -88,22 +48,22 @@
 						<text><!--{{detail.openGroupNickname.substr(0,1)}}-->***发起拼团</text>
 					</view>
 					<view class="item_num">
-						<text class="color_red">{{detail.joinGroupNumber}}人团</text>
-						<text>还差{{detail.surpNumber}}人</text>
+						<text class="color_red">{{detail.joinNum}}人团</text>
+						<text>还差{{detail.joinRemindNum}}人</text>
 					</view>
 				</view>
 				<view class="item_middle">
 					<image :src="detail.picture" mode="aspectFill"></image>
 					<view class="item_detail prod_detail">
 						<view class="detail_title">
-							<text>{{detail.productName}}</text>
+							<text>{{detail.pname}}</text>
 						</view>
 						<view class="detail_price">
 							<text>￥{{detail.marketPrice}}</text>
 							<text>市场价</text>
 						</view>
 						<view class="group_buy">
-							<text class="group_price">{{detail.groupPrice}}积分</text>
+							<text class="group_price">{{detail.ptPrice}}积分</text>
 							<text>拼团价</text>
 						</view>
 					</view>
@@ -111,7 +71,7 @@
 				<view class="item_bottom">
 					<view class="time">
 						<text class="time_title">倒计时：</text>
-						<u-count-down :timestamp="detail.countDown" font-size="24" bg-color="none" @end="endTime()" v-if="detail.countDown > 0"></u-count-down>
+						<u-count-down :timestamp="time" font-size="24" bg-color="none" @end="endTime()" v-if="detail.status !== 3"></u-count-down>
 						<text v-else>开团失败</text>
 					</view>
 					<view class="handle">
@@ -121,7 +81,7 @@
 				</view>
 				<u-line margin="24rpx 0"></u-line>
 				<view class="item_bottom join_time">
-					<text>加入时间：{{detail.joinCreateTime}}</text>
+					<text>加入时间：{{joinTime}}</text>
 					<text class="color_red">待开奖</text>
 				</view>
 			</view>
@@ -131,9 +91,9 @@
 				<image class="turnplate_bg" :animation="animationData" src="../../static/image/turnplate-bg@2x.png">
 				</image>
 				<view class="turnplate_content">
-					<image :class="['turnplate_img','turnplate_img' + (index + 1)]" :src="item" mode="aspectFill"
-						v-for="(item,index) in detail.headUrls" :key="index" v-if="index < 10"></image>
-					<image class="middle_img" :src="detail.isWinningHeadPortrait" mode="aspectFill" v-if="detail.status == 3 || detail.status == 2"></image>
+					<image :class="['turnplate_img','turnplate_img' + (index + 1)]" :src="item.headPortrait" mode="aspectFill"
+						v-for="(item,index) in detail.members" :key="index" v-if="index < 10"></image>
+					<image class="middle_img" :src="detail.winUserHeadPortrait" mode="aspectFill" v-if="detail.status == 3 || detail.status == 2"></image>
 					<image class="middle_img" src="/static/image/none-get-icon.png" mode="aspectFill" v-else-if="detail.status == 1"></image>
 				</view>
 			</view>
@@ -152,8 +112,8 @@
 				<button class="btn low" type="default" @click="routeShare()">邀请</button>
 			</template>
 			<template v-else>
-				<text class="message_text" v-if="detail.selfHeadPortrait && detail.headUrls.indexOf(detail.selfHeadPortrait) != -1 && detail.status == 2 && detail.selfHeadPortrait == detail.isWinningHeadPortrait">客官您好，本次您中奖了哦~</text>
-				<text class="message_text" v-else-if="detail.selfHeadPortrait && detail.headUrls.indexOf(detail.selfHeadPortrait) != -1 && detail.status == 2 && detail.selfHeadPortrait != detail.isWinningHeadPortrait">客官您好，本次您未中奖~</text>
+				<text class="message_text" v-if="detail.selfHeadPortrait && detail.members.indexOf(detail.selfHeadPortrait) != -1 && detail.status == 2 && detail.selfHeadPortrait == detail.winUserHeadPortrait">客官您好，本次您中奖了哦~</text>
+				<text class="message_text" v-else-if="detail.selfHeadPortrait && detail.members.indexOf(detail.selfHeadPortrait) != -1 && detail.status == 2 && detail.selfHeadPortrait != detail.winUserHeadPortrait">客官您好，本次您未中奖~</text>
 			</template>
 		</view>
 	</view>
@@ -168,9 +128,9 @@
 					couponNum: 0,
 					groupNo: "",
 					groupPrice: 0,
-					headUrls: [],
+					members: [],
 					isWinning: 0,
-					isWinningHeadPortrait: "",
+					winUserHeadPortrait: "",
 					isWinningNikeName: "",
 					joinCreateTime: "",
 					joinGroupNumber: 0,
@@ -189,12 +149,16 @@
 				headUrlsLength: 0,
 				animationData: {},
 				joinStatusText:'你未加入',
+				joinTime: null,
 				refreshShow:true,
+				time: null
 			}
 		},
 		onLoad: function(option) {
 			console.log(option)
 			this.groupNo = option.id
+			this.get_group_time_config()
+			this.joinTime=this.$u.timeFormat(new Date(), 'mm-dd hh:MM:ss')
 		},
 		onShow: function() {
 			this.ptGroupRecord_view()
@@ -209,6 +173,11 @@
 			}
 		},
 		methods: {
+			get_group_time_config() {
+				this.$u.api.get_group_time_config().then((res) => {
+					this.time = (new Date(res.data.end).getTime() - new Date().getTime()) / 1000
+				})
+			},
 			//倒计时结束
 			endTime:function(){
 				console.log('倒计时结束')
@@ -241,30 +210,35 @@
 				this.$u.api.ptGroupRecord_view({
 					groupNo: that.groupNo
 				}).then(res => {
-					if (res.code == 200) {
+					if (res.code == 0) {
 						let detail = res.data
-						detail.joinCreateTime = that.$u.timeFormat(parseInt(detail.joinCreateTime), 'mm-dd hh:MM:ss') //格式化时间
-						detail.countDown = parseInt(detail.countDown)/1000 //时间转秒
-						let i = detail.headUrls.length
+						let i = detail.members.length
 						detail.headUrlsLength = i
 						while (i < 10) {
-							detail.headUrls.push('/static/icon/group-none@2x.png')
+							detail.members.push('/static/icon/group-none@2x.png')
 							i++
 						}
 						//检测是否参与开团
-						let isJoin = detail.headUrls.indexOf(detail.selfHeadPortrait)
-						// let isJoin = detail.headUrls.filter((item) => {
+						let isJoin = detail.members.indexOf(detail.selfHeadPortrait)
+						// let isJoin = detail.members.filter((item) => {
 						//   return item == detail.selfHeadPortrait
 						// });
 						console.log('是否参团',isJoin)
 						
 						that.detail = detail
-						that.detail.picture = detail.picture.split(',')[0]
 						
 						//找到中奖人的位置
-						let isWinningHeadPortrait = detail.isWinningHeadPortrait
-						detail.headUrls.map( (item,index) => {
-							if( item == isWinningHeadPortrait ){ //找到中奖人
+						let winUserHeadPortrait = detail.winUserHeadPortrait
+						detail.members.map( (item,index) => {
+							if( item.createBySelf ){
+								that.joinStatusText = '你已开团'
+								that.joinTime=detail.joinTime
+							}
+							if( detail.queryUserId == item.userId  ){
+								that.joinStatusText = '你已加入'
+								that.joinTime=item.createTime
+							}
+							if( item.headPortrait == winUserHeadPortrait ){ //找到中奖人
 								var animation = uni.createAnimation({
 									duration: 500,
 									timingFunction: 'linear',
@@ -272,17 +246,11 @@
 								this.animation = animation
 								animation.rotate(36*index).step()
 								this.animationData = animation.export()
-								console.log('中奖人列表', detail.headUrls)
-								console.log('中奖人', detail.headUrls)
-							}
-							if( detail.selfHeadPortrait == detail.openGroupHeadPortrait ){
-								that.joinStatusText = '你已开团'
-							}
-							if( item == detail.selfHeadPortrait ){
-								that.joinStatusText = '你已加入'
+								console.log('中奖人列表', detail.members)
+								console.log('中奖人', detail.members)
 							}
 						}) 
-						// console.log('2',isWinningHeadPortrait)
+						
 						
 						if( detail.status == 1 ){
 							console.log('转动动画')
@@ -315,7 +283,7 @@
 			failGroup:function(){
 				let that = this
 				//开团失败判断
-				if( that.detail.countDown == 0 && that.detail.surpNumber > 0 ){ //拼团失败
+				if( that.status == 3 ){ //拼团失败
 					this.$u.toast('因人数不满开团失败，请选择其他商品继续拼团!');
 					setTimeout(()=>{
 						uni.switchTab({

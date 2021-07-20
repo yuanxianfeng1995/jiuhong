@@ -7,7 +7,7 @@
 		</view>
 		<view class="content">
 			<view class="address" v-if="groupItem.groupNo">
-				<view class="none" v-if="addressList.length == 0&&chooseAddress" @click="routeAddress">
+				<view class="none" v-if="addressList.length == 0 || !chooseAddress" @click="routeAddress">
 					<image src="/static/icon/add@2x.png"></image>
 					<text>手动添加收货地址</text>
 					<u-icon name="arrow-right" size="24"></u-icon>
@@ -18,9 +18,6 @@
 						<text class="name">{{chooseAddress.receiverName}} {{chooseAddress.receiverPhone}}</text>
 						<text>{{chooseAddress.receiverProvince}} {{chooseAddress.receiverCity}}
 							{{chooseAddress.receiverArea}} {{chooseAddress.receiverAddress}}</text>
-							<!-- <text class="name">{{chooseAddress.receiverName}} {{chooseAddress.receiverPhone}}</text>
-							<text>{{chooseAddress.receiverProvince}} {{chooseAddress.receiverCity}}
-								{{chooseAddress.receiverArea}} {{chooseAddress.receiverAddress}}</text> -->
 					</view>
 					<u-icon name="arrow-right" size="30"></u-icon>
 				</view>
@@ -148,6 +145,7 @@
 				total: 0,
 				second: 3,
 				type: 1,
+				isOnLoad: true,
 			}
 		},
 		onLoad: function(option) {
@@ -185,6 +183,7 @@
 				that.detail.picture = data.data.picture ? data.data.picture.split(',')[0] : ''
 				that.groupItem = data.data
 			})
+			console.log('load')
 			this.get_ptAddress_list()
 		},
 		methods: {
@@ -214,13 +213,15 @@
 					if (res.code == 0) {
 						console.log('地址', res)
 						that.addressList = res.data
-						console.log('that.groupItem.groupNo',that.groupItem.groupNo)
-						const arr=res.data.find(item=>item.isDefault===1);
-						console.log('arr',arr)
-						that.chooseAddress=that.groupItem.groupNo&&arr?res.data.find(item=>item.isDefault===1)[0]||{}:null
-						console.log('that.chooseAddress',that.chooseAddress)
+						if(that.isOnLoad){
+							const arr=res.data.find(item=>item.isDefault===1);
+							console.log('arr',arr)
+							that.chooseAddress=that.groupItem.groupNo&&arr?arr:null
+							console.log('that.chooseAddress',that.chooseAddress)
+					    that.isOnLoad=false
+						}
 					} else {
-						that.chooseAddress = {}
+						that.chooseAddress = null
 					}
 				})
 			},

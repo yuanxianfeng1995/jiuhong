@@ -12,7 +12,7 @@
 						<u-icon name="/static/icon/sure@2x.png" size="40" v-if="false"></u-icon>
 					</view>
 					<view class="line_2">
-						<u-radio :name="item.id" icon-size="28" label-size="28" active-color="#000000" @change="radioGroupChange(item)">设为默认</u-radio>
+						<u-radio :name="item.id" v-model="item.isDefault" icon-size="28" label-size="28" active-color="#000000" @change="radioGroupChange(item)">设为默认</u-radio>
 						<view class="btn">
 							<text @click="edit(item)">修改</text>
 							<text @click="deleteAddress(item)">删除</text>
@@ -65,6 +65,7 @@
 					consignee:'',
 					tel:'',
 					address:'',
+					isDefault: 0,
 					province:'',
 					city:'',
 					area:'',
@@ -149,15 +150,19 @@
 				// console.log('value',value)
 				let form = value
 				let that = this
-				this.$u.api.default_ptAddress(form).then(res => {
+				this.$u.api.edit_ptAddress({
+					...form,
+					isDefault: !form.isDefault?1:0
+				}).then(res => {
 					if( res.code == 0 ){
-						that.get_ptAddress_list()
 						uni.showToast({
-							title:'设置成功'
+							title:'修改成功'
 						})
+						that.formShow = false
+						that.get_ptAddress_list()
 					}else{
 						uni.showToast({
-							title:res.msg,
+							title:'修改失败，请稍后重试',
 							icon:'none'
 						})
 					}

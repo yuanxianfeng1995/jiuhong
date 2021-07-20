@@ -66,11 +66,12 @@
 					try{
 						console.log('登录成功',res)
 						if (res.code == 0) {
-							uni.setStorageSync('token', userInfo.token);
+							uni.setStorageSync('token', userInfo.token)
 							wx.showToast({
 								title: '登录成功',
 								success() {
-									uni.switchTab({
+									console.log('登录成功switchTab')
+									uni.reLaunch({
 										url: '/pages/index/index'
 									})
 								}
