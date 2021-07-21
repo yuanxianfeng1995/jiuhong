@@ -3,10 +3,10 @@
 		<view class="header">
 			<view class="price">
 				<u-icon name="/static/icon/mine-data-icon2@2x.png" size="60"></u-icon>
-				<text>{{user.account.accountCoupon}}</text>
+				<text>{{user.accountCoupon}}</text>
 			</view>
 			<view class="menu">
-				<text>当前剩余可用拼团券{{user.account.accountAvailableCoupon}}张</text>
+				<text>当前剩余可用拼团券{{user.accountAvailableCoupon}}张</text>
 				<view class="menu_btn">
 					<button class="btn" type="default" size="mini" @click="routeBuy">投入分红</button>
 				</view>
@@ -23,20 +23,20 @@
 				</view>
 			</view>
 			<view class="tag">
-				<view :class="['tag_item',tagCurrent==1 ? 'tag_active' : '']" @click="tagChange(1)">
+				<view :class="['tag_item',tagCurrent==0 ? 'tag_active' : '']" @click="tagChange(0)">
 					<text>获得记录</text>
-					<view :class="['tag_line',tagCurrent==1 ? 'tag_line_active' : '']"></view>
+					<view :class="['tag_line',tagCurrent==0 ? 'tag_line_active' : '']"></view>
 				</view>
-				<view :class="['tag_item',tagCurrent==2 ? 'tag_active' : '']" @click="tagChange(2)">
+				<view :class="['tag_item',tagCurrent==1 ? 'tag_active' : '']" @click="tagChange(1)">
 					<text>使用记录</text>
-					<view :class="['tag_line',tagCurrent==2 ? 'tag_line_active' : '']"></view>
+					<view :class="['tag_line',tagCurrent==1 ? 'tag_line_active' : '']"></view>
 				</view>
 			</view>
 			<view class="list">
 				<view class="item" v-for="(item,index) in couponListArr" :key="index">
-					<text>{{item.dateData}} {{item.remark}}</text>
-					<text v-if="tagCurrent == 1">+{{item.amount}}</text>
-					<text v-else>{{item.amount}}</text>
+					<text>{{item.createtime}} {{item.memo}}</text>
+					<text v-if="tagCurrent == 0">+{{item.amoney}}</text>
+					<text v-else>{{item.amoney}}</text>
 				</view>
 				<u-loadmore :status="'nomore'" :bg-color="'#F8F7F7'"  v-if="loadmoreShow" />
 			</view>
@@ -48,7 +48,7 @@
 	export default {
 		data() {
 			return {
-				tagCurrent:1,
+				tagCurrent:0,
 				user:{},
 				current:1,
 				reachBottomOpen:true,
@@ -60,19 +60,19 @@
 		onLoad:function(){
 			this.user = uni.getStorageSync('user');
 			console.log(this.user)
-			this.couponList(1)
+			this.couponList(0)
 		},
 		onShow() {
 			this.get_userCenter()
-			this.currenthold()
+			// this.currenthold()
 		},
 		onReachBottom:function(){
 			if( this.reachBottomOpen ){
 				this.current = this.current + 1
 				if( this.tagCurrent == 1 ){
-					this.couponList(1)
+					this.couponList(0)
 				}else{
-					this.couponList(2)
+					this.couponList(1)
 				}
 			}
 
@@ -82,7 +82,7 @@
 			get_userCenter:function(){
 				 let that = this
 				 this.$u.api.get_userCenter().then(res => {
-					if( res.code == 200 ){
+					if( res.code == 0 ){
 						this.user = res.data
 					}
 				 })
@@ -94,25 +94,25 @@
 					current:0,
 					size:50
 				}).then(res => {
-					if( res.code == 200 ){
+					if( res.code == 0 ){
 						that.shareBonusNumArr = res.data.records
 					}
 				})
 			},
 			//分红记录
-			couponList:function(type){
+			couponList:function(optype){
 				let that = this
 				this.$u.api.couponList({
-					type:type,
-					current:that.current,
-					size:30,
+					size: that.current,
+					optype: optype,
+					pageSize: 30
 				}).then(res => {
-					if( res.code == 200 ){
-						that.couponListArr = [...that.couponListArr,...res.data.records]
-						if( res.data.records.length < 30 ){
+					if( res.code == 0 ){
+						that.couponListArr = [...that.couponListArr,...res.data]
+						if( res.data.length < 30 ){
 							that.reachBottomOpen = false
 						}
-						if( res.data.records.length == 0 ){
+						if( res.data.length == 0 ){
 							that.loadmoreShow = true
 						}else{
 							that.loadmoreShow = false
@@ -128,10 +128,10 @@
 				this.current = 0
 				this.reachBottomOpen = true
 				this.couponListArr = []
-				if( index == 1 ){
-					this.couponList(1)
+				if( index == 0 ){
+					this.couponList(0)
 				}else{
-					this.couponList(2)
+					this.couponList(1)
 				}
 			},
 			//路由 - 购买积分

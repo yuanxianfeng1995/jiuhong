@@ -62,29 +62,23 @@
 				account:'',
 				//分页
 				current: 1,
-				current2: 1,
 				reachBottem: true,
-				reachBottem2: true,
 			}
 		},
 		onLoad:function(option){
-			this.account = uni.getStorageSync('user').account
+			this.account = uni.getStorageSync('user')
+			console.log('this.account',this.account)
 			// this.chargeList()
-			this.cashList()
+			this.chargeList(0)
 		},
 		onShow() {
 			this.get_userCenter()
 		},
 		onReachBottom:function(){
 			console.log('到底了',)
-			if( this.tabCurrent == 0 && this.reachBottem ){
+			if(this.reachBottem ){
 				this.current ++
-				this.cashList()
-				console.log(this.cashList_arr)
-			}else if( this.tabCurrent == 1 && this.reachBottem2  ){
-				this.current2 ++
-				this.chargeList()
-				console.log(this.chargeList_arr)
+				this.chargeList(this.tabCurrent)
 			}
 		},
 		onNavigationBarButtonTap:function(e){
@@ -98,8 +92,9 @@
 			get_userCenter:function(){
 				 let that = this
 				 this.$u.api.get_userCenter().then(res => {
-					if( res.code == 200 ){
-						this.account = res.data.account
+					if( res.code == 0 ){
+						this.account = res.data
+						console.log('get_userCenter this.account',this.account)
 					}
 				 })
 			},
@@ -109,50 +104,29 @@
 				this.chargeList_arr = []
 				this.cashList_arr = []
 				this.current = 1
-				this.current2 = 1
-				this.reachBottem = true
-				this.reachBottem2 = true
 				if( e == 0 ){
-					this.cashList()
+					this.chargeList(0)
 				}else{
-					this.chargeList()
+					this.chargeList(1)
 				}
 			},
-			//接口 - 充值记录
-			chargeList:function(){
+			chargeList:function(optype){ // optype:(0-收入，1-支出)
 				let that = this
-				this.$u.api.chargeList({ 
-					current: that.current2,
-					size: 20,
-					params: {}
+				this.$u.api.get_member_amount_logs({ 
+					size: that.current,
+					optype: optype,
+					pageSize: 20
 				}).then(res=>{
-					if( res.code == 200 ){
-						that.chargeList_arr = [...that.chargeList_arr,...res.data.records]
-						if( res.data.records.length < 20 ){
-							that.reachBottem2 = false
-						}
-						if( res.data.records.length == 0 ){
-							that.loadmoreShow = true
+					if( res.code == 0 ){
+						if(optype===0){
+							that.chargeList_arr = [...that.chargeList_arr,...res.data]
 						}else{
-							that.loadmoreShow = false
+							that.cashList_arr = [...that.cashList_arr,...res.data]
 						}
-					}
-				})
-			},
-			//接口 - 提现记录
-			cashList:function(){
-				let that = this
-				this.$u.api.cashList({
-					current: that.current,
-					size: 20,
-					params: {}
-				}).then(res=>{
-					if( res.code == 200 ){
-						that.cashList_arr = [...that.cashList_arr,...res.data.records]
-						if( res.data.records.length < 20 ){
+						if( res.data.length < 20 ){
 							that.reachBottem = false
 						}
-						if( res.data.records.length == 0 ){
+						if( res.data.length == 0 ){
 							that.loadmoreShow = true
 						}else{
 							that.loadmoreShow = false

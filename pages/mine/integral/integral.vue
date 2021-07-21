@@ -3,10 +3,10 @@
 		<view class="header">
 			<view class="price">
 				<u-icon name="/static/icon/mine-data-icon1@2x.png" size="60"></u-icon>
-				<text>{{user.account.accountIntegral}}</text>
+				<text>{{user.accountIntegral}}</text>
 			</view>
 			<view class="menu">
-				<text>当前可用拼团积分 {{user.account.accountAvailableIntegral}}</text>
+				<text>当前可用拼团积分 {{user.accountAvailableIntegral}}</text>
 				<view class="menu_btn">
 					<button class="btn" type="default" size="mini" @click="routeBuyBalance">转到余额</button>
 					<!-- <button class="btn" type="default" size="mini" @click="routeBuyAlsipay">微信购买</button> -->
@@ -29,11 +29,11 @@
 			</view>
 			<view class="list">
 				<view class="item" v-for="(item,index) in userCenter_integral" :key="index" v-if="tagCurrent == 1">
-					<text>{{item.dateData}} {{item.remark}}</text>
+					<text>{{item.createtime}} {{item.memo}}</text>
 					<text>+{{item.amount}}</text>
 				</view>
 				<view class="item" v-for="(item,index) in userCenter_integral" :key="index" v-if="tagCurrent == 2">
-					<text>{{item.dateData}} {{item.remark}}</text>
+					<text>{{item.createtime}} {{item.memo}}</text>
 					<text>{{item.amount}}</text>
 				</view>
 				<u-loadmore :status="'nomore'" :bg-color="'#F8F7F7'"  v-if="loadmoreShow" />
@@ -77,7 +77,7 @@
 			get_userCenter:function(){
 				 let that = this
 				 this.$u.api.get_userCenter().then(res => {
-					if( res.code == 200 ){
+					if( res.code == 0 ){
 						this.user = res.data
 					}
 				 })
@@ -86,16 +86,16 @@
 			get_userCenter_integral:function(type){
 				 let that = this
 				 this.$u.api.get_userCenter_integral({
-					 type:type,
-					 current:that.current,
-					 size:30
+					 size: that.current,
+					 optype: type,
+					 pageSize: 30
 				 }).then(res => {
-					if( res.code == 200 ){
-						that.userCenter_integral = [...that.userCenter_integral,...res.data.records]
-						if( res.data.records.length < 30 ){
+					if( res.code == 0 ){
+						that.userCenter_integral = [...that.userCenter_integral,...res.data]
+						if( res.data.length < 30 ){
 							that.reachBottomOpen = false
 						}
-						if( res.data.records.length == 0 ){
+						if( res.data.length == 0 ){
 							that.loadmoreShow = true
 						}else{
 							that.loadmoreShow = false

@@ -47,7 +47,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.contain {
 		display: flex;
 		flex-direction: column;
@@ -84,7 +84,9 @@
 
 	.tel text {
 		border-right: 2rpx solid #8A959A;
-		padding-right: 33rpx;
+		width: 74px;
+		text-align: right;
+		padding-right: 10px;
 		color: #000;
 		font-weight: bold;
 	}

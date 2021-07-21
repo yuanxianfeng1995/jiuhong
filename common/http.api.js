@@ -1,7 +1,7 @@
 // 此处第二个参数vm，就是我们在页面使用的this，你可以通过vm获取vuex等操作，更多内容详见uView对拦截器的介绍部分：
 // https://uviewui.com/js/http.html#%E4%BD%95%E8%B0%93%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%EF%BC%9F
 const install = (Vue, vm) => {
-	//const url='/web'
+	// const url='/web'
 	const url=''
 	/** 
 	 * 用户管理
@@ -54,22 +54,24 @@ const install = (Vue, vm) => {
 	let default_ptAddress =  (params = {}) => vm.$u.post('/user/ptAddress/', params);	//设置默认
 	let delete_ptAddress =  (params = {}) => vm.$u.get(url+'/address/remove', params);	//删除
 	//用户中心 ---------------------------------------
-	let get_userCenter = (params = {}) => vm.$u.get(url+'/member/getMemberAccountDetail', params);	//个人中心信息	
-	let get_userCenter_integral = (params = {}) => vm.$u.get('/user/ptUserAccount/integral/record', params);	//积分记录	
-	let get_ptOrder_list = (params = {}) => vm.$u.post('/group/ptOrder/list', params);	//全部订单	
-	let get_ptOrder_receive = (params = {}) => vm.$u.post('/group/ptOrder/receive', params);	//已收货		
-	let get_ptOrder_send = (params = {}) => vm.$u.post('/group/ptOrder/send', params);	//已发货		
-	let get_ptOrder_wait = (params = {}) => vm.$u.post('/group/ptOrder/wait', params);	//待发货	
+	let get_userCenter = (params = {}) => vm.$u.get(url+'/member/getMemberAccountDetail', params);	//获取会员账户详情
+	let get_member_info_detail = (params = {}) => vm.$u.get(url+'/member/getMemberInfoDetail', params);	//会员详情
+	let get_userCenter_integral = (params = {}) => vm.$u.get(url+'/member/getMemberIntegralLogs', params);	//积分记录	
+	let get_member_amount_logs = (params = {}) => vm.$u.get(url+'/member/getMemberAmountLogs', params);	//会员余额流水
+	
+
+	let get_ptOrder_list = (params = {}) => vm.$u.get(url+'/group/getMemberGroupOrderList', params);	//全部订单	
+
 	let ptUserAccount_bonus = (params = {}) => vm.$u.get('/user/ptUserAccount/bonus', params);	//当前可用分红累计分红冻结分红
-	let ptUserAccount_bonusRecord = (params = {}) => vm.$u.get('/user/ptUserAccount/bonusRecord', params);	//分红记录
+	let ptUserAccount_bonusRecord = (params = {}) => vm.$u.get(url+'/member/getMemberBonuslogs', params);	//分红记录
 	let bonus_balance = (params = {}) => vm.$u.get('/user/ptUserAccount/bonus/balance', params);	//分红转余额
 	let bonus_integral = (params = {}) => vm.$u.get('/user/ptUserAccount/bonus/integral', params);	//分红转积分
-	let couponList = (params = {}) => vm.$u.get('/user/ptUserAccount/couponList', params);	//券记录
+	let couponList = (params = {}) => vm.$u.get(url+'/member/getMemberCouponLogs', params);	//券记录
 	let shareBonusNum = (params = {}) => vm.$u.get('/user/ptUserAccount/shareBonusNum', params);	//当前分红产品份数
 	let currenthold = (params = {}) => vm.$u.get('/user/ptUserAccount/currenthold', params);	//当前持有分红产品份数
 	let bonusProduct = (params = {}) => vm.$u.post('/user/ptUserAccount/bonusProduct?id=' + params.id, params);	//投入分红产品
 	//粉丝管理
-	let get_ptFans_list = (params = {}) => vm.$u.get('/user/ptFans/list', params);	//粉丝列表
+	let get_ptFans_list = (params = {}) => vm.$u.get(url+'/member/getMemberFansList', params);	//粉丝列表
 	let get_erweima = (params = {}) => vm.$u.get('/user/ptFans/erweima.jpg', params);	//获取二维码
 	let get_ptFans_count = (params = {}) => vm.$u.get('/user/ptFans/count', params);	//我的粉丝数
 	let add_ptFans = (params = {}) => vm.$u.post('/user/ptFans/add', params);	//锁粉
@@ -118,6 +120,7 @@ const install = (Vue, vm) => {
 		get_ptFans_list,
 		get_erweima,
 		get_openAndJoin_num,
+		get_member_amount_logs,
 		openGroup,
 		joinGroup,
 		ptArticle_list,
@@ -130,6 +133,7 @@ const install = (Vue, vm) => {
 		get_group_time_config,
 		group_participate,
 		group_pt_successList,
+		get_member_info_detail,
 		group_random,
 		openGroup_fail,
 		openGroup_success,
@@ -139,9 +143,6 @@ const install = (Vue, vm) => {
 		add_ptFans,
 		get_userCenter_integral,
 		get_ptOrder_list,
-		get_ptOrder_receive,
-		get_ptOrder_send,
-		get_ptOrder_wait,
 		ptUserAccount_bonus,
 		ptUserAccount_bonusRecord,
 		bonus_balance,

@@ -192,7 +192,7 @@
 						<view class="item_middle">
 							<view class="img_box">
 								<image class="img" :src="item.picture" mode="aspectFill"></image>
-								<view class="history" v-if="item.members.length > 0">
+								<view class="history" v-if="item.members&&item.members.length > 0">
 									<image class="history_item" :src="ite.headPortrait" mode="aspectFill"
 										v-for="(ite,inde) in item.members" :key="inde"></image>
 								</view>

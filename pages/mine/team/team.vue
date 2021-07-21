@@ -2,20 +2,19 @@
 	<view class="contain">
 		<view class="header">
 			<view class="line_1">
-				<text>直属粉丝：{{ptFans_list.fansCount}}，活跃：{{ptFans_list.fansCountActive}}</text>
-				<text>总 粉 丝：{{ptFans_list.members}}，总活跃：{{ptFans_list.membersActive}}</text>
+				<text>直属粉丝：{{userInfo.ztnum}}，总 粉 丝：{{userInfo.teamnum}}</text>
 			</view>
 		</view>
 		<view class="content">
 			<view class="list">
-				<view class="item" v-for="(item,index) in ptFans_list.fansDetailVoList" :key="index">
+				<view class="item" v-for="(item,index) in ptFans_list" :key="index">
 					<view class="left">
-						<image :src="item.headUrl" mode="aspectFill"></image>
-						<text>{{item.nickname}}<!--（ID:{{item.userNo}}）--></text>
+						<image :src="item.headPortrait" mode="aspectFill"></image>
+						<text>{{item.userNo}}<!--（ID:{{item.userNo}}）--></text>
 						<text>{{item.levelName}}</text>
 						<!-- <text>{{item.mobile}}</text> -->
 					</view>
-						<text>{{item.mobile}}</text>
+						<text>{{item.levelName}}</text>
 					<!-- <view class="right">
 						<text>参团30次</text>
 					</view> -->
@@ -30,22 +29,35 @@
 		data() {
 			return {
 				ptFans_list:[],
+				userInfo: {
+					ztnum: 0,
+					teamnum: 0
+				}
 			}
 		},
 		onLoad:function(){
 			this.get_ptFans_list()
-			this.get_ptFans_count()
+			this.get_member_info_detail()
 		},
 		methods: {
-			get_ptFans_list:function(){
-				let that = this
-				this.$u.api.get_ptFans_list().then(res=>{
-					that.ptFans_list = res.data
+			//获取会员详情
+			get_member_info_detail(){
+				this.$u.api.get_member_info_detail().then(res => {
+						if( res.code == 0 ){
+							console.log('用户',res)
+							this.userInfo= res.data
+						}
 				})
 			},
-			get_ptFans_count:function(){
-				this.$u.api.get_ptFans_count().then(res=>{
-					
+			get_ptFans_list:function(){
+				let that = this
+				this.$u.api.get_ptFans_list({
+					page: 1,
+					pageSize: 20
+				}).then(res=>{
+					if( res.code == 0 ){
+						that.ptFans_list = res.data
+					}
 				})
 			},
 		}

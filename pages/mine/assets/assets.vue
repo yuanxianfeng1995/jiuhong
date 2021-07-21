@@ -12,15 +12,15 @@
 				<view class="content">
 					<view class="content-item">
 						<view class="label">可用</view>
-						<text class="value">{{item.value}}</text>
+						<text class="value">{{item.available}}</text>
 					</view>
 					<view class="content-item">
 						<view class="label">冻结</view>
-						<text class="value">{{item.value}}</text>
+						<text class="value">{{item.frozen}}</text>
 					</view>
 					<view class="content-item">
 						<view class="label">累计</view>
-						<text class="value">{{item.value}}</text>
+						<text class="value">{{item.cumulative}}</text>
 					</view>
 				</view>
 			</view>
@@ -44,35 +44,45 @@
 						lable: '余额',
 						src: '/static/icon/mine-data-icon1@2x.png',
 						url:"../wallet/wallet",
-						value: 0
+						available: 0,
+						frozen: 0,
+						cumulative: 0
 					},
 					{
 						id: 1,
 						lable: '拼团积分',
 						src: '/static/icon/mine-data-icon1@2x.png',
 						url:"../integral/integral",
-						value: 0
+						available: 0,
+						frozen: 0,
+						cumulative: 0
 					},
 					{
 						id: 2,
 						lable: '券',
 						src: '/static/icon/mine-data-icon2@2x.png',
 						url:"../coupon/coupon",
-						value: 0
+						available: 0,
+						frozen: 0,
+						cumulative: 0
 					},
 					{
 						id: 3,
 						lable: '分红',
 						src: '/static/icon/mine-data-icon3@2x.png',
 						url:"../participation/participation",
-						value: 0
+						available: 0,
+						frozen: 0,
+						cumulative: 0
 					},
 					{
 						id: 4,
 						lable: '玖花',
 						src: '/static/icon/mine-data-icon3@2x.png',
 						url:"../nine-flowers/nine-flowers",
-						value: 0
+						available: 0,
+						frozen: 0,
+						cumulative: 0
 					}
 				]
 			}
@@ -83,11 +93,46 @@
 			const eventChannel = this.getOpenerEventChannel()
 			eventChannel.on('detail', function(data) {
 				console.log('获取详情数据222', data)
-				that.detail = data.data
-				// that.list[1].value=data.data.accountAvailableIntegral
-				// that.list[2].value=data.data.accountAvailableCoupon
-				// that.list[3].value=data.data.accountIntegral
-				// that.list[4].value=data.data.accountIntegral
+				
+				const obj=data.data
+				const list = that.list
+				that.detail = obj
+				that.list[0]={
+					...list[0],
+					available: obj.accountAvailableAmount,
+					frozen: obj.accountFreezeAmount,
+					cumulative: obj.accountAmount
+				}
+				that.list[0]={
+					...list[0],
+					available: obj.accountAvailableAmount,
+					frozen: obj.accountFreezeAmount,
+					cumulative: obj.accountAmount
+				}
+				that.list[1]={
+					...list[1],
+					available: obj.accountAvailableIntegral,
+					frozen: obj.accountFreezeIntegral,
+					cumulative: obj.accountIntegral
+				}
+				that.list[2]={
+					...list[2],
+					available: obj.accountAvailableCoupon,
+					frozen: obj.accountFreezeCoupon,
+					cumulative: obj.accountCoupon
+				}
+				that.list[3]={
+					...list[3],
+					available: obj.accountShareBonus,
+					frozen: obj.accountFreezeShareBonus,
+					cumulative: obj.accountTotalShareBonus
+				}
+				that.list[4]={
+					...list[4],
+					available: obj.accountShareBonus,
+					frozen: obj.accountFreezeShareBonus,
+					cumulative: obj.accountTotalShareBonus
+				}
 			})
 		},
 		methods:{

@@ -4,7 +4,7 @@
 			<view class="price">
 				<view class="left">
 					<u-icon name="/static/icon/mine-data-icon3@2x.png" size="60"></u-icon>
-					<text>{{userInfo.account.accountShareBonus}}</text>
+					<text>{{user.accountShareBonus}}</text>
 				</view>
 				<view class="menu_btn">
 					<button class="btn" type="default" size="mini" @click="routeBuyBalance">转到余额</button>
@@ -12,7 +12,7 @@
 				</view>
 			</view>
 			<view class="menu">
-				<text>当前可用分红{{ptUserAccountBonus.currentBonus}}，累计获得分红{{ptUserAccountBonus.totalBonus}}，冻结部分{{ptUserAccountBonus.freezeBonus}}</text>
+				<text>当前可用分红{{user.accountShareBonus}}，累计获得分红{{user.accountTotalShareBonus}}，冻结部分{{user.accountFreezeShareBonus}}</text>
 			</view>
 		</view>
 		<view class="content">
@@ -20,19 +20,19 @@
 				<text>规则说明</text>
 			</view> -->
 			<view class="tag">
-				<view :class="['tag_item',tagCurrent==1 ? 'tag_active' : '']" @click="tagChange(1)">
+				<view :class="['tag_item',tagCurrent==0 ? 'tag_active' : '']" @click="tagChange(0)">
 					<text>获得记录</text>
-					<view :class="['tag_line',tagCurrent==1 ? 'tag_line_active' : '']"></view>
+					<view :class="['tag_line',tagCurrent==0 ? 'tag_line_active' : '']"></view>
 				</view>
-				<view :class="['tag_item',tagCurrent==2 ? 'tag_active' : '']" @click="tagChange(2)">
+				<view :class="['tag_item',tagCurrent==1 ? 'tag_active' : '']" @click="tagChange(1)">
 					<text>使用记录</text>
-					<view :class="['tag_line',tagCurrent==2 ? 'tag_line_active' : '']"></view>
+					<view :class="['tag_line',tagCurrent==1 ? 'tag_line_active' : '']"></view>
 				</view>
 			</view>
 			<view class="list">
 				<view class="item" v-for="(item,index) in ptUserAccountBonusRecord" :key="index">
-					<text>{{item.dateData}} {{item.remark}}</text>
-					<text v-if="tagCurrent == 1">+{{item.amount}}</text>
+					<text>{{item.createtime}} {{item.memo}}</text>
+					<text v-if="tagCurrent == 0">+{{item.amount}}</text>
 					<text v-else>{{item.amount}}</text>
 				</view>
 				<u-loadmore :status="'nomore'" :bg-color="'#F8F7F7'"  v-if="loadmoreShow" />
@@ -45,9 +45,9 @@
 	export default {
 		data() {
 			return {
-				tagCurrent:1,
+				tagCurrent:0,
 				current:1,
-				userInfo:{},
+				user:{},
 				ptUserAccountBonus:{},
 				ptUserAccountBonusRecord:[],
 				reachBottomOpen:true,
@@ -55,17 +55,16 @@
 			}
 		},
 		onLoad:function(){
-			this.userInfo = uni.getStorageSync('user');
-			this.ptUserAccount_bonus()
-			this.ptUserAccount_bonusRecord(1)
+			this.user = uni.getStorageSync('user');
+			this.ptUserAccount_bonusRecord(0)
 		},
 		onReachBottom:function(){
 			if( this.reachBottomOpen ){
 				this.current = this.current + 1
 				if( this.tagCurrent == 1 ){
-					this.ptUserAccount_bonusRecord(1)
+					this.ptUserAccount_bonusRecord(0)
 				}else{
-					this.ptUserAccount_bonusRecord(2)
+					this.ptUserAccount_bonusRecord(1)
 				}
 			}
 
@@ -78,34 +77,25 @@
 			get_userCenter:function(){
 				 let that = this
 				 this.$u.api.get_userCenter().then(res => {
-					if( res.code == 200 ){
-						this.userInfo = res.data
+					if( res.code == 0 ){
+						this.user = res.data
 					}
 				 })
-			},
-			//当前可用分红累计分红冻结分红
-			ptUserAccount_bonus:function(){
-				let that = this
-				this.$u.api.ptUserAccount_bonus().then(res => {
-					if( res.code == 200 ){
-						that.ptUserAccountBonus = res.data
-					}
-				})
 			},
 			//分红记录
 			ptUserAccount_bonusRecord:function(type){
 				let that = this
 				this.$u.api.ptUserAccount_bonusRecord({
-					type:type,
-					current:that.current,
-					size:30,
+					size: that.current,
+					optype: type,
+					pageSize: 30
 				}).then(res => {
-					if( res.code == 200 ){
-						that.ptUserAccountBonusRecord = [...that.ptUserAccountBonusRecord,...res.data.records]
-						if( res.data.records.length < 30 ){
+					if( res.code == 0 ){
+						that.ptUserAccountBonusRecord = [...that.ptUserAccountBonusRecord,...res.data]
+						if( res.data.length < 30 ){
 							that.reachBottomOpen = false
 						}
-						if( res.data.records.length == 0 ){
+						if( res.data.length == 0 ){
 							that.loadmoreShow = true
 						}else{
 							that.loadmoreShow = false
@@ -121,10 +111,10 @@
 				this.current = 0
 				this.reachBottomOpen = true
 				this.ptUserAccountBonusRecord = []
-				if( index == 1 ){
-					this.ptUserAccount_bonusRecord(1)
+				if( index == 0 ){
+					this.ptUserAccount_bonusRecord(0)
 				}else{
-					this.ptUserAccount_bonusRecord(2)
+					this.ptUserAccount_bonusRecord(1)
 				}
 			},
 			//路由 - 购买余额

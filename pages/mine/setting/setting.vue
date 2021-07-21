@@ -46,13 +46,13 @@
 			},
 			passwordModification(){
 				console.log('passwordModification')
-				uni.reLaunch({
+				uni.navigateTo({
 					url:'/pages/mine/password-modification/password-modification'
 				})
 			},
 			accountMaintenance(){
 				console.log('accountMaintenance')
-				uni.reLaunch({
+				uni.navigateTo({
 					url:'/pages/mine/account-maintenance/account-maintenance'
 				})
 			}
@@ -60,7 +60,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 .list{
 	margin-top: 28rpx;
 }

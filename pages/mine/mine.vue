@@ -4,16 +4,16 @@
 			<!-- <view class="status_bar"></view> -->
 			<view class="mine_bg">
 				<view class="mine_bg_view"></view>
-				<image class="mine_bg_img" :src="user.headPortrait" mode="aspectFill"></image>
+				<image class="mine_bg_img" :src="userInfo.headPortrait" mode="aspectFill"></image>
 			</view>
 			<view class="mine_detail">
 				 <view class="status_bar">
 					<!-- 这里是状态栏 -->
 				</view>
-				<image class="author" :src="user.headPortrait" mode="aspectFill"></image>
+				<image class="author" :src="userInfo.headPortrait" mode="aspectFill"></image>
 				<view class="detail_text">
-					<text>{{userInfo.nickname}} {{user.levelName}}</text>
-					<text>ID: {{user.id}}</text>
+					<text>{{userInfo.nickname}} {{userInfo.levelName}}</text>
+					<text>ID: {{userInfo.id}}</text>
 					<!-- <text>{{userInfo.level ? userInfo.level.levelName : '普通用户'}}</text> -->
 				</view>
 				<view class="mine_balance">
@@ -140,12 +140,10 @@
 			}
 		},
 		onLoad() {
-			const data=getApp().globalData.userInfo||{};
-			this.userInfo = data.id?getApp().globalData.userInfo.id:uni.getStorageSync('userInfo');
-			console.log('this.userInfo',this.userInfo)
 		},
 		onShow:function(){
 			 this.get_userCenter()
+			 this.get_member_info_detail()
 		},
 		onPullDownRefresh() {
 			this.get_userCenter()
@@ -154,7 +152,16 @@
 			}, 1000);
 		},
 		methods: {
-			//我的信息
+			//获取会员详情
+			get_member_info_detail(){
+				this.$u.api.get_member_info_detail().then(res => {
+									if( res.code == 0 ){
+										console.log('用户',res)
+										this.userInfo= res.data
+									}
+				})
+			},
+			//获取会员账户详情
 			get_userCenter:function(){
 				 let that = this
 				 this.$u.api.get_userCenter().then(res => {
@@ -257,7 +264,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 .status_bar {
 	height: var(--status-bar-height);
 	width: 100%;

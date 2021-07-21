@@ -5,12 +5,12 @@
 		</view>
 		<view class="content" v-for="(item,index) in ptOrder_list" :key="index">
 			<view class="date">
-				<text>{{$u.timeFormat(parseInt(item.createTime), 'yyyy-mm-dd hh:MM:ss')}}</text>
+				<text>{{item.createTime?$u.timeFormat(parseInt(item.createTime), 'yyyy-mm-dd hh:MM:ss'):''}}</text>
 			</view>
 			<view class="list">
 				<view class="item">
 					<view class="line_1">
-						<text>订单:{{item.orderNo}}</text>
+						<text>订单:{{item.coupon}}</text>
 						<text class="status" v-if="item.status == 1">拼中商品，待发货</text>
 						<text class="status" v-else-if="item.status == 2">拼中商品，已发货</text>
 						<text class="status" v-else-if="item.status == 3">拼中商品，已收货</text>
@@ -23,18 +23,14 @@
 							</view> -->
 						</view>
 						<view class="detail">
-							<text>{{item.productName}}</text>
-							<text class="tag">{{item.productPrice}}积分</text>
+							<text>{{item.pname}}</text>
+							<text class="tag">{{item.ptPrice}}积分</text>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
-		<view class="bottom">
-			<view class="reach_bottom" v-if="ptOrder_list.length == 0">
-				<text>我也是有底线的...</text>
-			</view>
-		</view>
+		<u-loadmore :status="loadingStatus" />
 	</view>
 </template>
 
@@ -63,7 +59,19 @@
 				ptOrder_send:[],
 				ptOrder_wait:[],
 				detail:{},
+				page: 1,
+				pageSize: 20,
+				loadingStatus: 'loadmore',
 			}
+		},
+		onReachBottom() {
+			let len = this.ptOrder_list.length;
+			if (len < this.pageSize * this.page) {
+				this.loadingStatusTab1 = 'nomore'
+				return false;
+			}
+			this.page++
+			this.get_ptOrder_list()
 		},
 		onLoad:function(){
 			this.get_ptOrder_list()
@@ -72,108 +80,28 @@
 			//Tab 改变
 			change(index) {
 				this.current = index;
+				console.log('index',index)
 				console.log(index)
 				uni.showLoading({
 					title:'加载中'
 				})
-				if( index == 0 ){
-					this.get_ptOrder_list()
-				}else if( index == 1 ){
-					this.get_ptOrder_wait()
-				}else if( index == 2 ){
-					this.get_ptOrder_send()
-				}else{
-					this.get_ptOrder_receive()
-				}
+				this.ptOrder_list=[]
+				this.get_ptOrder_list(index)
 			},
 			//全部订单
-			get_ptOrder_list:function(){
+			get_ptOrder_list:function(status){ //1待发 2已发 3签收？
 				 let that = this
-				 this.$u.api.get_ptOrder_list({
-					"current": 0,
-					"params": {},
-					"size": 100
+				 that.$u.api.get_ptOrder_list({
+					"page": that.page,
+					"status": status===0?'':status,
+					"pageSize": that.pageSize
 				 }).then(res => {
-					if( res.code == 200 ){
-						that.ptOrder_list = res.data.records.map( item => {
-							item.picture = ''
-							item.headUrls = []
-							return item
-						})
-						that.get_product_detail()
+					if( res.code == 0 ){
+						if (res.data) that.ptOrder_list.push(...res.data)
+						that.loadingStatus = res.data.length < that.pageSize * that.page ? 'nomore' :
+							'loadmore'
 					}
 				 })
-			},
-			//已收货
-			get_ptOrder_receive:function(){
-				 let that = this
-				 this.$u.api.get_ptOrder_receive({
-					"current": 0,
-					"params": {},
-					"size": 100
-				 }).then(res => {
-					if( res.code == 200 ){
-						that.ptOrder_list = res.data.records.map( item => {
-							item.picture = ''
-							item.headUrls = []
-							return item
-						})
-						that.get_product_detail()
-					}
-				 })
-			},
-			//已发货	
-			get_ptOrder_send:function(){
-				 let that = this
-				 this.$u.api.get_ptOrder_send({
-					"current": 0,
-					"params": {},
-					"size": 100
-				 }).then(res => {
-					if( res.code == 200 ){
-						that.ptOrder_list = res.data.records.map( item => {
-							item.picture = ''
-							item.headUrls = []
-							return item
-						})
-						that.get_product_detail()
-					}
-				 })
-			},
-			//待发货	
-			get_ptOrder_wait:function(){
-				 let that = this
-				 this.$u.api.get_ptOrder_wait({
-					"current": 0,
-					"params": {},
-					"size": 100
-				 }).then(res => {
-					if( res.code == 200 ){
-						that.ptOrder_list = res.data.records.map( item => {
-							item.picture = ''
-							item.headUrls = []
-							return item
-						})
-						that.get_product_detail()
-					}
-				 })
-			},
-			//接口 - 商品详情
-			get_product_detail:function(productId){
-				let that = this
-				that.ptOrder_list = that.ptOrder_list.map( item => {
-					 that.$u.api.get_product_detail({
-						productId:item.productId
-					 }).then(res => {
-						if( res.code == 200 ){
-							item.picture = res.data.picture.split(',')[0]
-							item.headUrls = res.data.headUrls
-						}
-					 })
-					return item
-				 })
-				 uni.hideLoading()
-				 console.log( that.ptOrder_list)
 			},
 		}
 	}
@@ -242,6 +170,9 @@
 	font-size: 28rpx;
 	color: #181725;
 	line-height: 36rpx;
+}
+.u-load-more-wrap{
+	margin-top: 20rpx!important;
 }
 .detail .tag{
 	font-size: 32rpx;
