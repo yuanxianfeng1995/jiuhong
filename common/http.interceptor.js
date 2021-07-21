@@ -32,8 +32,11 @@ const install = (Vue, vm, bon) => {
 			 * 生产环境打开 - 未登录跳转
 			 * ------------------------------------------------------------------------
 			 * */
+			if(time) return;
 			if(!token || config.header.Authorization.length < 6 ){
+				console.log('跳转1')
 				vm.$u.route('/pages/login/login') 
+				time=true
 				return
 			}
 
@@ -49,13 +52,13 @@ const install = (Vue, vm, bon) => {
 
 	// 响应拦截，判断状态码是否通过
 	Vue.prototype.$u.http.interceptor.response = (res) => {
-		console.log('接口拦截', res)
+		console.log('接口拦截', res,res.code)
 		if (res.code == 1002||res.code == 3002) {
 			// 假设201为token失效，这里跳转登录
 			vm.$u.toast('登录信息已失效，请重新登录');
 			if(time) return;
-			console.log('response time',time)
-			let time=setTimeout(() => {
+			time=setTimeout(() => {
+				console.log('跳转2')
 				// 此为uView的方法，详见路由相关文档
 				vm.$u.route('/pages/login/login')
 			}, 1500)

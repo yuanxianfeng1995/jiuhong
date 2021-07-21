@@ -40,6 +40,13 @@
 				},
 				list: [
 					{
+						id: 0,
+						lable: '余额',
+						src: '/static/icon/mine-data-icon1@2x.png',
+						url:"../wallet/wallet",
+						value: 0
+					},
+					{
 						id: 1,
 						lable: '拼团积分',
 						src: '/static/icon/mine-data-icon1@2x.png',
@@ -48,25 +55,25 @@
 					},
 					{
 						id: 2,
-						lable: '开团卷',
+						lable: '券',
 						src: '/static/icon/mine-data-icon2@2x.png',
 						url:"../coupon/coupon",
 						value: 0
 					},
 					{
 						id: 3,
-						lable: '玖花',
-						src: '/static/icon/mine-data-icon3@2x.png',
-						url:"../integral/integral",
-						value: 0
-					},
-					{
-						id: 4,
 						lable: '分红',
 						src: '/static/icon/mine-data-icon3@2x.png',
 						url:"../participation/participation",
 						value: 0
 					},
+					{
+						id: 4,
+						lable: '玖花',
+						src: '/static/icon/mine-data-icon3@2x.png',
+						url:"../nine-flowers/nine-flowers",
+						value: 0
+					}
 				]
 			}
 		},
@@ -77,10 +84,10 @@
 			eventChannel.on('detail', function(data) {
 				console.log('获取详情数据222', data)
 				that.detail = data.data
-				that.list[0].value=data.data.accountAvailableIntegral
-				that.list[1].value=data.data.accountAvailableCoupon
-				that.list[2].value=data.data.accountIntegral
-				that.list[3].value=data.data.accountIntegral
+				// that.list[1].value=data.data.accountAvailableIntegral
+				// that.list[2].value=data.data.accountAvailableCoupon
+				// that.list[3].value=data.data.accountIntegral
+				// that.list[4].value=data.data.accountIntegral
 			})
 		},
 		methods:{

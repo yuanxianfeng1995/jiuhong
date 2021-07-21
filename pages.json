@@ -214,7 +214,22 @@
 				"navigationBarTitleText": "资产",
 				"enablePullDownRefresh": false
 			}
-		}, {
+		},
+		{
+			"path": "pages/mine/password-modification/password-modification",
+			"style": {
+				"navigationBarTitleText": "密码修改",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/account-maintenance/account-maintenance",
+			"style": {
+				"navigationBarTitleText": "账户维护",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/mine/wallet/withdraw-deposit-step",
 			"style": {
 				"navigationBarTitleText": "提现验证",
@@ -254,6 +269,12 @@
 			"path": "pages/mine/participation/participation",
 			"style": {
 				"navigationBarTitleText": "分红",
+				"enablePullDownRefresh": false
+			}
+		}, {
+			"path": "pages/mine/nine-flowers/nine-flowers",
+			"style": {
+				"navigationBarTitleText": "玖花",
 				"enablePullDownRefresh": false
 			}
 		}, {

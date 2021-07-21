@@ -45,9 +45,17 @@
 				})
 			},
 			passwordModification(){
-				
+				console.log('passwordModification')
+				uni.reLaunch({
+					url:'/pages/mine/password-modification/password-modification'
+				})
 			},
-			accountMaintenance(){}
+			accountMaintenance(){
+				console.log('accountMaintenance')
+				uni.reLaunch({
+					url:'/pages/mine/account-maintenance/account-maintenance'
+				})
+			}
 		}
 	}
 </script>
