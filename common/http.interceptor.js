@@ -8,7 +8,8 @@ const install = (Vue, vm, bon) => {
 			loadingTime: 800,
 		});
 	}
-
+	
+	let time=null
 
 	// 请求拦截，配置Token等参数
 	Vue.prototype.$u.http.interceptor.request = (config) => {
@@ -52,7 +53,9 @@ const install = (Vue, vm, bon) => {
 		if (res.code == 1002||res.code == 3002) {
 			// 假设201为token失效，这里跳转登录
 			vm.$u.toast('登录信息已失效，请重新登录');
-			setTimeout(() => {
+			if(time) return;
+			console.log('response time',time)
+			let time=setTimeout(() => {
 				// 此为uView的方法，详见路由相关文档
 				vm.$u.route('/pages/login/login')
 			}, 1500)

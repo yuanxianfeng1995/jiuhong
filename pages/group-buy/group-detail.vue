@@ -212,7 +212,8 @@
 				}).then(res => {
 					if (res.code == 0) {
 						let detail = res.data
-						let i = detail.members.length
+						if(!detail) return;
+						let i = detail.members?detail.members.length:0
 						detail.headUrlsLength = i
 						while (i < 10) {
 							detail.members.push('/static/icon/group-none@2x.png')
@@ -246,8 +247,8 @@
 								this.animation = animation
 								animation.rotate(36*index).step()
 								this.animationData = animation.export()
-								console.log('中奖人列表', detail.members)
-								console.log('中奖人', detail.members)
+								// console.log('中奖人列表', detail.members)
+								// console.log('中奖人', detail.members)
 							}
 						}) 
 						

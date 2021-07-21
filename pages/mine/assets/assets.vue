@@ -10,8 +10,18 @@
 					<view class="icon iconfont  icon-jiantou"></view>
 				</view>
 				<view class="content">
-					<view class="label">可用</view>
-					<text class="value">{{item.value}}</text>
+					<view class="content-item">
+						<view class="label">可用</view>
+						<text class="value">{{item.value}}</text>
+					</view>
+					<view class="content-item">
+						<view class="label">冻结</view>
+						<text class="value">{{item.value}}</text>
+					</view>
+					<view class="content-item">
+						<view class="label">累计</view>
+						<text class="value">{{item.value}}</text>
+					</view>
 				</view>
 			</view>
 		</view>
@@ -115,7 +125,7 @@
 					display: flex;
 					justify-content: space-between;
 					align-items: center;
-					margin-bottom: 10rpx;
+					margin-bottom: 20rpx;
 					font-size: 30rpx;
 					.name{
 						font-size: 35rpx;
@@ -128,15 +138,20 @@
 				.content{
 					padding-left: 20rpx;
 					color: #f3d66c;
+					display: flex;
+					font-size: 35rpx;
+					justify-content: space-between;
+					padding: 0 40rpx;
 					.label{
 						color: #FFFFFF;
-						font-size: 35rpx;
+						font-size: 30rpx;
 						margin-bottom: 10rpx;
 					}
 				}
 				.data_icon{
-					width: 100rpx;
-					height: 100rpx;
+					width: 80rpx;
+					height: 80rpx;
+					margin-right: 20rpx;
 				}
 			}
 		}

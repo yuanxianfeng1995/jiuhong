@@ -7,6 +7,14 @@
 					<text>v{{version}}</text>
 				</view>
 			</view>
+			<u-cell-group>
+				<u-cell-item title="密码修改"  :border-bottom="false" :title-style="menuListTitleStyle" @click="passwordModification">
+					<u-icon name="/static/icon/mmxg.png" slot="icon" size="40" ></u-icon>
+				</u-cell-item>
+				<u-cell-item title="收款账户维护" :border-bottom="false" :title-style="menuListTitleStyle"  @click="accountMaintenance">
+					<u-icon name="/static/icon/zh.png" slot="icon" size="40" ></u-icon>
+				</u-cell-item>
+			</u-cell-group>
 		</view>
 		<view class="bottom">
 			<button class="btn" type="default" @click="exit()">退出登录</button>
@@ -18,7 +26,12 @@
 	export default {
 		data() {
 			return {
-				version:''
+				version:'',
+				menuListTitleStyle:{
+					color:'#000000',
+					fontWeight:'600',
+					paddingLeft:'20rpx'
+				},
 			}
 		},
 		onLoad:function(){
@@ -30,7 +43,11 @@
 				uni.reLaunch({
 					url:'/pages/login/login'
 				})
-			}
+			},
+			passwordModification(){
+				
+			},
+			accountMaintenance(){}
 		}
 	}
 </script>
