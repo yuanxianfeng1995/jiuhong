@@ -13,7 +13,7 @@
 							<image class="headimg" :src="detail.winUserHeadPortrait" mode="aspectFill"></image>
 						</view>
 						<view class="author_name">
-							<text>{{detail.winUserName.substr(0,1)}}**</text>
+							<text>{{detail.winUserName?detail.winUserName.substr(0,1):''}}**</text>
 							<!-- <text>贵阳</text> -->
 						</view>
 					</view>
@@ -175,7 +175,7 @@
 		methods: {
 			get_group_time_config() {
 				this.$u.api.get_group_time_config().then((res) => {
-					this.time = (new Date(res.data.end).getTime() - new Date().getTime()) / 1000
+					this.time = (new Date(res.data.end.replace(/-/g, '/')).getTime() - new Date().getTime()) / 1000
 				})
 			},
 			//倒计时结束
@@ -283,7 +283,7 @@
 			failGroup:function(){
 				let that = this
 				//开团失败判断
-				if( that.status == 3 ){ //拼团失败
+				if( that.status&&that.status == 3 ){ //拼团失败
 					this.$u.toast('因人数不满开团失败，请选择其他商品继续拼团!');
 					setTimeout(()=>{
 						uni.switchTab({

@@ -21,7 +21,7 @@
 			<swiper :indicator-dots="false" :autoplay="true" :circular="true" :interval="3000" :duration="1000"
 				style="height: 364rpx;" v-if="group_pt_successList_list.length > 0">
 				<swiper-item v-for="(item,index) in group_pt_successList_list" :key="index">
-					<view class="recommend" @click.stop="routeDetailHose(item.status,item)">
+					<view class="recommend" @click.stop="routeDetailHose(item)">
 						<view class="line_1">
 							<text class="date">开团时间：{{item.createtime}}</text>
 							<!-- <text>团号：{{item.groupNo}}</text> -->
@@ -33,7 +33,7 @@
 									<image class="headimg" :src="item.isWinningHeadUrl" mode="aspectFill"></image>
 								</view>
 								<view class="author_name">
-									<view class="u-line-1" style="width: 110rpx;">{{item.winUserno.substr(0,1)}}**
+									<view class="u-line-1" style="width: 110rpx;">{{item.winUserno?item.winUserno.substr(0,1):''}}**
 									</view>
 									<!-- <text>贵阳</text> -->
 								</view>
@@ -67,7 +67,7 @@
 
 			<view class="list">
 				<view class="item" v-for="(item,index) in group_square_list" :key="index"
-					@click.stop="routeDetailHose(item.status,item)">
+					@click.stop="routeDetailHose(item)">
 					<view class="item_top">
 						<view class="item_name">
 							<!-- <image :src="item.openGroupHeadPortrait" mode="aspectFill"></image> -->
@@ -147,7 +147,7 @@
 									<image class="headimg" :src="item.winUserHeadPortrait" mode="aspectFill"></image>
 								</view>
 								<view class="author_name">
-									<view class="u-line-1" style="width: 110rpx;">{{item.winUserName.substr(0,1)}}**
+									<view class="u-line-1" style="width: 110rpx;">{{item.winUserno?item.winUserName.substr(0,1):''}}**
 									</view>
 									<!-- <text>贵阳</text> -->
 								</view>
@@ -376,7 +376,7 @@
 			get_group_time_config() {
 				this.$u.api.get_group_time_config().then((res) => {
 					console.log('res get_group_time_config', res)
-					this.time = (new Date(res.data.end).getTime() - new Date().getTime()) / 1000
+					this.time = (new Date(res.data.end.replace(/-/g, '/')).getTime() - new Date().getTime()) / 1000
 					console.log('this.time', this.time)
 				})
 			},
@@ -506,7 +506,7 @@
 				}
 				// console.log('剩下开团次数',this.openAndJoin_num)
 				//开团失败判断
-				if (item.status == 3) { //拼团失败
+				if (item.status&&item.status == 3) { //拼团失败
 					this.$u.toast('因人数不满开团失败，请选择其他商品继续拼团!');
 					return
 				}
@@ -522,13 +522,15 @@
 			//路由 - 拼团房间
 			routeDetailHose: function(item) {
 				let that = this
+				console.log('item',item)
 				//开团失败判断
-				if (item.status == 3) { //拼团失败
+				if (item.status&&item.status == 3) { //拼团失败
 					this.$u.toast('因人数不满开团失败，请选择其他商品继续拼团!');
 					return
 				}
+				console.log('item111',item)
 				uni.navigateTo({
-					url: '/pages/group-buy/group-detail?status=' + status + '&id=' + item.groupNo
+					url: '/pages/group-buy/group-detail?id=' + item.groupNo
 				})
 			},
 			//开团成功列表

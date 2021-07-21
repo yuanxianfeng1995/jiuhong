@@ -81,12 +81,12 @@
 							...res.data
 						};
 						console.log('res.data',res.data)
-						// uni.navigateTo({
-						// 	url:`/pages/login/password/password?mobile=${this.mobile||''}&smscode=${''}&password=${''}`
-						// })
 						uni.navigateTo({
-							url: `/pages/login/code/code?mobile=${this.mobile||''}&smscode=${''}&password=${''}`
+							url:`/pages/login/password/password?mobile=${this.mobile||''}&smscode=${''}&password=${''}`
 						})
+						// uni.navigateTo({
+						// 	url: `/pages/login/code/code?mobile=${this.mobile||''}&smscode=${''}&password=${''}`
+						// })
 
 					} else {
 						that.$u.toast(res.msg);
