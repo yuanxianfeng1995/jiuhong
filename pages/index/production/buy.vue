@@ -16,8 +16,7 @@
 					<u-icon name="/static/icon/local@2x.png" size="40"></u-icon>
 					<view class="detail_text">
 						<text class="name">{{chooseAddress.receiverName}} {{chooseAddress.receiverPhone}}</text>
-						<text>{{chooseAddress.receiverProvince}} {{chooseAddress.receiverCity}}
-							{{chooseAddress.receiverArea}} {{chooseAddress.receiverAddress}}</text>
+						<text>{{chooseAddress.receiverProvince}} {{chooseAddress.receiverCity}}{{chooseAddress.receiverArea}} {{chooseAddress.receiverAddress}}</text>
 					</view>
 					<u-icon name="arrow-right" size="30"></u-icon>
 				</view>
@@ -214,9 +213,19 @@
 						console.log('地址', res)
 						that.addressList = res.data
 						if(that.isOnLoad){
-							const arr=res.data.find(item=>item.isDefault===1);
-							console.log('arr',arr)
-							that.chooseAddress=that.groupItem.groupNo&&arr?arr:null
+							const obj=res.data.find(item=>item.isDefault===1);
+							console.log('obj',obj)
+							// <text class="name">{{chooseAddress.receiverName}} {{chooseAddress.receiverPhone}}</text>
+							// <text>{{chooseAddress.receiverProvince}} {{chooseAddress.receiverCity}}
+							// 	{{chooseAddress.receiverArea}} {{chooseAddress.receiverAddress}}</text>
+							that.chooseAddress=that.groupItem.groupNo&&obj?{
+								receiverName: obj.consignee,
+								receiverPhone: obj.tel,
+								receiverProvince: obj.province,
+								receiverCity: obj.city,
+								receiverArea: obj.area,
+								receiverAddress: obj.address,
+							}:null
 							console.log('that.chooseAddress',that.chooseAddress)
 					    that.isOnLoad=false
 						}

@@ -89,7 +89,7 @@
 				this.get_ptOrder_list(index)
 			},
 			//全部订单
-			get_ptOrder_list:function(status){ //1待发 2已发 3签收？
+			get_ptOrder_list:function(status){ //1待发 2已发 3签收
 				 let that = this
 				 that.$u.api.get_ptOrder_list({
 					"page": that.page,

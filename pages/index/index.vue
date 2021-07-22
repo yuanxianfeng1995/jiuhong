@@ -345,7 +345,7 @@
 	}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 	/deep/ .uni-swiper .uni-swiper-slides {
 		width: 100%;
 	}

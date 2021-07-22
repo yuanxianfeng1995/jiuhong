@@ -7,14 +7,14 @@
 						<image class="data_icon" :src="item.src"></image>
 						<text class="name">{{item.lable}}</text>
 					</view>
-					<view class="icon iconfont  icon-jiantou"></view>
+					<view  v-if="!item.isFrozen" class="icon iconfont  icon-jiantou"></view>
 				</view>
 				<view class="content">
 					<view class="content-item">
 						<view class="label">可用</view>
 						<text class="value">{{item.available}}</text>
 					</view>
-					<view class="content-item">
+					<view class="content-item" v-if="!item.isFrozen">
 						<view class="label">冻结</view>
 						<text class="value">{{item.frozen}}</text>
 					</view>
@@ -22,6 +22,7 @@
 						<view class="label">累计</view>
 						<text class="value">{{item.cumulative}}</text>
 					</view>
+					<view v-if="item.isFrozen"></view>
 				</view>
 			</view>
 		</view>
@@ -59,7 +60,7 @@
 					},
 					{
 						id: 2,
-						lable: '券',
+						lable: '开团券',
 						src: '/static/icon/mine-data-icon2@2x.png',
 						url:"../coupon/coupon",
 						available: 0,
@@ -83,7 +84,17 @@
 						available: 0,
 						frozen: 0,
 						cumulative: 0
-					}
+					},
+					{
+						id: 5,
+						lable: '购物券',
+						src: '/static/icon/mine-data-icon3@2x.png',
+						url:"../nine-flowers/nine-flowers",
+						available: 0,
+						isFrozen: true,
+						frozen: 0,
+						cumulative: 0
+					},
 				]
 			}
 		},
@@ -133,10 +144,16 @@
 					frozen: obj.accountFreezeShareBonus,
 					cumulative: obj.accountTotalShareBonus
 				}
+				that.list[5]={
+					...list[5],
+					available: obj.accountShopvoucher,
+					cumulative: obj.accountTotalShareBonus
+				}
 			})
 		},
 		methods:{
 			goPage(item){
+				if(item.isFrozen) return;
 				uni.navigateTo({
 					url: item.url
 				})
@@ -199,6 +216,9 @@
 						font-size: 30rpx;
 						margin-bottom: 10rpx;
 					}
+				}
+				.content-item{
+					text-align: center;
 				}
 				.data_icon{
 					width: 80rpx;

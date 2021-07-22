@@ -12,9 +12,19 @@
 				</view>
 				<image class="author" :src="userInfo.headPortrait" mode="aspectFill"></image>
 				<view class="detail_text">
-					<text>{{userInfo.nickname}} {{userInfo.levelName}}</text>
+					<view class="content">
+						<text>{{userInfo.nickname}}</text>
+						<view class="tag-content">
+							<text class="tag">{{userInfo.levelName||'普通会员'}}</text>
+							<text class="tag" v-if="userInfo.isService===1">服务中心</text>
+							<text class="tag" v-else-if="userInfo.isDirector===1">总监</text>
+							<text class="tag" v-else-if="userInfo.isPartner===1">联创合伙人</text>
+						</view>
+					</view>
+					<text>
+					</text>
 					<text>ID: {{userInfo.id}}</text>
-					<!-- <text>{{userInfo.level ? userInfo.level.levelName : '普通用户'}}</text> -->
+					<text>代理{{userInfo.agentid}}级 分红{{userInfo.bonusid}}级</text>
 				</view>
 				<view class="mine_balance">
 					<view class="balance_price" @click="routeWallet">
@@ -329,7 +339,25 @@
 	font-size: 28rpx;
 	color: #ffffff;
 	padding-top: 50rpx;
+	width: 100%;
 	line-height: 1.5;
+}
+.detail_text .content{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 100%;
+	position: relative;
+}
+.detail_text .content .tag{
+	background-color: #ef7e09;
+	border-radius: 10px;
+	padding: 4px;
+	margin-left: 10px;
+}
+.detail_text .tag-content{
+	position: absolute;
+	left: 60%;
 }
 .mine_balance{
 	width: 100%;

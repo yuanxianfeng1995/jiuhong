@@ -42,7 +42,7 @@
 					mask: true
 				})
 				this.$u.api.appPrePay({
-					money:that.integral,
+					amount:that.integral,
 				}).then(res => { 
 					if( res.code == 200 ){
 						let payData = JSON.parse(res.data)

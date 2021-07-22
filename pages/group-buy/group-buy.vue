@@ -13,7 +13,7 @@
 				</view>
 			</view>
 			<view class="warn_message">
-				<text>温馨提示：您今日还可开团{{openAndJoin_num.surplusCreateGroupTotal<0?0:openAndJoin_num.surplusCreateGroupTotal}}次，参团{{openAndJoin_num.surplusJoinGroupTotal}}次</text>
+				<text>温馨提示：您今日还可开团{{openAndJoin_num.surplusCreateGroupTotal<0?0:openAndJoin_num.surplusCreateGroupTotal}}次，参团{{openAndJoin_num.surplusJoinGroupTotal<0?0:openAndJoin_num.surplusJoinGroupTotal}}次</text>
 				<text @click="routeRole">查看规则</text>
 			</view>
 		</view>
