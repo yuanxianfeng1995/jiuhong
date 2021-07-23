@@ -51,8 +51,11 @@
 					title:'转换中',
 					mask: true
 				})
-				this.$u.api.integralToBalance({
-					integral:that.integral
+				const userInfo= uni.getStorageSync('userInfo');
+				that.$u.api.integralToBalance({
+					 integral: parseInt(that.integral),
+					 remark: "",
+					 userId: userInfo.id
 				}).then( res => {
 					if( res.code == 200 ){
 						uni.hideLoading()

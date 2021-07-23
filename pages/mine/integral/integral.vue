@@ -118,7 +118,7 @@
 			//路由 - 购买余额
 			routeBuyBalance:function(){
 				uni.navigateTo({
-					url:'buy-balance?amount=' + this.user.account.accountAvailableIntegral
+					url:'buy-balance?amount=' + this.user.accountAvailableIntegral
 				})
 			},
 			//路由 - 支付宝购买

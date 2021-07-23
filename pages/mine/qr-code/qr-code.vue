@@ -17,18 +17,17 @@
 			    title: '生成中'
 			});
 			let token = uni.getStorageSync('token')
-			//生产环境
-			let imgUrl = this.$u.http.config.baseUrl + '/user/ptFans/erweima.jpg?Authorization=Bearer' + token
-			//测试环境
-			// let imgUrl = 'http://47.108.39.183:8083/user/ptFans/erweima.jpg?Authorization=BearereyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxODc5ODgwODU2OCIsImNyZWF0ZWQiOjE2MjE0MzM3NDAyNDQsImV4cCI6MTc0MTQzMzc0MH0.ksN3ilscjcRclwXHfXC5rMEAVirT50Qxzc9u5hZiTaLlZk8mwahJfUuvc5bonnXFhJYr69k9gaWVLgh10M3KpQ'
-			
+
+		this.$u.api.get_share_img().then(res => {
+			console.log('res.data',res.data)
 			var context = uni.createCanvasContext('my_qr')
 			context.drawImage('/static/image/share@2x.png', 0, 0, 341, 567)
-			context.drawImage(imgUrl, 88, 201, 164, 164) 
+			context.drawImage(res.data+'?Authorization=Bearer' + token, 88, 201, 164, 164) 
 			context.draw()
 			setTimeout(function () {
 			    uni.hideLoading();
 			}, 1500);
+		})
 		},
 		methods: {
 			download_erweima:function(){

@@ -42,32 +42,33 @@
 				}
 				let that = this
 				const app = getApp()
-				let userInfo = app.globalData.userInfo || {
-					"gender": 0,
-					"city": "",
-					"province": "",
-					"country": "",
-					"headimgurl": "",
-					"openid": "oRrdQt6Tau75ETteYhNJz5-m1qO4",
-					"nickname": "旋风",
-					"avatarurl": "",
-					"unionid": "oU5Yyt4oGlJqTXaVpmhXo21nGWuk",
-					"id": 4,
-					"userNo": this.mobile,
-					"username": null,
-					"realname": null,
-					"headPortrait": "",
-					"unionId": "oU5Yyt4oGlJqTXaVpmhXo21nGWuk",
-					"password": null,
-					"tradepwd": null,
-					"status": 1,
-					"mobile": this.mobile,
-					"regtime": null,
-					"iscase": 1,
-					"isreal": null,
-					"logintime": null,
-					"loginIp": "43.250.201.119"
-				}
+				let userInfo = app.globalData.userInfo
+				// {
+				// 	"gender": 0,
+				// 	"city": "",
+				// 	"province": "",
+				// 	"country": "",
+				// 	"headimgurl": "",
+				// 	"openid": "oRrdQt6Tau75ETteYhNJz5-m1qO4",
+				// 	"nickname": "旋风",
+				// 	"avatarurl": "",
+				// 	"unionid": "oU5Yyt4oGlJqTXaVpmhXo21nGWuk",
+				// 	"id": 4,
+				// 	"userNo": this.mobile,
+				// 	"username": null,
+				// 	"realname": null,
+				// 	"headPortrait": "",
+				// 	"unionId": "oU5Yyt4oGlJqTXaVpmhXo21nGWuk",
+				// 	"password": null,
+				// 	"tradepwd": null,
+				// 	"status": 1,
+				// 	"mobile": this.mobile,
+				// 	"regtime": null,
+				// 	"iscase": 1,
+				// 	"isreal": null,
+				// 	"logintime": null,
+				// 	"loginIp": "43.250.201.119"
+				// }
 
 				that.$u.api.wxLogin({
 					headPortrait: userInfo.headimgurl,

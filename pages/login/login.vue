@@ -48,12 +48,12 @@
 					})
 					return
 				}
-				if(true){
-					uni.navigateTo({
-						url:'/pages/login/mobile/mobile'
-					})
-					return;
-				}
+				// if(true){
+				// 	uni.navigateTo({
+				// 		url:'/pages/login/mobile/mobile'
+				// 	})
+				// 	return;
+				// }
 				
 				//微信登录
 				uni.login({
@@ -75,6 +75,7 @@
 								}
 							}
 							app.globalData.userInfo = userInfo
+							uni.setStorageSync('userInfo', userInfo)
 						  console.log('userInfo', userInfo)
 							uni.navigateTo({
 								url:'/pages/login/mobile/mobile'

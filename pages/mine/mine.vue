@@ -168,6 +168,7 @@
 									if( res.code == 0 ){
 										console.log('用户',res)
 										this.userInfo= res.data
+										uni.setStorageSync('userInfo', res.data)
 									}
 				})
 			},
@@ -197,7 +198,7 @@
 			//路由 - 提现
 			routewithdraw:function(){
 				uni.navigateTo({
-					url:"wallet/withdraw-deposit?amount=" + this.userInfo.account.accountAvailableAmount
+					url:"wallet/withdraw-deposit?amount=" + this.user.accountAvailableAmount
 				})
 			},
 			//路由 - 提现

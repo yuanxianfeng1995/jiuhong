@@ -10,16 +10,6 @@
 				<u-input v-model="form.money" name="money"></u-input>
 			</view>
 		</view>
-		<view class="pay_name">
-			<view class="pay_item">
-				<u-input v-model="form.aliAccount" name="aliAccount" placeholder="请输入需要提现的支付宝账号"></u-input>
-				<u-icon name="zhifubao-circle-fill" size="40" color="#532DA3"></u-icon>
-			</view>
-			<view class="pay_item">
-				<u-input v-model="form.trueName" name="trueName" placeholder="对应支付宝真实姓名"></u-input>
-				<u-icon name="account-fill" size="40" color="#532DA3"></u-icon>
-			</view>
-		</view>
 		<view class="warn">
 			<text>规则说明</text>
 		</view>
@@ -37,8 +27,6 @@
 				integral:'',
 				form:{
 					money:'',
-					aliAccount:'',
-					trueName:''
 				}
 			}
 		},
@@ -66,38 +54,16 @@
 					})
 					return
 				}
-				if( !that.form.aliAccount ){
-					uni.showToast({
-						title:'请填写支付宝账号',
-						icon:'none'
-					})
-					return
-				}
-				if( !that.form.trueName ){
-					uni.showToast({
-						title:'请填写姓名',
-						icon:'none'
-					})
-					return
-				}
-				if( parseFloat(that.form.money) > parseFloat(that.amount) ){
-					console.log(  that.form.money, that.amount )
-					uni.showToast({
-						title:'余额不足',
-						icon:'none'
-					})
-					return
-				}
+				// if( parseFloat(that.form.money) > parseFloat(that.amount) ){
+				// 	console.log(  that.form.money, that.amount )
+				// 	uni.showToast({
+				// 		title:'余额不足',
+				// 		icon:'none'
+				// 	})
+				// 	return
+				// }
 				if( !this.form.money ){
 					this.$u.toast('请填写提现金额')
-					return
-				}
-				if( !this.form.aliAccount ){
-					this.$u.toast('请填写支付宝账户')
-					return
-				}
-				if( !this.form.trueName ){
-					this.$u.toast('请填写真实姓名')
 					return
 				}
 				uni.navigateTo({

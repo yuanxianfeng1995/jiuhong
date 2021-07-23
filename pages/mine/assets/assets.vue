@@ -103,51 +103,54 @@
 			//用户信息
 			const eventChannel = this.getOpenerEventChannel()
 			eventChannel.on('detail', function(data) {
-				console.log('获取详情数据222', data)
-				
-				const obj=data.data
-				const list = that.list
-				that.detail = obj
-				that.list[0]={
-					...list[0],
-					available: obj.accountAvailableAmount,
-					frozen: obj.accountFreezeAmount,
-					cumulative: obj.accountAmount
-				}
-				that.list[0]={
-					...list[0],
-					available: obj.accountAvailableAmount,
-					frozen: obj.accountFreezeAmount,
-					cumulative: obj.accountAmount
-				}
-				that.list[1]={
-					...list[1],
-					available: obj.accountAvailableIntegral,
-					frozen: obj.accountFreezeIntegral,
-					cumulative: obj.accountIntegral
-				}
-				that.list[2]={
-					...list[2],
-					available: obj.accountAvailableCoupon,
-					frozen: obj.accountFreezeCoupon,
-					cumulative: obj.accountCoupon
-				}
-				that.list[3]={
-					...list[3],
-					available: obj.accountShareBonus,
-					frozen: obj.accountFreezeShareBonus,
-					cumulative: obj.accountTotalShareBonus
-				}
-				that.list[4]={
-					...list[4],
-					available: obj.accountShareBonus,
-					frozen: obj.accountFreezeShareBonus,
-					cumulative: obj.accountTotalShareBonus
-				}
-				that.list[5]={
-					...list[5],
-					available: obj.accountShopvoucher,
-					cumulative: obj.accountTotalShareBonus
+				console.log('获取详情数据222', data.data)
+				try{
+					const obj=data.data
+					let list = JSON.parse(JSON.stringify(that.list)) 
+					list[0]={
+						...list[0],
+						available: obj.accountAvailableAmount,
+						frozen: obj.accountFreezeAmount,
+						cumulative: obj.accountAmount
+					}
+					list[0]={
+						...list[0],
+						available: obj.accountAvailableAmount,
+						frozen: obj.accountFreezeAmount,
+						cumulative: obj.accountAmount
+					}
+					list[1]={
+						...list[1],
+						available: obj.accountAvailableIntegral,
+						frozen: obj.accountFreezeIntegral,
+						cumulative: obj.accountIntegral
+					}
+					list[2]={
+						...list[2],
+						available: obj.accountAvailableCoupon,
+						frozen: obj.accountFreezeCoupon,
+						cumulative: obj.accountCoupon
+					}
+					list[3]={
+						...list[3],
+						available: obj.accountShareBonus,
+						frozen: obj.accountFreezeShareBonus,
+						cumulative: obj.accountTotalShareBonus
+					}
+					list[4]={
+						...list[4],
+						available: obj.accountShareBonus,
+						frozen: obj.accountFreezeShareBonus,
+						cumulative: obj.accountTotalShareBonus
+					}
+					list[5]={
+						...list[5],
+						available: obj.accountShopvoucher,
+						cumulative: obj.accountTotalShareBonus
+					}
+					that.list=list
+				}catch(e){
+					console.log('catch',e)
 				}
 			})
 		},
