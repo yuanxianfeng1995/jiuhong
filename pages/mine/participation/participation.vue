@@ -120,20 +120,20 @@
 			//路由 - 购买余额
 			routeBuyBalance:function(){
 				let that = this
-				if( that.ptUserAccountBonus.currentBonus <= 0 ){
+				if( that.user.accountShareBonus <= 0 ){
 					this.$u.toast('当前可用分红不足');
 					return
 				}
 				uni.showModal({
 				    title: '提示',
-				    content: '您正在将' + that.ptUserAccountBonus.currentBonus + '分红转为余额操作',
+				    content: '您正在将' + that.user.accountShareBonus + '分红转为余额操作',
 				    success: function (res) {
 				        if (res.confirm) {
 				            console.log('用户点击确定');
 							that.$u.api.bonus_balance({
-								amount:that.ptUserAccountBonus.currentBonus
+								amount:that.user.accountShareBonus
 							}).then(res => {
-								if( res.code == 200 ){
+								if( res.code == 0 ){
 									uni.showToast({
 										title:'操作成功'
 									})
@@ -155,18 +155,18 @@
 			//路由 - 支付宝购买
 			routeBuyAlipay:function(){
 				let that = this
-				if( that.ptUserAccountBonus.currentBonus <= 0 ){
+				if( that.user.accountShareBonus <= 0 ){
 					this.$u.toast('当前可用分红不足');
 					return
 				}
 				uni.showModal({
 				    title: '提示',
-				    content: '您正在将' + that.ptUserAccountBonus.currentBonus + '分红转为积分操作',
+				    content: '您正在将' + that.user.accountShareBonus + '分红转为积分操作',
 				    success: function (res) {
 				        if (res.confirm) {
 				            console.log('用户点击确定');
 							that.$u.api.bonus_integral({
-									amount:that.ptUserAccountBonus.currentBonus
+									amount:that.user.accountShareBonus
 							}).then(res => {
 								if( res.code == 200 ){
 									uni.showToast({

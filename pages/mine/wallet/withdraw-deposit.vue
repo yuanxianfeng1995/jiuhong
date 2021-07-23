@@ -1,5 +1,25 @@
 <template>
 	<view class="contain">
+		<view class="header">
+			<view class="warn_message" v-if="accountList.length===0">
+				<text>您当前没有添加收款账户，请完善收款账户后再下单</text>
+			</view>
+		</view>
+		<view class="account">
+			<view class="none" v-if="accountList.length|| !chooseAddress" @click="routeAccount">
+				<image src="/static/icon/add@2x.png"></image>
+				<text>手动添加收款账户</text>
+				<u-icon name="arrow-right" size="24"></u-icon>
+			</view>
+			<view class="account_detail" v-else @click="routeaccount">
+				<u-icon name="/static/icon/local@2x.png" size="40"></u-icon>
+				<view class="detail_text">
+					<text class="name">{{chooseaccount.receiverName}} {{chooseaccount.receiverPhone}}</text>
+					<text>{{chooseaccount.receiverProvince}} {{chooseaccount.receiverCity}}{{chooseaccount.receiverArea}} {{chooseaccount.receiveraccount}}</text>
+				</view>
+				<u-icon name="arrow-right" size="30"></u-icon>
+			</view>
+		</view>
 		<view class="form">
 			<view class="title">
 				<text>请输入提现金额（100的整数倍）</text>
@@ -33,8 +53,34 @@
 		onLoad:function(option){
 			console.log('可用余额',option.amount)
 			this.amount = option.amount
+			this.getAccountList()
 		},
 		methods: {
+			routeAccount: function() {
+				let that = this
+				uni.navigateTo({
+					url: '/pages/mine/account-maintenance/account-maintenance',
+					events: {
+						chooseAccount: function(data) {
+							that.chooseAccount = data.data||{}
+						},
+					},
+				})
+			},
+			getAccountList: function() {
+				let that = this
+				this.$u.api.getAccountList().then(res => {
+					console.log(res);
+					if (res.code == 0) {
+						that.accountList = res.data.map(item=>{
+							return {
+								...item,
+								accounttypeName: that.dictionaries[item.accounttype]
+							}
+						})
+					}
+				})
+			},
 			submit:function(){
 				console.log(this.form)
 				let that = this
@@ -140,4 +186,35 @@
 	color: #8f8f8f;
 	font-size: 28rpx;
 }
+.account .none image {
+		width: 40rpx;
+		height: 40rpx;
+	}
+
+	.account .none text {
+		flex: 1;
+		padding-left: 32rpx;
+		font-size: 24rpx;
+		color: #090a0f;
+		font-weight: 600;
+	}
+
+	.account_detail {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+	}
+
+	.account_detail .detail_text {
+		font-size: 28rpx;
+		color: #606060;
+		display: flex;
+		flex-direction: column;
+		padding: 0 32rpx;
+	}
+
+	.account_detail .detail_text text {
+		padding: 15rpx 0;
+	}
+
 </style>

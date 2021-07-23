@@ -3,7 +3,7 @@
 		<view class="content">
 			<view class="role">
 				<view class="role_title">
-					<text>您当前可以投入分红的开团券数量为：{{user.account.accountAvailableCoupon}}</text>
+					<text>您当前可以投入分红的开团券数量为：{{user.accountAvailableCoupon}}</text>
 				</view>
 				<u-radio-group v-model="value" active-color="#532DA3" @change="radioChange">
 					<view class="role_item" v-for="(item,index) in shareBonusNumArr" :key="index">
