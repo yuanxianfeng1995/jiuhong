@@ -4,17 +4,18 @@
 			<u-radio-group v-model="radioValue" size="40">
 				<view class="item" v-for="(item,index) in accountList" :key="index">
 					<view class="line_1" @click="chooseAddress(item)">
-						<u-icon name="/static/icon/local@2x.png" size="40"></u-icon>
+						<u-icon name="/static/icon/yh.png" size="40"></u-icon>
 						<view class="item_detail">
 							<text>姓名:{{item.name}}</text>
 							<text>收货人:{{item.consignee}}</text>
-							<text>账户类型:{{list.accounttypeName}}</text>
-							<text>开户行:{{list.bankdeposit}}</text>
-							<text>提现账号:{{list.accountnumber}}</text>
+							<text>账户类型:{{item.accounttypeName}}</text>
+							<text>开户行:{{item.bankdeposit}}</text>
+							<text>提现账号:{{item.accountnumber}}</text>
 						</view>
 						<u-icon name="/static/icon/sure@2x.png" size="40" v-if="false"></u-icon>
 					</view>
 					<view class="line_2">
+						<view></view>
 						<view class="btn">
 							<text @click="edit(item)">修改</text>
 							<!-- <text @click="deleteAddress(item)">删除</text> -->
@@ -77,7 +78,7 @@
 					accountnumber: null,
 					accounttype: 1,
 					bankdeposit: null,
-					accounttypeName: '支付宝',
+					accounttypeName: null,
 					consignee: null,
 					name: null
 				},
@@ -94,6 +95,7 @@
 						label: '银行卡'
 					}
 				],
+				dictionaries: {1:'支付宝',2:'微信',3:'银行卡'},
 				regionShow: false,
 				accountList: [],
 				//是否是选择
@@ -125,7 +127,12 @@
 				this.$u.api.getAccountList().then(res => {
 					console.log(res);
 					if (res.code == 0) {
-						that.accountList = res.data
+						that.accountList = res.data.map(item=>{
+							return {
+								...item,
+								accounttypeName: that.dictionaries[item.accounttype]
+							}
+						})
 					}
 				})
 			},
@@ -230,6 +237,7 @@
 				console.log('userInfo', userInfo)
 				that.$u.api.saveCollectAccount(form).then((res) => {
 					if (res.code === 0) {
+						that.getAccountList()
 						uni.showToast({
 							title: '操作成功'
 						})
@@ -245,6 +253,17 @@
 			regionChange: function(e) {
 				this.form.accounttype = e[0].value
 				this.form.accounttypeName = e[0].label
+			},
+			//事件 - 选择地址
+			chooseAddress:function(item){
+				 console.log(item)
+				 if( this.chooseRadio ){
+					 const eventChannel = this.getOpenerEventChannel()
+					 eventChannel.emit('chooseAddressEmit', {data: item});
+					 uni.navigateBack({
+					 	delta:1
+					 })
+				 }
 			},
 		}
 	}
