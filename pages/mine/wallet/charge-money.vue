@@ -44,19 +44,29 @@
 				this.$u.api.appPrePay({
 					amount:that.integral,
 				}).then(res => { 
-					if( res.code == 200 ){
-						let payData = JSON.parse(res.data)
-						console.log( JSON.parse(res.data) )
+					console.log('啊啊啊', res )
+					if( res.code == 0 ){
+						let payData = res.data
+						console.log('啊啊啊', res.data)
+						// "appId": "wxb3e0922f6bca0f4a",
+						// "timeStamp": "1627141024",
+						// "nonceStr": "GzefY0zaoyjsjRXe",
+						// "paySign": "F404433A04AE9B96B79012B145F29259",
+						// "signType": "MD5",
+						// "packageInfo": "Sign=WXPay",
+						// "prepayId": "wx24233704202122aeec4351da5ad2b80000",
+						// "partnerId": "1609309825",
+						// "formatSignType": "MD5"
 						uni.requestPayment({
 						    "provider": "wxpay", 
 						    "orderInfo": {
-						        "appid": payData.appid,  // 微信开放平台 - 应用 - AppId，注意和微信小程序、公众号 AppId 可能不一致
-						        "noncestr": payData.noncestr, // 随机字符串
+						        "appid": payData.appId,  // 微信开放平台 - 应用 - AppId，注意和微信小程序、公众号 AppId 可能不一致
+						        "noncestr": payData.nonceStr, // 随机字符串
 						        "package": "Sign=WXPay",        // 固定值
-						        "partnerid": payData.partnerid,      // 微信支付商户号
-						        "prepayid": payData.prepayid, // 统一下单订单号 
-						        "timestamp": payData.timestamp,        // 时间戳（单位：秒）
-						        "sign": payData.sign // 签名，这里用的 MD5 签名
+						        "partnerid": payData.partnerId,      // 微信支付商户号
+						        "prepayid": payData.prepayId, // 统一下单订单号 
+						        "timestamp": payData.timeStamp,        // 时间戳（单位：秒）
+						        "sign": payData.paySign // 签名，这里用的 MD5 签名
 						    },
 						    success(res) {
 								uni.hideLoading()
