@@ -129,9 +129,11 @@
 				    content: '您正在将' + that.user.accountShareBonus + '分红转为余额操作',
 				    success: function (res) {
 				        if (res.confirm) {
-				            console.log('用户点击确定');
+				      console.log('用户点击确定',that.user);
 							that.$u.api.bonus_balance({
-								amount:that.user.accountShareBonus
+								"bonus": that.user.accountShareBonus,
+								"remark": "",
+								"userId": that.user.userId
 							}).then(res => {
 								if( res.code == 0 ){
 									uni.showToast({
@@ -166,7 +168,9 @@
 				        if (res.confirm) {
 				            console.log('用户点击确定');
 							that.$u.api.bonus_integral({
-									amount:that.user.accountShareBonus
+									"bonus": that.user.accountShareBonus,
+									"remark": "",
+									"userId": that.user.userId
 							}).then(res => {
 								if( res.code == 200 ){
 									uni.showToast({

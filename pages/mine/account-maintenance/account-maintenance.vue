@@ -31,7 +31,7 @@
 			</view>
 		</view>
 		<view class="footer">
-			<button class="btn" type="default" @click="add()">新增收货地址</button>
+			<button class="btn" type="default" @click="add()">新增账户</button>
 		</view>
 		<u-popup v-model="formShow" mode="center" border-radius="12" width="632" :closeable="true">
 			<view class="form_content">
@@ -115,7 +115,7 @@
 			//如用户删掉所有地址，返回清空上一页选择
 			if (this.accountList.length == 0) {
 				const eventChannel = this.getOpenerEventChannel()
-				eventChannel.emit('chooseAddressEmit', {
+				eventChannel.emit('chooseAccount', {
 					data: {}
 				});
 			}
@@ -259,7 +259,7 @@
 				 console.log(item)
 				 if( this.chooseRadio ){
 					 const eventChannel = this.getOpenerEventChannel()
-					 eventChannel.emit('chooseAddressEmit', {data: item});
+					 eventChannel.emit('chooseAccount', {data: item});
 					 uni.navigateBack({
 					 	delta:1
 					 })

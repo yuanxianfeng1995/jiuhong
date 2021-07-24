@@ -57,7 +57,7 @@
 					 remark: "",
 					 userId: userInfo.id
 				}).then( res => {
-					if( res.code == 200 ){
+					if( res.code == 0 ){
 						uni.hideLoading()
 						uni.showToast({
 							title:'操作成功'

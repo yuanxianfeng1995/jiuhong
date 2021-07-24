@@ -18,21 +18,21 @@
 				<text>规则说明</text>
 			</view> -->
 			<view class="tag">
-				<view :class="['tag_item',tagCurrent==1 ? 'tag_active' : '']" @click="tagChange(1)">
+				<view :class="['tag_item',tagCurrent==0 ? 'tag_active' : '']" @click="tagChange(0)">
 					<text>获得记录</text>
-					<view :class="['tag_line',tagCurrent==1 ? 'tag_line_active' : '']"></view>
+					<view :class="['tag_line',tagCurrent==0 ? 'tag_line_active' : '']"></view>
 				</view>
-				<view :class="['tag_item',tagCurrent==2 ? 'tag_active' : '']" @click="tagChange(2)">
+				<view :class="['tag_item',tagCurrent==1 ? 'tag_active' : '']" @click="tagChange(1)">
 					<text>使用记录</text>
-					<view :class="['tag_line',tagCurrent==2 ? 'tag_line_active' : '']"></view>
+					<view :class="['tag_line',tagCurrent==1 ? 'tag_line_active' : '']"></view>
 				</view>
 			</view>
 			<view class="list">
-				<view class="item" v-for="(item,index) in userCenter_integral" :key="index" v-if="tagCurrent == 1">
+				<view class="item" v-for="(item,index) in userCenter_integral" :key="index" v-if="tagCurrent == 0">
 					<text>{{item.createtime}} {{item.memo}}</text>
 					<text>+{{item.amount}}</text>
 				</view>
-				<view class="item" v-for="(item,index) in userCenter_integral" :key="index" v-if="tagCurrent == 2">
+				<view class="item" v-for="(item,index) in userCenter_integral" :key="index" v-if="tagCurrent == 1">
 					<text>{{item.createtime}} {{item.memo}}</text>
 					<text>{{item.amount}}</text>
 				</view>
@@ -46,7 +46,7 @@
 	export default {
 		data() {
 			return {
-				tagCurrent:1,
+				tagCurrent:0,
 				user:'',
 				current:1,
 				userCenter_integral:[],
@@ -56,7 +56,7 @@
 		},
 		onLoad(option) {
 			this.user = uni.getStorageSync('user');
-			this.get_userCenter_integral(1)
+			this.get_userCenter_integral(0)
 		},
 		onShow() {
 			this.get_userCenter()
@@ -65,10 +65,10 @@
 			console.log(this.reachBottomOpen)
 			if( this.reachBottomOpen ){
 				this.current = this.current + 1
-				if( this.tagCurrent == 1 ){
-					this.get_userCenter_integral(1)
+				if( this.tagCurrent == 0 ){
+					this.get_userCenter_integral(0)
 				}else{
-					this.get_userCenter_integral(2)
+					this.get_userCenter_integral(1)
 				}
 			}
 		},
@@ -109,10 +109,10 @@
 				this.current = 0
 				this.userCenter_integral = []
 				this.reachBottomOpen = true
-				if( index == 1 ){
-					this.get_userCenter_integral(1)
+				if( index == 0 ){
+					this.get_userCenter_integral(0)
 				}else{
-					this.get_userCenter_integral(2)
+					this.get_userCenter_integral(1)
 				}
 			},
 			//路由 - 购买余额

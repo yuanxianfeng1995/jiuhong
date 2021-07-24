@@ -2,3 +2,5 @@
 /unpackage/dist
 /unpackage/release
 /unpackage/cache
+/node_modules
+/resources

@@ -59,6 +59,13 @@
 			}
 		},
 		{
+			"path": "pages/login/verification/verification",
+			"style": {
+				"navigationBarTitleText": "手机验证",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/login/privacy/privacy",
 			"style": {
 				"navigationBarTitleText": "用户注册协议",

@@ -71,7 +71,7 @@
 						title: '正在获取验证码'
 					})
 					let that = this
-					that.$u.api.get_smsLogin({
+					that.$u.api.sendVerifyCode({
 						mobile: that.mobile,
 						// mobile:'18798808568',
 						method: 2,
@@ -107,8 +107,11 @@
 				})
 				that.$u.api.cashMoney({
 					amount: parseInt(that.form.money),
+					code: that.code,
+					mobile: that.mobile,
 					remark: "",
-					userId: userInfo.id
+					userId: userInfo.id,
+					walletid: that.form.walletid,
 					}).then(res => {
 					if (res.code == 0) {
 						uni.hideLoading()

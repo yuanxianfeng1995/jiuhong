@@ -18,7 +18,7 @@
 					<text>当前持有分红的产品份数如下：</text>
 				</view>
 				<view class="role_item" v-for="(item,index) in shareBonusNumArr" :key="index">
-					<text>投入{{item.couponNumber}}张开团券，累计分红{{item.integralNumber}}积分出局</text>
+					<text>投入{{item.coupounum}}张开团券，累计分红{{item.accountsum}}积分出局</text>
 					<text>1份</text>
 				</view>
 			</view>
@@ -64,7 +64,7 @@
 		},
 		onShow() {
 			this.get_userCenter()
-			// this.currenthold()
+			this.currenthold()
 		},
 		onReachBottom:function(){
 			if( this.reachBottomOpen ){
@@ -90,23 +90,16 @@
 			//当前分红产品份数
 			currenthold:function(type){
 				let that = this
-				this.$u.api.currenthold({
-					current:0,
-					size:50
-				}).then(res => {
+				this.$u.api.currenthold().then(res => {
 					if( res.code == 0 ){
-						that.shareBonusNumArr = res.data.records
+						that.shareBonusNumArr = res.data
 					}
 				})
 			},
 			//分红记录
 			couponList:function(optype){
 				let that = this
-				this.$u.api.couponList({
-					size: that.current,
-					optype: optype,
-					pageSize: 30
-				}).then(res => {
+				this.$u.api.couponList().then(res => {
 					if( res.code == 0 ){
 						that.couponListArr = [...that.couponListArr,...res.data]
 						if( res.data.length < 30 ){

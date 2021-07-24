@@ -6,16 +6,19 @@
 			</view>
 		</view>
 		<view class="account">
-			<view class="none" v-if="accountList.length|| !chooseAddress" @click="routeAccount">
+			<view class="none" v-if="!chooseaccount" @click="routeAccount">
 				<image src="/static/icon/add@2x.png"></image>
 				<text>手动添加收款账户</text>
 				<u-icon name="arrow-right" size="24"></u-icon>
 			</view>
-			<view class="account_detail" v-else @click="routeaccount">
-				<u-icon name="/static/icon/local@2x.png" size="40"></u-icon>
+			<view class="account_detail" v-else @click="routeAccount">
 				<view class="detail_text">
-					<text class="name">{{chooseaccount.receiverName}} {{chooseaccount.receiverPhone}}</text>
-					<text>{{chooseaccount.receiverProvince}} {{chooseaccount.receiverCity}}{{chooseaccount.receiverArea}} {{chooseaccount.receiveraccount}}</text>
+						<u-icon name="/static/icon/yh.png" size="40"></u-icon>
+					<view class="item_detail">
+						<text>姓名:{{chooseaccount.name}}</text>
+						<text>账户类型:{{chooseaccount.accounttypeName}}</text>
+						<text>提现账号:{{chooseaccount.accountnumber}}</text>
+					</view>
 				</view>
 				<u-icon name="arrow-right" size="30"></u-icon>
 			</view>
@@ -46,8 +49,12 @@
 				amount:0,
 				integral:'',
 				form:{
-					money:'',
-				}
+					money:null,
+					walletid: null
+				},
+				chooseaccount: null,
+				accountList: [],
+				dictionaries: {1:'支付宝',2:'微信',3:'银行卡'},
 			}
 		},
 		onLoad:function(option){
@@ -59,10 +66,13 @@
 			routeAccount: function() {
 				let that = this
 				uni.navigateTo({
-					url: '/pages/mine/account-maintenance/account-maintenance',
+					url: '/pages/mine/account-maintenance/account-maintenance?type=choose',
 					events: {
 						chooseAccount: function(data) {
-							that.chooseAccount = data.data||{}
+							console.log('chooseAccount',data)
+							that.chooseaccount = data.data||{}
+							that.form.walletid=that.chooseaccount.id
+							console.log('that.chooseaccount',that.chooseaccount,!that.chooseaccount)
 						},
 					},
 				})
@@ -132,6 +142,18 @@
 	flex-direction: column;
 	justify-content: space-between;
 }
+.item_detail {
+		flex: 1;
+		font-size: 28rpx;
+		color: #000000;
+		padding: 0 32rpx;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.item_detail text {
+		padding: 15rpx 0;
+	}
 .title{
 	font-size: 30rpx;
 	color: #979797;
@@ -186,6 +208,11 @@
 	color: #8f8f8f;
 	font-size: 28rpx;
 }
+.account .none{
+	display: flex;
+	padding: 40rpx;
+	align-items: center;
+}
 .account .none image {
 		width: 40rpx;
 		height: 40rpx;
@@ -203,13 +230,18 @@
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
+		width: 680rpx;
+		margin: 30rpx auto;
+		padding: 38rpx 34rpx;
+		background-color: #FFFFFF;
 	}
 
 	.account_detail .detail_text {
 		font-size: 28rpx;
 		color: #606060;
 		display: flex;
-		flex-direction: column;
+		align-items: center;
+		justify-content: space-between;
 		padding: 0 32rpx;
 	}
 

@@ -1,8 +1,8 @@
 // 此处第二个参数vm，就是我们在页面使用的this，你可以通过vm获取vuex等操作，更多内容详见uView对拦截器的介绍部分：
 // https://uviewui.com/js/http.html#%E4%BD%95%E8%B0%93%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%EF%BC%9F
 const install = (Vue, vm) => {
-	const url='/web'
-	//const url=''
+	//const url='/web'
+	const url=''
 	/** 
 	 * 用户管理
 	 * --------------------------------------------------------------------
@@ -11,6 +11,9 @@ const install = (Vue, vm) => {
 	let get_smsLogin = (params = {}) => vm.$u.get(url+'/sms/sendCode', params);	//获取短信验证码
 	let regist = (params = {}) => vm.$u.post(url+'/member/regist', params);	//注册
 	let wxLogin = (params = {}) => vm.$u.post(url+'/member/wxLogin', params);	//登录
+	
+	let sendModifyPwdCode = (params = {}) => vm.$u.get(url+'/sms/sendModifyPwdCode', params);	//发送修改密码验证码
+	let sendVerifyCode = (params = {}) => vm.$u.get(url+'/sms/sendVerifyCode', params);	//发送验证身份验证码
 	/** 
 	 * 拼团
 	 * --------------------------------------------------------------------------
@@ -61,13 +64,16 @@ const install = (Vue, vm) => {
 	let get_ptOrder_list = (params = {}) => vm.$u.get(url+'/group/getMemberGroupOrderList', params);	//全部订单	
 	let ptUserAccount_bonus = (params = {}) => vm.$u.get('/user/ptUserAccount/bonus', params);	//当前可用分红累计分红冻结分红
 	let ptUserAccount_bonusRecord = (params = {}) => vm.$u.get(url+'/member/getMemberBonuslogs', params);	//分红记录
-	let bonus_balance = (params = {}) => vm.$u.get('/user/ptUserAccount/bonus/balance', params);	//分红转余额
-	let bonus_integral = (params = {}) => vm.$u.get('/user/ptUserAccount/bonus/integral', params);	//分红转积分
+	let bonus_balance = (params = {}) => vm.$u.post(url+'/member/shareBonusExchangeAmount', params);	//分红转余额
+	let bonus_integral = (params = {}) => vm.$u.post(url+'/member/shareBonusExchangeIntegral', params);	//分红转积分
 	let couponList = (params = {}) => vm.$u.get(url+'/member/getMemberCouponLogs', params);	//券记录
-	let shareBonusNum = (params = {}) => vm.$u.get('/user/ptUserAccount/shareBonusNum', params);	//当前分红产品份数
-	let currenthold = (params = {}) => vm.$u.get('/user/ptUserAccount/currenthold', params);	//当前持有分红产品份数
-	let bonusProduct = (params = {}) => vm.$u.post('/user/ptUserAccount/bonusProduct?id=' + params.id, params);	//投入分红产品
+	let shareBonusNum = (params = {}) => vm.$u.get(url+'/config/getUserBounsLevelList', params);	//获取分红等级列表
+	let currenthold = (params = {}) => vm.$u.get(url+'/member/getMemberBounsExchangeList', params);	//获取会员分红资格记录列表
+	let bonusProduct = (params = {}) => vm.$u.get(url+'/member/bounsExchange', params);	//兑换分红资格
 	let get_share_img = (params = {}) => vm.$u.get(url+'/member/getShareImg', params);	//获得推广二维码
+  let modifyPwd = (params = {}) => vm.$u.post(url+'/member/modifyPwd', params);	//修改密码
+  let getMemberBounsLevel = (params = {}) => vm.$u.get(url+'/member/getMemberBounsLevel', params);	//获取会员分红资格级别
+
 
 	//粉丝管理
 	let get_ptFans_list = (params = {}) => vm.$u.get(url+'/member/getMemberFansList', params);	//粉丝列表
@@ -82,7 +88,7 @@ const install = (Vue, vm) => {
 	let cashMoney =  (params = {}) => vm.$u.post(url+'/member/withdraw', params);	//提现
 	let chargeList =  (params = {}) => vm.$u.post('/WxPay/chargeList', params);	//充值记录
 	let cashList =  (params = {}) => vm.$u.post('/WxPay/cashList', params);	//提现记录
-	let balanceBuy =  (params = {}) => vm.$u.post('/user/ptUserAccount/balanceBuy', params, { "Content-Type": "application/x-www-form-urlencoded" });	//余额购买
+	let balanceBuy =  (params = {}) => vm.$u.post(url+'/member/amountExchangeIntegral', params, { "Content-Type": "application/x-www-form-urlencoded" });	//余额购买
 	let integralToBalance =  (params = {}) => vm.$u.post(url+'/member/integralExchangeAmount', params);	//积分转余额
 	//版本号
 	let getVersionApp =  (params = {}) => vm.$u.get('/group/ptVersion/update', params);	//积分转余额
@@ -98,6 +104,8 @@ const install = (Vue, vm) => {
 		getVersionApp,
 		integralToBalance,
 		currenthold,
+		sendModifyPwdCode,
+		sendVerifyCode,
 		bonusProduct,
 		shareBonusNum,
 		couponList,
@@ -155,7 +163,9 @@ const install = (Vue, vm) => {
 		saveCollectAccount,
 		getAccountList,
 		getAccountDetail,
-		updateCollectAccount
+		updateCollectAccount,
+		modifyPwd,
+		getMemberBounsLevel
 	};
 }
 

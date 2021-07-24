@@ -9,11 +9,11 @@
 			<view class="form">
 				<view class="tel">
 					<text>密码</text>
-					<input class="input" v-model="password" maxlength="11" type="password" placeholder="请输入密码"/>
+					<input class="input" v-model="password" maxlength="11" type="password" placeholder="请输入密码" />
 				</view>
 				<view class="tel">
 					<text>确认密码</text>
-					<input class="input" v-model="password1" maxlength="11" type="password" placeholder="请输入密码"/>
+					<input class="input" v-model="password1" maxlength="11" type="password" placeholder="请输入密码" />
 				</view>
 			</view>
 		</view>
@@ -30,18 +30,61 @@
 			return {
 				password: '',
 				password1: '',
+				code: '',
+				mobile: '',
+				delta: 1
 			}
 		},
-		onLoad(option) {},
+		onLoad(option) {
+			this.code = option.code
+			this.mobile = option.mobile
+			this.delta=option.delta
+		},
 		methods: {
 			register() {
-				if (this.password.length<6) {
+				const that = this;
+				if (that.password.length < 6) {
 					wx.showToast({
 						title: '密码输入最少六位',
 						icon: 'none'
 					})
 					return
 				}
+				if (that.password !== that.password1) {
+					wx.showToast({
+						title: '密码输入不一致',
+						icon: 'none'
+					})
+					return
+				}
+				const userInfo = uni.getStorageSync('userInfo') || {};
+				let params = {
+					"password": that.password,
+				}
+				userInfo.id?params.userId=userInfo.id:null
+				if (that.code) {
+					params = {
+						...params,
+						code: that.code,
+						mobile: that.mobile,
+					}
+				}
+
+				that.$u.api.modifyPwd(params).then((res) => {
+					if (res.code == 0) {
+						uni.showToast({
+							title: '密码修改成功'
+						})
+						setTimeout(() => {
+							uni.navigateBack({
+								delta: that.delta
+							})
+						}, 1000)
+					} else {
+						that.$u.toast(res.msg);
+					}
+				})
+
 			},
 		}
 	}
@@ -105,11 +148,13 @@
 		justify-content: flex-end;
 	}
 
-	.bottom .btn {
-		width: 40%;
-		height: 60rpx;
-		line-height: 60rpx;
-		color: #FFFFFF;
+	.bottom .btn{
+		width: 680rpx;
+		height: 120rpx;
 		background: #532da3;
+		border-radius: 20rpx;
+		padding: 0;
+		color: #FFFFFF;
+		line-height: 120rpx;
 	}
 </style>

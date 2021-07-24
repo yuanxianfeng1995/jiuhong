@@ -46,8 +46,11 @@
 					})
 					return
 				}
+				const userInfo= uni.getStorageSync('userInfo');
 				this.$u.api.balanceBuy({
-					balanceAmount:that.integral
+					"amount": that.integral,
+					"remark": "",
+					"userId": userInfo.id
 				}).then( res => {
 					if( res.code == 200 ){
 						uni.showToast({

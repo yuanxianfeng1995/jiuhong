@@ -17,6 +17,7 @@
 		<view class="bottom">
 			<!-- <button class="btn" @click="prev">上一步</button> -->
 			<button class="btn" @click="register">完成</button>
+			<text class="forget-password" @click="forgetPassword">忘记密码</text>
 		</view>
 	</view>
 </template>
@@ -38,6 +39,11 @@
 			
 		},
 		methods: {
+			forgetPassword(){
+				uni.navigateTo({
+					url: '/pages/login/verification/verification?mobile='+(this.mobile || '')
+				})
+			},
 			prev() {
 				uni.navigateTo({
 					url: '../code/code?mobile='+(this.mobile || '')
@@ -148,13 +154,21 @@
 		padding: 0 36rpx 120rpx;
 		display: flex;
 		justify-content: flex-end;
+		align-items: flex-end;
+		position: relative;
 	}
 
 	.bottom .btn {
-		width: 40%;
-		height: 60rpx;
-		line-height: 60rpx;
+		width: 60%;
+		height: 80rpx;
+		line-height: 80rpx;
 		color: #FFFFFF;
 		background: #532da3;
+		
+	}
+	.forget-password{
+		position: absolute;
+		right: 30rpx;
+		top: 45rpx;
 	}
 </style>

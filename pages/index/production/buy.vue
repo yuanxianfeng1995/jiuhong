@@ -215,9 +215,6 @@
 						if(that.isOnLoad){
 							const obj=res.data.find(item=>item.isDefault===1);
 							console.log('obj',obj)
-							// <text class="name">{{chooseAddress.receiverName}} {{chooseAddress.receiverPhone}}</text>
-							// <text>{{chooseAddress.receiverProvince}} {{chooseAddress.receiverCity}}
-							// 	{{chooseAddress.receiverArea}} {{chooseAddress.receiverAddress}}</text>
 							that.chooseAddress=that.groupItem.groupNo&&obj?{
 								receiverName: obj.consignee,
 								receiverPhone: obj.tel,
