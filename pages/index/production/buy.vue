@@ -40,7 +40,7 @@
 					<text>说明</text>
 				</view>
 				<view class="value">
-					<text v-if="!groupItem.groupNo">该商品开团需开团券{{detail.coupon}}张</text>
+					<text v-if="!groupItem.groupNo">该商品开团需拼团券{{detail.coupon}}张</text>
 					<text v-else>该商品开团需拼团积分{{detail.ptPrice}}</text>
 				</view>
 			</view>
@@ -53,7 +53,7 @@
 				<view class="block_item">
 					<view class="title">
 						<image src="/static/icon/coupon.png"></image>
-						<text>开团券</text>
+						<text>拼团券</text>
 					</view>
 					<view class="value value_gray">
 						<text>已开启抵扣</text>
@@ -99,7 +99,7 @@
 				<text>客官您好，您当前积分不足，暂不可参团。</text>
 			</view>
 			<view class="handle" v-if="false">
-				<text>还需抵开团券1张</text>
+				<text>还需抵拼团券1张</text>
 				<button class="btn" disabled="true" type="default" v-if="true">立即开团</button>
 				<button class="btn open" disabled="true" type="default" v-else>立即开团</button>
 			</view>
@@ -116,7 +116,7 @@
 							<view class="result_text"><text>支付成功</text></view>
 							<view class="result_price">
 								<text v-if="groupItem.groupNo">积分抵扣 -{{detail.ptPrice}}</text>
-								<text v-else>开团券抵扣 -{{detail.coupon}}</text>
+								<text v-else>拼团券抵扣 -{{detail.coupon}}</text>
 							</view>
 						</view>
 						<view class="result_bottom" style="text-align: center;">
@@ -315,7 +315,7 @@
 					console.log('详情', that.detail)
 					if (that.detail.coupon > that.userInfo.accountAvailableCoupon) {
 						uni.showToast({
-							title: '您当前开团券不足，暂不可开团。',
+							title: '您当前拼团券不足，暂不可开团。',
 							icon: 'none'
 						})
 						return

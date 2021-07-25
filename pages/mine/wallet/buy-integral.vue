@@ -52,7 +52,7 @@
 					"remark": "",
 					"userId": userInfo.id
 				}).then( res => {
-					if( res.code == 200 ){
+					if( res.code == 0 ){
 						uni.showToast({
 							title:'购买成功'
 						})

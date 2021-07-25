@@ -73,6 +73,22 @@
 							<u-icon name="/static/icon/mine-menu2@2x.png" slot="icon" size="40"></u-icon>
 							<u-icon name="/static/icon/qr-icon.png" slot="right-icon" size="40"></u-icon>
 						</u-cell-item>
+						<u-cell-item title="充提记录" :title-style="menuListTitleStyle" :value="userInfo.fansCount"
+							:border-bottom="false" @click="routeCt">
+							<u-icon name="/static/icon/mine-menu7@2x.png" slot="icon" size="40"></u-icon>
+						</u-cell-item>
+						<u-cell-item title="分红兑换记录" :title-style="menuListTitleStyle" :value="userInfo.fansCount"
+							:border-bottom="false" @click="routeFh">
+							<u-icon name="/static/icon/mine-menu7@2x.png" slot="icon" size="40"></u-icon>
+						</u-cell-item>
+						<u-cell-item title="代理信息" :title-style="menuListTitleStyle" :value="userInfo.fansCount"
+							:border-bottom="false" @click="routeDl">
+							<u-icon name="/static/icon/mine-menu7@2x.png" slot="icon" size="40"></u-icon>
+						</u-cell-item>
+						<u-cell-item title="服务中心信息" :title-style="menuListTitleStyle" :value="userInfo.fansCount"
+							:border-bottom="false" @click="routeFw">
+							<u-icon name="/static/icon/mine-menu7@2x.png" slot="icon" size="40"></u-icon>
+						</u-cell-item>
 					</u-cell-group>
 				</view>
 				<view class="menu_list_block">
@@ -188,6 +204,26 @@
 						that.user = res.data
 						uni.setStorageSync('user', res.data);
 					}
+				})
+			},
+			routeCt(){
+				uni.navigateTo({
+					url: 'withdrawal-recharge/withdrawal-recharge'
+				})
+			},
+			routeFh(){
+				uni.navigateTo({
+					url: 'dividend-exchange/dividend-exchange'
+				})
+			},
+			routeDl(){
+				uni.navigateTo({
+					url: 'agent-info/agent-info'
+				})
+			},
+			routeFw(){
+				uni.navigateTo({
+					url: 'service-centre/service-centre'
 				})
 			},
 			//路由 - 余额

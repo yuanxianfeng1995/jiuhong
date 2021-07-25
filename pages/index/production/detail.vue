@@ -83,7 +83,7 @@
 			<view class="footer_handle">
 				<view class="explain" v-if="openAndJoin_num.surplusCreateGroupTotal == 0">
 					<view class="ask_text">
-						<text>如何获取开团券？</text>
+						<text>如何获取拼团券？</text>
 					</view>
 					<view class="visit_text">
 						<text @click="routeGroupInfo('open')">查看详情</text>
@@ -257,7 +257,7 @@
 			//随机拼团
 			routeBuy:function(){
 				let that = this
-				//没有开团券拦截
+				//没有拼团券拦截
 				// if( that.openAndJoin_num.surplusJoinGroupTotal <= 0 ){
 				// 	uni.showToast({
 				// 		title:'客官您好，您当前没有拼团次数，暂不可拼团。',

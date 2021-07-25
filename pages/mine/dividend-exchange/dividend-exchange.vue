@@ -1,21 +1,5 @@
 <template>
 	<view class="contain">
-		<view class="header">
-			<view class="price">
-				<text>￥{{account.accountAmount.toFixed(2)}}</text>
-			</view>
-			<view class="menu">
-				<view class="" style="width: 200rpx;">
-					<text>钱包可用余额</text>
-					<text>{{account.accountAvailableAmount.toFixed(2)}}</text>
-				</view>
-				<view class="menu_btn">
-					<button class="btn" type="default" size="mini" @click="routeIntegral">购买拼团积分</button>
-					<button class="btn" type="default" size="mini" @click="routeChargeMoney">充值</button>
-					<button class="btn" type="default" size="mini" @click="routewithdraw">提现</button>
-				</view>
-			</view>
-		</view>
 		<view class="content">
 			<!-- <view class="title">
 				<text>规则说明</text>
@@ -53,6 +37,7 @@
 	export default {
 		data() {
 			return {
+				chargeList_arr:[],
 				cashList_arr:[],
 				tabCurrent:0,
 				loadmoreShow:false,
@@ -111,13 +96,9 @@
 					this.chargeList(1)
 				}
 			},
-			chargeList:function(optype){ // optype:(0-收入，1-支出)
+			chargeList:function(optype){ 
 				let that = this
-				this.$u.api.get_member_amount_logs({ 
-					size: that.current,
-					optype: optype,
-					pageSize: 20
-				}).then(res=>{
+				this.$u.api.currenthold().then(res=>{
 					if( res.code == 0 ){
 						that.cashList_arr = [...that.cashList_arr,...res.data]
 						if( res.data.length < 20 ){
@@ -232,6 +213,7 @@
 .list .item text{
 	font-size: 28rpx;
 	color: #000000; 
+	flex: 1;
 }
 .list .item text.status{
 	font-weight: 600;

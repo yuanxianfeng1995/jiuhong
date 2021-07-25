@@ -46,8 +46,10 @@
 			},
 			passwordModification(){
 				console.log('passwordModification')
+				const userInfo=uni.getStorageSync('userInfo')
+				console.log('userInfo',userInfo)
 				uni.navigateTo({
-					url:'/pages/mine/password-modification/password-modification'
+					url: '/pages/login/verification/verification?mobile='+(userInfo.mobile || '')
 				})
 			},
 			accountMaintenance(){

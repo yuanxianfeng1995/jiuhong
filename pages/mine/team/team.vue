@@ -2,25 +2,33 @@
 	<view class="contain">
 		<view class="header">
 			<view class="line_1">
-				<text>直属粉丝：{{userInfo.ztnum}}，总 粉 丝：{{userInfo.teamnum}}</text>
-			</view>
-		</view>
-		<view class="content">
-			<view class="list">
-				<view class="item" v-for="(item,index) in ptFans_list" :key="index">
-					<view class="left">
-						<image :src="item.headPortrait" mode="aspectFill"></image>
-						<text>{{item.userNo}}<!--（ID:{{item.userNo}}）--></text>
-						<text>{{item.levelName}}</text>
-						<!-- <text>{{item.mobile}}</text> -->
-					</view>
-						<text>{{item.levelName}}</text>
-					<!-- <view class="right">
-						<text>参团30次</text>
-					</view> -->
+				<view class="line-item">
+					<text>直属会员：{{userInfo.ztnum}}</text>
+					<text>团队人数：{{userInfo.teamnum}}</text>
+				</view>
+				<view class="line-item">
+					<text>活跃人数：{{userInfo.ztactivenum}}</text>
+					<text>团队活跃人数：{{userInfo.teamactivenum}}</text>
 				</view>
 			</view>
 		</view>
+		<view class="content">
+			<view class="content-header">直推会员列表</view>
+			<view class="list">
+				<view class="item" v-for="(item,index) in ptFans_list" :key="index">
+					<image class="img" :src="item.headPortrait" mode="aspectFill"></image>
+					<view class="left">
+						<text>{{item.userNo}}</text>
+						<text>{{item.levelName}}</text>
+					</view>
+					<view class="right">
+						<text>等级: {{item.levelName}}</text>
+						<text>团队人数: {{item.levelName}}</text>
+					</view>
+				</view>
+			</view>
+		</view>
+		<u-loadmore :status="'nomore'" :bg-color="'#F8F7F7'"  v-if="loadmoreShow" />
 	</view>
 </template>
 
@@ -29,10 +37,24 @@
 		data() {
 			return {
 				ptFans_list:[],
+				current:1,
 				userInfo: {
 					ztnum: 0,
 					teamnum: 0
-				}
+				},
+				reachBottomOpen:true,
+				loadmoreShow:false,
+			}
+		},
+		onReachBottom:function(){
+			if( this.reachBottomOpen ){
+				this.current = this.current + 1
+				this.get_ptFans_list()
+				// if( this.tagCurrent == 1 ){
+				// 	this.ptUserAccount_bonusRecord(0)
+				// }else{
+				// 	this.ptUserAccount_bonusRecord(1)
+				// }
 			}
 		},
 		onLoad:function(){
@@ -52,11 +74,19 @@
 			get_ptFans_list:function(){
 				let that = this
 				this.$u.api.get_ptFans_list({
-					page: 1,
+					page: this.current,
 					pageSize: 20
 				}).then(res=>{
 					if( res.code == 0 ){
 						that.ptFans_list = res.data
+						if( res.data.length < 20 ){
+							that.reachBottomOpen = false
+						}
+						if( res.data.length == 0 ){
+							that.loadmoreShow = true
+						}else{
+							that.loadmoreShow = false
+						}
 					}
 				})
 			},
@@ -67,17 +97,34 @@
 <style>
 .header{
 	padding: 30rpx 26rpx;
+	background-color: #6d2ef3;
 }
 .line_1{
 	display: flex;
 	flex-direction: column;
 	font-size: 28rpx;
-	color: #000000;
+	color: #FFFFFF;
 	line-height: 1.8;
 }
 .list{
 	padding: 0 20rpx;
 	background: #ffffff;
+}
+.item{
+	padding: 80rpx 5%;
+}
+.item .img{
+	width: 100rpx;
+	height: 100rpx;
+}
+.line-item{
+	display: flex;
+	width: 100%;
+	
+}
+
+.line-item text{
+	flex: 1;
 }
 .item{
 	height: 98rpx;
@@ -86,13 +133,13 @@
 	justify-content: space-between;
 }
 .left{
-	display: flex;
-	align-items: center;
 }
 .left text{
 	padding-left: 20rpx;
 	font-size: 24rpx;
 	color: #000000;
+	display: block;
+	margin-bottom: 10rpx;
 }
 .left image{
 	width: 48rpx;
@@ -104,5 +151,10 @@
 .right text{
 	font-size: 24rpx;
 	color: #000000;
+	display: block;
+	margin-bottom: 10rpx;
+}
+.content-header{
+	margin: 20rpx;
 }
 </style>

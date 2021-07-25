@@ -43,7 +43,7 @@
 									<text>{{item.pname}}</text>
 								</view>
 								<view class="coupon">
-									<text>获得开团券：</text>
+									<text>获得拼团券：</text>
 									<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
 									<text class="num">+ {{item.giveCoupon ? item.giveCoupon : 0}}</text>
 								</view>
@@ -157,7 +157,7 @@
 									<text>获得商品：{{item.pname}}</text>
 								</view>
 								<view class="coupon">
-									<text>获得开团券：</text>
+									<text>获得拼团券：</text>
 									<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
 									<text class="num">+ {{detail.giveCoupon ? detail.giveCoupon : 0}}</text>
 								</view>

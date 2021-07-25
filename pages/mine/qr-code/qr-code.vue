@@ -20,8 +20,13 @@
 
 		this.$u.api.get_share_img().then(res => {
 			console.log('res.data',res.data)
+			
 			var context = uni.createCanvasContext('my_qr')
-			context.drawImage(res.data+'?Authorization=Bearer' + token, 0, 0,341, 567) 
+			// context.drawImage('/static/image/share@2x.png', 0, 0, 341, 567)
+			// context.drawImage(res.data+'?Authorization=Bearer' + token, 88, 201, 164, 164) 
+			
+			// context.drawImage('/static/image/share@2x.png', 0, 0, 341, 567)
+			context.drawImage(res.data+'?Authorization=Bearer' + token, 0, 0, 341, 567) 
 			context.draw()
 			setTimeout(function () {
 			    uni.hideLoading();

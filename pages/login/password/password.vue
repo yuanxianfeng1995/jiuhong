@@ -62,6 +62,7 @@
 				})
 				let userInfo = getApp().globalData.userInfo
 				console.log('userInfo', userInfo)
+				//pwdLogin
 				this.$u.api.regist({
 					"code": this.code,
 					"mobile": this.mobile,

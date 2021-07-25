@@ -2,14 +2,17 @@
 	<view class="contain">
 		<view class="header">
 			<view class="price">
-				<u-icon name="/static/icon/mine-data-icon1@2x.png" size="60"></u-icon>
-				<text>{{user.accountIntegral}}</text>
+				<text>￥{{account.accountAmount.toFixed(2)}}</text>
 			</view>
 			<view class="menu">
-				<text>当前可用拼团积分 {{user.accountAvailableIntegral}}</text>
+				<view class="" style="width: 200rpx;">
+					<text>钱包可用余额</text>
+					<text>{{account.accountAvailableAmount.toFixed(2)}}</text>
+				</view>
 				<view class="menu_btn">
-					<button class="btn" type="default" size="mini" @click="routeBuyBalance">转到余额</button>
-					<!-- <button class="btn" type="default" size="mini" @click="routeBuyAlsipay">微信购买</button> -->
+					<button class="btn" type="default" size="mini" @click="routeIntegral">购买拼团积分</button>
+					<button class="btn" type="default" size="mini" @click="routeChargeMoney">充值</button>
+					<button class="btn" type="default" size="mini" @click="routewithdraw">提现</button>
 				</view>
 			</view>
 		</view>
@@ -18,23 +21,23 @@
 				<text>规则说明</text>
 			</view> -->
 			<!-- <view class="tag">
-				<view :class="['tag_item',tagCurrent==0 ? 'tag_active' : '']" @click="tagChange(0)">
-					<text>获得记录</text>
-					<view :class="['tag_line',tagCurrent==0 ? 'tag_line_active' : '']"></view>
+				<view :class="['tag_item',tabCurrent == 0 ? 'tag_active' : '']" @click="rabChange(0)">
+					<text>提现记录</text>
+					<view :class="['tag_line', tabCurrent == 0 ? 'tag_line_active' : '']"></view>
 				</view>
-				<view :class="['tag_item',tagCurrent==1 ? 'tag_active' : '']" @click="tagChange(1)">
-					<text>使用记录</text>
-					<view :class="['tag_line',tagCurrent==1 ? 'tag_line_active' : '']"></view>
+				<view :class="['tag_item',tabCurrent == 1 ? 'tag_active' : '']" @click="rabChange(1)">
+					<text>充值记录</text>
+					<view :class="['tag_line', tabCurrent == 1 ? 'tag_line_active' : '']"></view>
 				</view>
 			</view> -->
 			<view class="list">
 				<view class="item">
 					<text>日期时间</text>
 					<text>操作说明</text>
-					<text>交易积分</text>
-					<text>结余积分</text>
+					<text>交易金额</text>
+					<text>结余金额</text>
 				</view>
-				<view class="item" v-for="(item,index) in userCenter_integral" :key="index">
+				<view class="item" v-for="(item,index) in cashList_arr" :key="index" v-if="tabCurrent == 0">
 					<text>{{item.createtime}}</text>
 					<text>{{item.realtype}}</text>
 					<text>{{(item.optype===0?'+':'-')+item.sjmoney}}</text>
@@ -50,32 +53,42 @@
 	export default {
 		data() {
 			return {
-				tagCurrent:0,
-				user:'',
-				current:1,
-				userCenter_integral:[],
-				reachBottomOpen:true,
+				chargeList_arr:[],
+				cashList_arr:[],
+				tabCurrent:0,
 				loadmoreShow:false,
+				account:'',
+				//分页
+				current: 1,
+				reachBottem: true,
 			}
 		},
-		onLoad(option) {
-			this.user = uni.getStorageSync('user');
-			this.get_userCenter_integral()
+		onLoad:function(option){
+			this.account = uni.getStorageSync('user')
+			console.log('this.account',this.account)
+			// this.chargeList()
+			this.chargeList()
 		},
 		onShow() {
 			this.get_userCenter()
 		},
 		onReachBottom:function(){
-			console.log(this.reachBottomOpen)
-			if( this.reachBottomOpen ){
-				this.current = this.current + 1
-				this.get_userCenter_integral()
+			console.log('到底了',)
+			if(this.reachBottem ){
+				this.current ++
+				this.chargeList()
 				// if( this.tagCurrent == 0 ){
-				// 	this.get_userCenter_integral(0)
+				// 	this.chargeList(0)
 				// }else{
-				// 	this.get_userCenter_integral(1)
+				// 	this.chargeList(1)
 				// }
 			}
+		},
+		onNavigationBarButtonTap:function(e){
+			// console.log(e)
+			uni.navigateTo({
+				url:'buy-history'
+			})
 		},
 		methods: {
 			//我的信息
@@ -83,22 +96,33 @@
 				 let that = this
 				 this.$u.api.get_userCenter().then(res => {
 					if( res.code == 0 ){
-						this.user = res.data
+						this.account = res.data
+						console.log('get_userCenter this.account',this.account)
 					}
 				 })
 			},
-			//积分记录	
-			get_userCenter_integral:function(type){
-				 let that = this
-				 this.$u.api.get_userCenter_integral({
-					 size: that.current,
-					 optype: type,
-					 pageSize: 30
-				 }).then(res => {
+			//tab改变
+			rabChange:function(e){
+				this.tabCurrent = e
+				this.cashList_arr = []
+				this.current = 1
+				if( e == 0 ){
+					this.chargeList(0)
+				}else{
+					this.chargeList(1)
+				}
+			},
+			chargeList:function(optype){ // optype:(0-收入，1-支出)
+				let that = this
+				this.$u.api.get_member_amount_logs({ 
+					size: that.current,
+					optype: optype,
+					pageSize: 20
+				}).then(res=>{
 					if( res.code == 0 ){
-						that.userCenter_integral = [...that.userCenter_integral,...res.data]
-						if( res.data.length < 30 ){
-							that.reachBottomOpen = false
+						that.cashList_arr = [...that.cashList_arr,...res.data]
+						if( res.data.length < 20 ){
+							that.reachBottem = false
 						}
 						if( res.data.length == 0 ){
 							that.loadmoreShow = true
@@ -106,32 +130,26 @@
 							that.loadmoreShow = false
 						}
 					}
-				 })
-			},
-			//Tag改变
-			tagChange:function(index){
-				this.tagCurrent = index
-				this.current = 0
-				this.userCenter_integral = []
-				this.reachBottomOpen = true
-				if( index == 0 ){
-					this.get_userCenter_integral(0)
-				}else{
-					this.get_userCenter_integral(1)
-				}
-			},
-			//路由 - 购买余额
-			routeBuyBalance:function(){
-				uni.navigateTo({
-					url:'buy-balance?amount=' + this.user.accountAvailableIntegral
 				})
 			},
-			//路由 - 支付宝购买
-			routeBuyAlipay:function(){
+			//路由 - 购买积分
+			routeIntegral:function(){
 				uni.navigateTo({
-					url:'buy-alipay'
+					url:'/pages/mine/wallet/buy-integral?amount=' + this.account.accountAvailableAmount
 				})
 			},
+			//路由- 充值
+			routeChargeMoney:function(){
+				uni.navigateTo({
+					url:"charge-money"
+				})
+			},
+			//路由 - 提现
+			routewithdraw:function(){
+				uni.navigateTo({
+					url:'withdraw-deposit?amount=' + this.account.accountAvailableAmount
+				})
+			}
 		}
 	}
 </script>
@@ -143,6 +161,7 @@
 	padding: 68rpx 20rpx 32rpx;
 }
 .menu_btn .btn{
+	flex: 2;
 	height: 68rpx;
 	line-height: 68rpx;
 	color: #FFFFFF;
@@ -155,7 +174,6 @@
 .header .price text{
 	font-size: 70rpx;
 	color: #ffffff;
-	padding-left: 10rpx;
 }
 .menu{
 	display: flex;
@@ -219,23 +237,5 @@
 }
 .list .item text.status{
 	font-weight: 600;
-}
-.role{
-	margin-bottom: 20rpx;
-}
-.role_title{
-	padding: 30rpx 26rpx;
-	color: #000000;
-	font-size: 28rpx;
-}
-.role_item{
-	height: 82rpx;
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	color: #000000;
-	font-size: 28rpx;
-	padding: 0 26rpx;
-	background-color: #FFFFFF;
 }
 </style>

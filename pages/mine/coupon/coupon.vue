@@ -13,16 +13,16 @@
 			</view>
 		</view>
 		<view class="content">
-			<view class="role">
+			<!-- <view class="role">
 				<view class="role_title">
 					<text>当前持有分红的产品份数如下：</text>
 				</view>
 				<view class="role_item" v-for="(item,index) in shareBonusNumArr" :key="index">
-					<text>投入{{item.coupounum}}张开团券，累计分红{{item.accountsum}}积分出局</text>
+					<text>投入{{item.coupounum}}张拼团券，累计分红{{item.accountsum}}积分出局</text>
 					<text>1份</text>
 				</view>
-			</view>
-			<view class="tag">
+			</view> -->
+		<!-- 	<view class="tag">
 				<view :class="['tag_item',tagCurrent==0 ? 'tag_active' : '']" @click="tagChange(0)">
 					<text>获得记录</text>
 					<view :class="['tag_line',tagCurrent==0 ? 'tag_line_active' : '']"></view>
@@ -31,12 +31,19 @@
 					<text>使用记录</text>
 					<view :class="['tag_line',tagCurrent==1 ? 'tag_line_active' : '']"></view>
 				</view>
-			</view>
+			</view> -->
 			<view class="list">
+				<view class="item">
+					<text>日期时间</text>
+					<text>操作说明</text>
+					<text>交易拼团券</text>
+					<text>结余拼团券</text>
+				</view>
 				<view class="item" v-for="(item,index) in couponListArr" :key="index">
-					<text>{{item.createtime}} {{item.memo}}</text>
-					<text v-if="tagCurrent == 0">+{{item.amoney}}</text>
-					<text v-else>{{item.amoney}}</text>
+					<text>{{item.createtime}}</text>
+					<text>{{item.realtype}}</text>
+					<text>{{(item.optype===0?'+':'-')+item.sjmoney}}</text>
+					<text>{{item.jymoney}}</text>
 				</view>
 				<u-loadmore :status="'nomore'" :bg-color="'#F8F7F7'"  v-if="loadmoreShow" />
 			</view>
@@ -60,20 +67,21 @@
 		onLoad:function(){
 			this.user = uni.getStorageSync('user');
 			console.log(this.user)
-			this.couponList(0)
+			this.couponList()
 		},
 		onShow() {
 			this.get_userCenter()
-			this.currenthold()
+			// this.currenthold()
 		},
 		onReachBottom:function(){
 			if( this.reachBottomOpen ){
 				this.current = this.current + 1
-				if( this.tagCurrent == 1 ){
-					this.couponList(0)
-				}else{
-					this.couponList(1)
-				}
+				this.couponList()
+				// if( this.tagCurrent == 1 ){
+				// 	this.couponList(0)
+				// }else{
+				// 	this.couponList(1)
+				// }
 			}
 
 		},
@@ -99,7 +107,12 @@
 			//分红记录
 			couponList:function(optype){
 				let that = this
-				this.$u.api.couponList().then(res => {
+				this.$u.api.couponList(
+				{
+					size: that.current,
+					optype: optype,
+					pageSize: 30
+				}).then(res => {
 					if( res.code == 0 ){
 						that.couponListArr = [...that.couponListArr,...res.data]
 						if( res.data.length < 30 ){
@@ -216,6 +229,7 @@
 .list .item text{
 	font-size: 28rpx;
 	color: #000000; 
+	flex: 1;
 }
 .list .item text.status{
 	font-weight: 600;

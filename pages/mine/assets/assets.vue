@@ -4,7 +4,7 @@
 			<view v-for="(item,index) in list" :key="item.id" class="assets-list-item" @click="goPage(item)">
 				<view class="list-header">
 					<view class="text">
-						<image class="data_icon" :src="item.src"></image>
+						<image class="data_icon" :class="{'is-icfont': item.isIconfont}" :src="item.src" ></image>
 						<text class="name">{{item.lable}}</text>
 					</view>
 					<view  v-if="!item.isFrozen" class="icon iconfont  icon-jiantou"></view>
@@ -43,7 +43,8 @@
 					{
 						id: 0,
 						lable: '余额',
-						src: '/static/icon/mine-data-icon1@2x.png',
+						isIconfont: true,
+						src: '/static/icon/mine-icon1@2x.png',
 						url:"../wallet/wallet",
 						available: 0,
 						frozen: 0,
@@ -52,7 +53,8 @@
 					{
 						id: 1,
 						lable: '拼团积分',
-						src: '/static/icon/mine-data-icon1@2x.png',
+						isIconfont: true,
+						src: '/static/icon/mine-icon2@2x.png',
 						url:"../integral/integral",
 						available: 0,
 						frozen: 0,
@@ -60,8 +62,9 @@
 					},
 					{
 						id: 2,
-						lable: '开团券',
-						src: '/static/icon/mine-data-icon2@2x.png',
+						lable: '拼团券',
+						isIconfont: true,
+						src: '/static/icon/mine-icon3@2x.png',
 						url:"../coupon/coupon",
 						available: 0,
 						frozen: 0,
@@ -70,7 +73,7 @@
 					{
 						id: 3,
 						lable: '分红',
-						src: '/static/icon/mine-data-icon3@2x.png',
+						src: '/static/icon/mine-icon4@2x.png',
 						url:"../participation/participation",
 						available: 0,
 						frozen: 0,
@@ -79,7 +82,8 @@
 					{
 						id: 4,
 						lable: '玖花',
-						src: '/static/icon/mine-data-icon3@2x.png',
+						isIconfont: true,
+						src: '/static/icon/mine-icon5@2x.png',
 						url:"../nine-flowers/nine-flowers",
 						available: 0,
 						frozen: 0,
@@ -88,7 +92,8 @@
 					{
 						id: 5,
 						lable: '购物券',
-						src: '/static/icon/mine-data-icon3@2x.png',
+						isIconfont: true,
+						src: '/static/icon/mine-icon6@2x.png',
 						url:"../nine-flowers/nine-flowers",
 						available: 0,
 						isFrozen: true,
@@ -226,6 +231,11 @@
 				.data_icon{
 					width: 80rpx;
 					height: 80rpx;
+					margin-right: 20rpx;
+				}
+				.is-icfont{
+					width: 60rpx;
+					height: 60rpx;
 					margin-right: 20rpx;
 				}
 			}

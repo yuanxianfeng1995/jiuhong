@@ -19,7 +19,7 @@
 			<!-- <view class="title">
 				<text>规则说明</text>
 			</view> -->
-			<view class="tag">
+			<!-- <view class="tag">
 				<view :class="['tag_item',tagCurrent==0 ? 'tag_active' : '']" @click="tagChange(0)">
 					<text>获得记录</text>
 					<view :class="['tag_line',tagCurrent==0 ? 'tag_line_active' : '']"></view>
@@ -28,12 +28,19 @@
 					<text>使用记录</text>
 					<view :class="['tag_line',tagCurrent==1 ? 'tag_line_active' : '']"></view>
 				</view>
-			</view>
+			</view> -->
 			<view class="list">
+				<view class="item">
+					<text>日期时间</text>
+					<text>操作说明</text>
+					<text>交易金额</text>
+					<text>结余金额</text>
+				</view>
 				<view class="item" v-for="(item,index) in ptUserAccountBonusRecord" :key="index">
-					<text>{{item.createtime}} {{item.memo}}</text>
-					<text v-if="tagCurrent == 0">+{{item.amount}}</text>
-					<text v-else>{{item.amount}}</text>
+					<text>{{item.createtime}}</text>
+					<text>{{item.realtype}}</text>
+					<text>{{(item.optype===0?'+':'-')+item.sjmoney}}</text>
+					<text>{{item.jymoney}}</text>
 				</view>
 				<u-loadmore :status="'nomore'" :bg-color="'#F8F7F7'"  v-if="loadmoreShow" />
 			</view>
@@ -56,16 +63,18 @@
 		},
 		onLoad:function(){
 			this.user = uni.getStorageSync('user');
-			this.ptUserAccount_bonusRecord(0)
+			this.ptUserAccount_bonusRecord()
+			//this.ptUserAccount_bonusRecord(0)
 		},
 		onReachBottom:function(){
 			if( this.reachBottomOpen ){
 				this.current = this.current + 1
-				if( this.tagCurrent == 1 ){
-					this.ptUserAccount_bonusRecord(0)
-				}else{
-					this.ptUserAccount_bonusRecord(1)
-				}
+				this.ptUserAccount_bonusRecord()
+				// if( this.tagCurrent == 1 ){
+				// 	this.ptUserAccount_bonusRecord(0)
+				// }else{
+				// 	this.ptUserAccount_bonusRecord(1)
+				// }
 			}
 
 		},
@@ -172,7 +181,7 @@
 									"remark": "",
 									"userId": that.user.userId
 							}).then(res => {
-								if( res.code == 200 ){
+								if( res.code == 0 ){
 									uni.showToast({
 										title:'操作成功'
 									})
@@ -278,7 +287,8 @@
 }
 .list .item text{
 	font-size: 28rpx;
-	color: #000000; 
+	color: #000000;
+	flex: 1;
 }
 .list .item text.status{
 	font-weight: 600;

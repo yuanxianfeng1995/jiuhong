@@ -245,13 +245,13 @@
 		}, {
 			"path": "pages/mine/coupon/coupon",
 			"style": {
-				"navigationBarTitleText": "开团券",
+				"navigationBarTitleText": "拼团券",
 				"enablePullDownRefresh": false
 			}
 		}, {
 			"path": "pages/mine/coupon/buy/buy",
 			"style": {
-				"navigationBarTitleText": "开团券投入分红",
+				"navigationBarTitleText": "拼团券投入分红",
 				"enablePullDownRefresh": false
 			}
 		}, {
@@ -278,7 +278,29 @@
 				"navigationBarTitleText": "分红",
 				"enablePullDownRefresh": false
 			}
-		}, {
+		},
+		{
+			"path": "pages/mine/withdrawal-recharge/withdrawal-recharge",
+			"style": {
+				"navigationBarTitleText": "充提记录",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/dividend-exchange/dividend-exchange",
+			"style": {
+				"navigationBarTitleText": "分红兑换记录",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
+			"path": "pages/mine/agent-info/agent-info",
+			"style": {
+				"navigationBarTitleText": "代理信息",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/mine/nine-flowers/nine-flowers",
 			"style": {
 				"navigationBarTitleText": "玖花",

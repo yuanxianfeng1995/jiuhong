@@ -1,8 +1,8 @@
 // 此处第二个参数vm，就是我们在页面使用的this，你可以通过vm获取vuex等操作，更多内容详见uView对拦截器的介绍部分：
 // https://uviewui.com/js/http.html#%E4%BD%95%E8%B0%93%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%EF%BC%9F
 const install = (Vue, vm) => {
-	//const url='/web'
-	const url=''
+	const url='/web'
+	//const url=''
 	/** 
 	 * 用户管理
 	 * --------------------------------------------------------------------
@@ -11,6 +11,7 @@ const install = (Vue, vm) => {
 	let get_smsLogin = (params = {}) => vm.$u.get(url+'/sms/sendCode', params);	//获取短信验证码
 	let regist = (params = {}) => vm.$u.post(url+'/member/regist', params);	//注册
 	let wxLogin = (params = {}) => vm.$u.post(url+'/member/wxLogin', params);	//登录
+	let pwdLogin = (params = {}) => vm.$u.post(url+'/member/pwdLogin', params);	//登录
 	
 	let sendModifyPwdCode = (params = {}) => vm.$u.get(url+'/sms/sendModifyPwdCode', params);	//发送修改密码验证码
 	let sendVerifyCode = (params = {}) => vm.$u.get(url+'/sms/sendVerifyCode', params);	//发送验证身份验证码
@@ -88,7 +89,7 @@ const install = (Vue, vm) => {
 	let cashMoney =  (params = {}) => vm.$u.post(url+'/member/withdraw', params);	//提现
 	let chargeList =  (params = {}) => vm.$u.post('/WxPay/chargeList', params);	//充值记录
 	let cashList =  (params = {}) => vm.$u.post('/WxPay/cashList', params);	//提现记录
-	let balanceBuy =  (params = {}) => vm.$u.post(url+'/member/amountExchangeIntegral', params, { "Content-Type": "application/x-www-form-urlencoded" });	//余额购买
+	let balanceBuy =  (params = {}) => vm.$u.post(url+'/member/amountExchangeIntegral',params);	//余额购买
 	let integralToBalance =  (params = {}) => vm.$u.post(url+'/member/integralExchangeAmount', params);	//积分转余额
 	//版本号
 	let getVersionApp =  (params = {}) => vm.$u.get('/group/ptVersion/update', params);	//积分转余额
@@ -105,6 +106,7 @@ const install = (Vue, vm) => {
 		integralToBalance,
 		currenthold,
 		sendModifyPwdCode,
+		pwdLogin,
 		sendVerifyCode,
 		bonusProduct,
 		shareBonusNum,

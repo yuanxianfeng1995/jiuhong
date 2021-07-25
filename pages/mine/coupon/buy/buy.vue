@@ -3,11 +3,11 @@
 		<view class="content">
 			<view class="role">
 				<view class="role_title">
-					<text>您当前可以投入分红的开团券数量为：{{user.accountAvailableCoupon}}</text>
+					<text>您当前可以投入分红的拼团券数量为：{{user.accountAvailableCoupon}}</text>
 				</view>
 				<u-radio-group v-model="value" active-color="#532DA3" @change="radioChange">
 					<view class="role_item" v-for="(item,index) in shareBonusNumArr" :key="index">
-						<text>投入{{item.couponnum}}张开团券，累计分红{{item.maxprofit}}积分出局</text>
+						<text>投入{{item.couponnum}}张拼团券，累计分红{{item.maxprofit}}积分出局</text>
 						<u-radio :name="index"></u-radio>
 					</view>
 				</u-radio-group>
@@ -45,11 +45,11 @@
 				console.log('选择', e)
 				this.value = e
 
-				console.log('可用开团券', this.user.accountAvailableCoupon)
+				console.log('可用拼团券', this.user.accountAvailableCoupon)
 				console.log('分红列表', this.shareBonusNumArr)
 				if (this.user.accountAvailableCoupon < this.shareBonusNumArr[e].couponnum) {
 					uni.showToast({
-						title: '当前开团券不足,无法购买',
+						title: '当前拼团券不足,无法购买',
 						icon: 'none'
 					})
 					return
@@ -61,7 +61,7 @@
 				let that = this
 				if (this.user.accountAvailableCoupon < this.shareBonusNumArr[this.value].couponnum) {
 					uni.showToast({
-						title: '当前开团券不足,无法购买',
+						title: '当前拼团券不足,无法购买',
 						icon: 'none'
 					})
 					return
