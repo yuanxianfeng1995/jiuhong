@@ -9,10 +9,11 @@
 	export default {
 		data() {
 			return {
-				imgUrl:''
+				imgUrl:'',
 			}
 		},
 		onReady:function(){
+			const userInfo=uni.getStorageSync('userInfo')
 			uni.showLoading({
 			    title: '生成中'
 			});
@@ -22,11 +23,11 @@
 			console.log('res.data',res.data)
 			
 			var context = uni.createCanvasContext('my_qr')
-			// context.drawImage('/static/image/share@2x.png', 0, 0, 341, 567)
-			// context.drawImage(res.data+'?Authorization=Bearer' + token, 88, 201, 164, 164) 
-			
-			// context.drawImage('/static/image/share@2x.png', 0, 0, 341, 567)
-			context.drawImage(res.data+'?Authorization=Bearer' + token, 0, 0, 341, 567) 
+			context.drawImage(res.data, 0, 0, 367, 567) 
+			context.setFontSize(20)
+			context.fillStyle = '#FFFFFF'
+			context.fillText('ID:'+userInfo.id,140,50)
+			// context.Color='#FFFFFF';
 			context.draw()
 			setTimeout(function () {
 			    uni.hideLoading();
@@ -68,7 +69,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 .contain{
 	padding: 30rpx 0;
 	display: flex;
@@ -85,5 +86,9 @@
 	line-height: 120rpx;
 	color: #FFFFFF;
 	margin-top: 84rpx;
+}
+.header{
+	font-size: 18px;
+	margin-bottom: 20rpx;
 }
 </style>

@@ -221,7 +221,6 @@
 	height: 96rpx;
 	width: 750rpx;
 	border-bottom: 2rpx solid #F9F9F9;
-	padding:  0 40rpx;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -230,6 +229,7 @@
 	font-size: 28rpx;
 	color: #000000; 
 	flex: 1;
+	text-align: center;
 }
 .list .item text.status{
 	font-weight: 600;

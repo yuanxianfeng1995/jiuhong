@@ -18,12 +18,12 @@
 				<view class="item" v-for="(item,index) in ptFans_list" :key="index">
 					<image class="img" :src="item.headPortrait" mode="aspectFill"></image>
 					<view class="left">
-						<text>{{item.userNo}}</text>
-						<text>{{item.levelName}}</text>
+						<text>{{item.nickname}}</text>
+						<text>{{item.mobile}}</text>
 					</view>
 					<view class="right">
 						<text>等级: {{item.levelName}}</text>
-						<text>团队人数: {{item.levelName}}</text>
+						<text>团队人数: {{item.teamNum}}</text>
 					</view>
 				</view>
 			</view>

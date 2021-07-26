@@ -4,7 +4,7 @@
 			<view class="price">
 				<view class="left">
 					<u-icon name="/static/icon/mine-data-icon3@2x.png" size="60"></u-icon>
-					<text>{{user.accountShareBonus}}</text>
+					<text>{{user.accountAvailableShareBonus}}</text>
 				</view>
 				<view class="menu_btn">
 					<button class="btn" type="default" size="mini" @click="routeBuyBalance">转到余额</button>
@@ -12,7 +12,7 @@
 				</view>
 			</view>
 			<view class="menu">
-				<text>当前可用分红{{user.accountShareBonus}}，累计获得分红{{user.accountTotalShareBonus}}，冻结部分{{user.accountFreezeShareBonus}}</text>
+				<text>当前可用分红{{user.accountAvailableShareBonus}}，累计获得分红{{user.accountTotalShareBonus}}，冻结部分{{user.accountFreezeShareBonus}}</text>
 			</view>
 		</view>
 		<view class="content">
@@ -129,18 +129,18 @@
 			//路由 - 购买余额
 			routeBuyBalance:function(){
 				let that = this
-				if( that.user.accountShareBonus <= 0 ){
+				if( that.user.accountAvailableShareBonus <= 0 ){
 					this.$u.toast('当前可用分红不足');
 					return
 				}
 				uni.showModal({
 				    title: '提示',
-				    content: '您正在将' + that.user.accountShareBonus + '分红转为余额操作',
+				    content: '您正在将' + that.user.accountAvailableShareBonus + '分红转为余额操作',
 				    success: function (res) {
 				        if (res.confirm) {
 				      console.log('用户点击确定',that.user);
 							that.$u.api.bonus_balance({
-								"bonus": that.user.accountShareBonus,
+								"bonus": that.user.accountAvailableShareBonus,
 								"remark": "",
 								"userId": that.user.userId
 							}).then(res => {
@@ -166,18 +166,18 @@
 			//路由 - 支付宝购买
 			routeBuyAlipay:function(){
 				let that = this
-				if( that.user.accountShareBonus <= 0 ){
+				if( that.user.accountAvailableShareBonus <= 0 ){
 					this.$u.toast('当前可用分红不足');
 					return
 				}
 				uni.showModal({
 				    title: '提示',
-				    content: '您正在将' + that.user.accountShareBonus + '分红转为积分操作',
+				    content: '您正在将' + that.user.accountAvailableShareBonus + '分红转为积分操作',
 				    success: function (res) {
 				        if (res.confirm) {
 				            console.log('用户点击确定');
 							that.$u.api.bonus_integral({
-									"bonus": that.user.accountShareBonus,
+									"bonus": that.user.accountAvailableShareBonus,
 									"remark": "",
 									"userId": that.user.userId
 							}).then(res => {
@@ -280,7 +280,6 @@
 	height: 96rpx;
 	width: 750rpx;
 	border-bottom: 2rpx solid #F9F9F9;
-	padding:  0 40rpx;
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
@@ -289,6 +288,7 @@
 	font-size: 28rpx;
 	color: #000000;
 	flex: 1;
+	text-align: center;
 }
 .list .item text.status{
 	font-weight: 600;

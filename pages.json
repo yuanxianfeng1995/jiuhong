@@ -301,6 +301,13 @@
 			}
 		},
 		{
+			"path": "pages/mine/service-centre/service-centre",
+			"style": {
+				"navigationBarTitleText": "服务中心信息",
+				"enablePullDownRefresh": false
+			}
+		},
+		{
 			"path": "pages/mine/nine-flowers/nine-flowers",
 			"style": {
 				"navigationBarTitleText": "玖花",

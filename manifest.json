@@ -133,10 +133,10 @@
             "disableHostCheck" : true,
             "proxy" : {
                 "/web" : {
-                    "target": "http://apisss.jiuhongtianxia.com/", //目标接口域名
-                    "changeOrigin": true, //是否跨域
-                    "secure": false, // 设置支持https协议的代理
-                    "pathRewrite": {
+                    "target" : "http://apisss.jiuhongtianxia.com/", //目标接口域名
+                    "changeOrigin" : true, //是否跨域
+                    "secure" : false, // 设置支持https协议的代理
+                    "pathRewrite" : {
                         "^/web" : ""
                     }
                 }

@@ -7,7 +7,6 @@
 						<u-icon name="/static/icon/yh.png" size="40"></u-icon>
 						<view class="item_detail">
 							<text>姓名:{{item.name}}</text>
-							<text>收货人:{{item.consignee}}</text>
 							<text>账户类型:{{item.accounttypeName}}</text>
 							<text>开户行:{{item.bankdeposit}}</text>
 							<text>提现账号:{{item.accountnumber}}</text>
@@ -42,9 +41,6 @@
 					<u-form :model="form" ref="uForm" label-width="130">
 						<u-form-item label="姓名">
 							<u-input v-model="form.name" />
-						</u-form-item>
-						<u-form-item label="收货人">
-							<u-input v-model="form.consignee" />
 						</u-form-item>
 						<u-form-item label="账户类型">
 							<view class="right" @click="regionShow = true">
@@ -178,13 +174,6 @@
 				if (!formData.name) {
 					uni.showToast({
 						title: '请填写姓名',
-						icon: 'none'
-					})
-					return
-				}
-				if (!formData.consignee) {
-					uni.showToast({
-						title: '请填写收货人',
 						icon: 'none'
 					})
 					return

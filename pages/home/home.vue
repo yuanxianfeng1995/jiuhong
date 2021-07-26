@@ -189,70 +189,70 @@
 						goods_id: 0,
 						img: '/static/image/goods/p1.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
-						price: '￥168',
+						price: '￥20',
 						slogan: '1235人付款'
 					},
 					{
 						goods_id: 1,
 						img: '/static/image/goods/p2.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
-						price: '￥168',
+						price: '￥20',
 						slogan: '1235人付款'
 					},
 					{
 						goods_id: 2,
 						img: '/static/image/goods/p3.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
-						price: '￥168',
+						price: '￥20',
 						slogan: '1235人付款'
 					},
 					{
 						goods_id: 3,
 						img: '/static/image/goods/p4.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
-						price: '￥168',
+						price: '￥20',
 						slogan: '1235人付款'
 					},
 					{
 						goods_id: 4,
 						img: '/static/image/goods/p5.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
-						price: '￥168',
+						price: '￥20',
 						slogan: '1235人付款'
 					},
 					{
 						goods_id: 5,
 						img: '/static/image/goods/p6.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
-						price: '￥168',
+						price: '￥20',
 						slogan: '1235人付款'
 					},
 					{
 						goods_id: 6,
 						img: '/static/image/goods/p7.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
-						price: '￥168',
+						price: '￥20',
 						slogan: '1235人付款'
 					},
 					{
 						goods_id: 7,
 						img: '/static/image/goods/p8.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
-						price: '￥168',
+						price: '￥20',
 						slogan: '1235人付款'
 					},
 					{
 						goods_id: 8,
 						img: '/static/image/goods/p9.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
-						price: '￥168',
+						price: '￥20',
 						slogan: '1235人付款'
 					},
 					{
 						goods_id: 9,
 						img: '/static/image/goods/p10.jpg',
 						name: '商品名称商品名称商品名称商品名称商品名称',
-						price: '￥168',
+						price: '￥20',
 						slogan: '1235人付款'
 					}
 				],
@@ -275,7 +275,7 @@
 		//上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
 		onReachBottom() {
 			let len = this.productList.length;
-			if (len >= 40) {
+			if (len >= 10) {
 				this.loadingText = '到底了';
 				return false;
 			}
@@ -287,7 +287,7 @@
 					goods_id: goods_id,
 					img: '/static/image/goods/p' + (goods_id % 10 == 0 ? 10 : goods_id % 10) + '.jpg',
 					name: '商品名称商品名称商品名称商品名称商品名称',
-					price: '￥168',
+					price: '￥20',
 					slogan: '1235人付款'
 				};
 				this.productList.push(p);
@@ -363,10 +363,10 @@
 			},
 			//轮播图跳转
 			toSwiper(e) {
-				uni.showToast({
-					title: e.src,
-					icon: 'none'
-				});
+				// uni.showToast({
+				// 	title: e.src,
+				// 	icon: 'none'
+				// });
 			},
 			toProductList() {
 				uni.navigateTo({
@@ -375,7 +375,15 @@
 			},
 			//分类跳转
 			toCategory(e) {
+				console.log(e)
 				//uni.showToast({title: e.name,icon:"none"});
+				if(e.id===1||e.id===2){
+					uni.showToast({
+						title: '正在开发中',
+						icon: 'none'
+					});
+					return
+				}
 				uni.setStorageSync('catName', e.name);
 				uni.navigateTo({
 					url: e.url,
@@ -393,9 +401,12 @@
 			},
 			//商品跳转
 			toGoods(e) {
-				uni.switchTab({
-					url: '/pages/index/index'
-				})
+				uni.showToast({
+					title: '正在开发中',
+					icon: 'none'
+				});
+				
+				
 			},
 			//轮播图指示器
 			swiperChange(event) {

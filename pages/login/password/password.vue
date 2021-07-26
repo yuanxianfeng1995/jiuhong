@@ -63,12 +63,9 @@
 				let userInfo = getApp().globalData.userInfo
 				console.log('userInfo', userInfo)
 				//pwdLogin
-				this.$u.api.regist({
-					"code": this.code,
+				this.$u.api.pwdLogin({
 					"mobile": this.mobile,
 					"password": this.password,
-					"tempUserId": userInfo.tempUserId || 0,
-					"tradepwd": userInfo.tradepwd,
 				}).then(res => {
 					try{
 						console.log('登录成功',res)

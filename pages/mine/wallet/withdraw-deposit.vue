@@ -82,12 +82,7 @@
 				this.$u.api.getAccountList().then(res => {
 					console.log(res);
 					if (res.code == 0) {
-						that.accountList = res.data.map(item=>{
-							return {
-								...item,
-								accounttypeName: that.dictionaries[item.accounttype]
-							}
-						})
+						that.accountList = res.data
 					}
 				})
 			},

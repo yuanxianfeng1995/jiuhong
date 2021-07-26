@@ -12,18 +12,22 @@
 				</view>
 				<image class="author" :src="userInfo.headPortrait" mode="aspectFill"></image>
 				<view class="detail_text">
-					<view class="content"><text>{{userInfo.nickname}}</text></view>
+					<text>{{userInfo.nickname}}</text>
 					<text>ID: {{userInfo.id}}</text>
-					<view class="text-content">
+					<text>等级:{{userInfo.levelName||'普通会员'}}</text>
+					<text>代理:{{userInfo.agentLevelName}}</text>
+					<text>分红:{{userInfo.bonusLevelName}}</text>
+					<text>职务:{{job}}</text>
+					<!-- <view class="text-content">
 						<text>等级:{{userInfo.levelName||'普通会员'}}</text>
 						<text>代理:{{userInfo.agentLevelName}}</text>
 					</view>
 					<view class="text-content">
 						<text>分红:{{userInfo.bonusLevelName}}</text>
 						<text>职务:{{job}}</text>
-					</view>
+					</view> -->
 				</view>
-				<view class="mine_balance">
+			<!-- 	<view class="mine_balance">
 					<view class="balance_price" @click="routeWallet">
 						<text class="num">￥{{user.accountAmount}}</text>
 						<text>钱包可用余额{{user.accountAvailableAmount}}</text>
@@ -32,7 +36,7 @@
 						<button class="btn" type="default" size="mini" @click="routeChargeMoney">充值</button>
 						<button class="btn" type="default" size="mini" @click="routewithdraw">提现</button>
 					</view>
-				</view>
+				</view> -->
 			</view>
 			
 		</view>
@@ -62,7 +66,7 @@
 					<u-cell-group>
 						<u-cell-item title="我的资产" :title-style="menuListTitleStyle" :value="userInfo.fansCount"
 							:border-bottom="false" @click="myAssets">
-							<u-icon name="/static/icon/mine-menu1@2x.png" slot="icon" size="40"></u-icon>
+							<u-icon name="/static/icon/mine-menu12@2x.png" slot="icon" size="40"></u-icon>
 						</u-cell-item>
 						<u-cell-item title="我的粉丝" :title-style="menuListTitleStyle" :value="userInfo.fansCount"
 							:border-bottom="false" @click="routeTeam">
@@ -75,19 +79,19 @@
 						</u-cell-item>
 						<u-cell-item title="充提记录" :title-style="menuListTitleStyle" :value="userInfo.fansCount"
 							:border-bottom="false" @click="routeCt">
-							<u-icon name="/static/icon/mine-menu7@2x.png" slot="icon" size="40"></u-icon>
+							<u-icon name="/static/icon/mine-menu8@2x.png" slot="icon" size="40"></u-icon>
 						</u-cell-item>
 						<u-cell-item title="分红兑换记录" :title-style="menuListTitleStyle" :value="userInfo.fansCount"
 							:border-bottom="false" @click="routeFh">
-							<u-icon name="/static/icon/mine-menu7@2x.png" slot="icon" size="40"></u-icon>
+							<u-icon name="/static/icon/mine-menu9@2x.png" slot="icon" size="40"></u-icon>
 						</u-cell-item>
 						<u-cell-item title="代理信息" :title-style="menuListTitleStyle" :value="userInfo.fansCount"
 							:border-bottom="false" @click="routeDl">
-							<u-icon name="/static/icon/mine-menu7@2x.png" slot="icon" size="40"></u-icon>
+							<u-icon name="/static/icon/mine-menu10@2x.png" slot="icon" size="40"></u-icon>
 						</u-cell-item>
 						<u-cell-item title="服务中心信息" :title-style="menuListTitleStyle" :value="userInfo.fansCount"
 							:border-bottom="false" @click="routeFw">
-							<u-icon name="/static/icon/mine-menu7@2x.png" slot="icon" size="40"></u-icon>
+							<u-icon name="/static/icon/mine-menu11@2x.png" slot="icon" size="40"></u-icon>
 						</u-cell-item>
 					</u-cell-group>
 				</view>
@@ -333,7 +337,7 @@
 
 	.header {
 		width: 100%;
-		height: 800rpx;
+		height: 600rpx;
 		position: relative;
 	}
 
@@ -341,7 +345,7 @@
 		position: relative;
 		z-index: 0;
 		width: 100%;
-		height: 800rpx;
+		height: 600rpx;
 		/* filter: blur(26rpx); */
 	}
 
@@ -361,7 +365,7 @@
 		left: 0;
 		top: 0;
 		width: 100%;
-		height: 800rpx;
+		height: 600rpx;
 		filter: blur(6rpx);
 		border-radius: 0px 0px 60rpx 60rpx;
 	}
@@ -371,7 +375,7 @@
 		flex-direction: column;
 		align-items: center;
 		position: absolute;
-		bottom: 150rpx;
+		bottom: 0;
 		left: 0;
 		z-index: 9;
 		width: 100%;
@@ -397,12 +401,16 @@
 		line-height: 1.5;
 	}
 	.text-content{
-		padding-left: 20rpx;
+		width: 250rpx;
+		margin: 0 auto;
+	}
+	.detail_text text{
+		margin-bottom: 10rpx;
 	}
 	.text-content text{
-		width: 220rpx;
-		margin-right: 20rpx;
-    display: inline-block;
+    display: block;
+		margin-bottom: 10rpx;
+		text-align: left;
 	}
 	.detail_text .content {
 		display: flex;
@@ -410,6 +418,7 @@
 		justify-content: center;
 		width: 100%;
 		position: relative;
+		margin-bottom: 20rpx;
 	}
 
 	.detail_text .content .tag {
@@ -501,7 +510,7 @@
 	}
 
 	.order_status {
-		margin: -80px 0 30rpx 0;
+		margin: 30rpx 0 30rpx 0;
 		padding: 0 30rpx;
 		background-color: #FFFFFF;
 	}

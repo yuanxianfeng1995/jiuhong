@@ -14,7 +14,7 @@
 					<text class="line_3">市场价 ￥{{detail.marketprice}}</text>
 				</view>
 				<view class="inventory">
-					<text>剩余 {{detail.stock}}</text>
+					<text>库存 {{detail.stock}}</text>
 				</view>
 			</view>
 			<view class="history" v-if="detail.memberBaseVos > 0">
@@ -50,7 +50,7 @@
 									<view class="time">
 										<text>还差{{item.needPeople}}人</text>
 										<view class="">
-											剩余<u-count-down :timestamp="item.surplusTime" font-size="24" bg-color="none" v-if="item.surplusTime > 0"></u-count-down>
+											库存<u-count-down :timestamp="item.surplusTime" font-size="24" bg-color="none" v-if="item.surplusTime > 0"></u-count-down>
 											<text v-else>开团失败</text> 
 										</view>
 									</view>

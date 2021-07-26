@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-		<view class="header">
+	<!-- 	<view class="header">
 			<view class="price">
 				<text>￥{{account.accountAmount.toFixed(2)}}</text>
 			</view>
@@ -15,12 +15,12 @@
 					<button class="btn" type="default" size="mini" @click="routewithdraw">提现</button>
 				</view>
 			</view>
-		</view>
+		</view> -->
 		<view class="content">
 			<!-- <view class="title">
 				<text>规则说明</text>
 			</view> -->
-			<!-- <view class="tag">
+			<view class="tag">
 				<view :class="['tag_item',tabCurrent == 0 ? 'tag_active' : '']" @click="rabChange(0)">
 					<text>提现记录</text>
 					<view :class="['tag_line', tabCurrent == 0 ? 'tag_line_active' : '']"></view>
@@ -29,7 +29,7 @@
 					<text>充值记录</text>
 					<view :class="['tag_line', tabCurrent == 1 ? 'tag_line_active' : '']"></view>
 				</view>
-			</view> -->
+			</view>
 			<view class="list">
 				<view class="item">
 					<text>日期时间</text>
@@ -66,8 +66,7 @@
 		onLoad:function(option){
 			this.account = uni.getStorageSync('user')
 			console.log('this.account',this.account)
-			// this.chargeList()
-			this.chargeList()
+			this.chargeList(0)
 		},
 		onShow() {
 			this.get_userCenter()
@@ -76,12 +75,11 @@
 			console.log('到底了',)
 			if(this.reachBottem ){
 				this.current ++
-				this.chargeList()
-				// if( this.tagCurrent == 0 ){
-				// 	this.chargeList(0)
-				// }else{
-				// 	this.chargeList(1)
-				// }
+				if( this.tagCurrent == 0 ){
+					this.chargeList(0)
+				}else{
+					this.chargeList(1)
+				}
 			}
 		},
 		onNavigationBarButtonTap:function(e){
@@ -112,11 +110,12 @@
 					this.chargeList(1)
 				}
 			},
-			chargeList:function(optype){ // optype:(0-收入，1-支出)
+			chargeList:function(optype){
 				let that = this
-				this.$u.api.get_member_amount_logs({ 
+				console.log('optype',optype)
+				const fn=optype===0?this.$u.api.getMemberChargeList:this.$u.api.getMemberWithdrawList
+				fn({ 
 					size: that.current,
-					optype: optype,
 					pageSize: 20
 				}).then(res=>{
 					if( res.code == 0 ){
@@ -194,6 +193,7 @@
 .content .tag{
 	display: flex;
 	padding: 20rpx 0;
+	background-color: #FFFFFF;
 }
 .tag_item{
 	margin-left: 40rpx;

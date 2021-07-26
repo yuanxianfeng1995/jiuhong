@@ -60,7 +60,7 @@
 					</view>
 				</view>
 				<view class="coupon_num">
-					<text>剩余：{{userInfo.accountAvailableCoupon}}张</text>
+					<text>库存：{{userInfo.accountAvailableCoupon}}张</text>
 					<text class="message">当前最大可抵扣{{detail.coupon}}张</text>
 					<u-switch v-model="couponChecked" size="36" active-color="#532DA3" @change="switchChange">
 					</u-switch>
@@ -77,7 +77,7 @@
 					</view>
 				</view>
 				<view class="coupon_num">
-					<text>剩余：{{userInfo.accountAvailableIntegral}}</text>
+					<text>库存：{{userInfo.accountAvailableIntegral}}</text>
 					<u-switch v-model="couponChecked" size="36" active-color="#532DA3" @change="switchChange">
 					</u-switch>
 				</view>

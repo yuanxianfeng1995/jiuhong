@@ -74,6 +74,11 @@ const install = (Vue, vm) => {
 	let get_share_img = (params = {}) => vm.$u.get(url+'/member/getShareImg', params);	//获得推广二维码
   let modifyPwd = (params = {}) => vm.$u.post(url+'/member/modifyPwd', params);	//修改密码
   let getMemberBounsLevel = (params = {}) => vm.$u.get(url+'/member/getMemberBounsLevel', params);	//获取会员分红资格级别
+  let getMemberAgent = (params = {}) => vm.$u.get(url+'/member/getMemberAgent', params);	//会员代理信息
+  let getMemberServiceInfo = (params = {}) => vm.$u.get(url+'/member/getMemberServiceInfo', params);	//会员服务中心信息
+	let getMemberChargeList = (params = {}) => vm.$u.get(url+'/member/getMemberChargeList', params);	//充值记录
+	let getMemberWithdrawList = (params = {}) => vm.$u.get(url+'/member/getMemberWithdrawList', params);	//提现记录
+
 
 
 	//粉丝管理
@@ -167,7 +172,11 @@ const install = (Vue, vm) => {
 		getAccountDetail,
 		updateCollectAccount,
 		modifyPwd,
-		getMemberBounsLevel
+		getMemberBounsLevel,
+		getMemberAgent,
+		getMemberServiceInfo,
+		getMemberChargeList,
+		getMemberWithdrawList
 	};
 }
 

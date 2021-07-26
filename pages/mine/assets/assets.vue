@@ -109,15 +109,10 @@
 			const eventChannel = this.getOpenerEventChannel()
 			eventChannel.on('detail', function(data) {
 				console.log('获取详情数据222', data.data)
+				const userInfo=uni.getStorageSync('userInfo')
 				try{
 					const obj=data.data
 					let list = JSON.parse(JSON.stringify(that.list)) 
-					list[0]={
-						...list[0],
-						available: obj.accountAvailableAmount,
-						frozen: obj.accountFreezeAmount,
-						cumulative: obj.accountAmount
-					}
 					list[0]={
 						...list[0],
 						available: obj.accountAvailableAmount,
@@ -138,13 +133,13 @@
 					}
 					list[3]={
 						...list[3],
-						available: obj.accountShareBonus,
+						available: obj.accountAvailableShareBonus,
 						frozen: obj.accountFreezeShareBonus,
 						cumulative: obj.accountTotalShareBonus
 					}
 					list[4]={
 						...list[4],
-						available: obj.accountShareBonus,
+						available: obj.accountAvailableShareBonus,
 						frozen: obj.accountFreezeShareBonus,
 						cumulative: obj.accountTotalShareBonus
 					}
@@ -153,6 +148,8 @@
 						available: obj.accountShopvoucher,
 						cumulative: obj.accountTotalShareBonus
 					}
+					console.log('userInfo.isDirector==1',userInfo.isDirector==1)
+					userInfo.isDirector==1?list.splice(4,1):list.splice(5,1)
 					that.list=list
 				}catch(e){
 					console.log('catch',e)

@@ -17,15 +17,17 @@
 			<view class="list">
 				<view class="item">
 					<text>日期时间</text>
-					<text>操作说明</text>
-					<text>交易金额</text>
-					<text>结余金额</text>
+					<text>分红等级</text>
+					<text>使用拼团劵数</text>
+					<text>最大分红收入</text>
+					<text>累计分红收入</text>
 				</view>
 				<view class="item" v-for="(item,index) in cashList_arr" :key="index" v-if="tabCurrent == 0">
 					<text>{{item.createtime}}</text>
-					<text>{{item.realtype}}</text>
-					<text>{{(item.optype===0?'+':'-')+item.sjmoney}}</text>
-					<text>{{item.jymoney}}</text>
+					<text>{{item.bounslevel}}</text>
+					<text>{{item.coupounum}}</text>
+					<text>{{item.accountmax}}</text>
+					<text>{{item.accountsum}}</text>
 				</view>
 				<u-loadmore :status="'nomore'" :bg-color="'#F8F7F7'"  v-if="loadmoreShow" />
 			</view>
@@ -202,7 +204,7 @@
 	background-color: #FFFFFF;
 }
 .list .item{
-	height: 96rpx;
+	height: 140rpx;
 	width: 750rpx;
 	border-bottom: 2rpx solid #F9F9F9;
 	padding:  0 40rpx;
@@ -214,6 +216,7 @@
 	font-size: 28rpx;
 	color: #000000; 
 	flex: 1;
+	text-align: center;
 }
 .list .item text.status{
 	font-weight: 600;
