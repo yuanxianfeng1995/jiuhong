@@ -21,7 +21,9 @@
 			</view>
 		</view>
 		<view class="bottom">
+			<!-- <button class="btn" @click="prev">上一步</button> -->
 			<button class="btn" @click="register">完成</button>
+			<text class="forget-password" @click="forgetPassword">忘记密码</text>
 		</view>
 	</view>
 </template>
@@ -35,6 +37,11 @@
 			}
 		},
 		methods: {
+			forgetPassword(){
+				uni.navigateTo({
+					url: '/pages/login/verification/verification?mobile='+(this.mobile || '')
+				})
+			},
 			//手机号输入
 			mobileChange: function(e) {
 				this.mobile = e.target.value
@@ -61,11 +68,6 @@
 					unionId: userInfo.unionid,
 				}).then(res => {
 					if (res.code === 0) {
-						app.globalData.userInfo = {
-							...userInfo,
-							...res.data
-						};
-
 						that.$u.api.pwdLogin({
 							"mobile": that.mobile,
 							"password": that.password,
@@ -73,7 +75,12 @@
 							try {
 								console.log('登录成功', res1)
 								if (res1.code == 0) {
-									uni.setStorageSync('token', res.data.token)
+									app.globalData.userInfo = {
+										...userInfo,
+										...res1.data
+									};
+									
+									uni.setStorageSync('token', res1.data.token)
 									wx.showToast({
 										title: '登录成功',
 										success() {
@@ -154,19 +161,20 @@
 	}
 
 	.bottom {
-		flex: 1;
 		background-color: #f9f9f9;
 		padding: 0 36rpx 120rpx;
 		display: flex;
-		flex-direction: column;
 		justify-content: flex-end;
+		align-items: flex-end;
+		position: relative;
 	}
-
+	
 	.bottom .btn {
-		width: 680rpx;
-		height: 120rpx;
-		line-height: 120rpx;
+		width: 60%;
+		height: 80rpx;
+		line-height: 80rpx;
 		color: #FFFFFF;
 		background: #532da3;
+		
 	}
 </style>

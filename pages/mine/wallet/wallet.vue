@@ -2,13 +2,14 @@
 	<view class="contain">
 		<view class="header">
 			<view class="price">
-				<text>￥{{account.accountAmount.toFixed(2)}}</text>
+				<text>￥{{account.accountAvailableAmount.toFixed(2)}}</text>
 			</view>
 			<view class="menu">
-				<view class="" style="width: 200rpx;">
-					<text>钱包可用余额</text>
-					<text>{{account.accountAvailableAmount.toFixed(2)}}</text>
-				</view>
+				<view></view>
+				<!-- <view class="" style="width: 200rpx;">
+					<text>钱包累计余额</text>
+					<text>{{account.accountAmount.toFixed(2)}}</text>
+				</view> -->
 				<view class="menu_btn">
 					<button class="btn" type="default" size="mini" @click="routeIntegral">购买拼团积分</button>
 					<button class="btn" type="default" size="mini" @click="routeChargeMoney">充值</button>
@@ -65,10 +66,10 @@
 		onLoad:function(option){
 			this.account = uni.getStorageSync('user')
 			console.log('this.account',this.account)
-			// this.chargeList()
-			this.chargeList()
 		},
 		onShow() {
+			this.cashList_arr=[]
+			this.chargeList()
 			this.get_userCenter()
 		},
 		onReachBottom:function(){

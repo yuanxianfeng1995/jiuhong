@@ -18,13 +18,13 @@
 				<view class="item">
 					<text>日期时间</text>
 					<text>分红等级</text>
-					<text>使用拼团劵数</text>
+					<text>使用拼团劵</text>
 					<text>最大分红收入</text>
 					<text>累计分红收入</text>
 				</view>
 				<view class="item" v-for="(item,index) in cashList_arr" :key="index" v-if="tabCurrent == 0">
 					<text>{{item.createtime}}</text>
-					<text>{{item.bounslevel}}</text>
+					<text>{{item.levelName}}</text>
 					<text>{{item.coupounum}}</text>
 					<text>{{item.accountmax}}</text>
 					<text>{{item.accountsum}}</text>

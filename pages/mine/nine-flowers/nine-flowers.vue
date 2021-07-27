@@ -12,7 +12,8 @@
 				</view>
 			</view>
 			<view class="menu">
-				<text>当前可用玖花{{user.accountAvailableShareBonus}}，累计获得玖花{{user.accountTotalShareBonus}}，冻结部分{{user.accountFreezeShareBonus}}</text>
+				<!-- 累计获得玖花{{user.accountTotalShareBonus}} -->
+				<text>当前可用玖花{{user.accountAvailableShareBonus}}，冻结部分{{user.accountFreezeShareBonus}}</text>
 			</view>
 		</view>
 		<view class="content">
@@ -63,7 +64,7 @@
 		},
 		onLoad:function(){
 			this.user = uni.getStorageSync('user');
-			this.ptUserAccount_bonusRecord()
+			
 			//this.ptUserAccount_bonusRecord(0)
 		},
 		onReachBottom:function(){
@@ -78,7 +79,9 @@
 			}
 		},
 		onShow() {
+			this.ptUserAccountBonusRecord=[]
 			this.get_userCenter()
+			this.ptUserAccount_bonusRecord()
 		},
 		methods: {
 			//我的信息

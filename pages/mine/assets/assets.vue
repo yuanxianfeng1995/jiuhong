@@ -22,7 +22,7 @@
 						<view class="label">累计</view>
 						<text class="value">{{item.cumulative}}</text>
 					</view>
-					<view v-if="item.isFrozen"></view>
+					<view v-if="item.isFrozen" class="content-item"></view>
 				</view>
 			</view>
 		</view>
@@ -131,7 +131,7 @@
 					list[4]={
 						...list[4],
 						available: obj.accountShopvoucher,
-						cumulative: obj.accountTotalShareBonus
+						cumulative: obj.accountUseShopvoucher
 					}
 					that.list=list
 				}catch(e){
@@ -193,12 +193,10 @@
 					}
 				}
 				.content{
-					padding-left: 20rpx;
 					color: #f3d66c;
 					display: flex;
 					font-size: 35rpx;
 					justify-content: space-between;
-					padding: 0 40rpx;
 					.label{
 						color: #FFFFFF;
 						font-size: 30rpx;
@@ -206,6 +204,7 @@
 					}
 				}
 				.content-item{
+					flex: 1;
 					text-align: center;
 				}
 				.data_icon{

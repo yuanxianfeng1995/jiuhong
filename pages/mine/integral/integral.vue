@@ -3,10 +3,11 @@
 		<view class="header">
 			<view class="price">
 				<u-icon name="/static/icon/mine-data-icon1@2x.png" size="60"></u-icon>
-				<text>{{user.accountIntegral}}</text>
+				<text>{{user.accountAvailableIntegral}}</text>
 			</view>
 			<view class="menu">
-				<text>当前可用拼团积分 {{user.accountAvailableIntegral}}</text>
+				<view></view>
+			<!-- 	<text>当前累计拼团积分 {{user.accountIntegral}}</text> -->
 				<view class="menu_btn">
 					<button class="btn" type="default" size="mini" @click="routeBuyBalance">转到余额</button>
 					<!-- <button class="btn" type="default" size="mini" @click="routeBuyAlsipay">微信购买</button> -->
@@ -60,10 +61,11 @@
 		},
 		onLoad(option) {
 			this.user = uni.getStorageSync('user');
-			this.get_userCenter_integral()
 		},
 		onShow() {
+			this.userCenter_integral=[]
 			this.get_userCenter()
+			this.get_userCenter_integral()
 		},
 		onReachBottom:function(){
 			console.log(this.reachBottomOpen)

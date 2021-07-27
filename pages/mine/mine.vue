@@ -14,18 +14,10 @@
 				<view class="detail_text">
 					<text>{{userInfo.nickname}}</text>
 					<text>ID: {{userInfo.id}}</text>
-					<text>等级:{{userInfo.levelName||'普通会员'}}</text>
-					<text>代理:{{userInfo.agentLevelName}}</text>
-					<text>分红:{{userInfo.bonusLevelName}}</text>
-					<text>职务:{{job}}</text>
-					<!-- <view class="text-content">
-						<text>等级:{{userInfo.levelName||'普通会员'}}</text>
-						<text>代理:{{userInfo.agentLevelName}}</text>
-					</view>
 					<view class="text-content">
-						<text>分红:{{userInfo.bonusLevelName}}</text>
+						<text>等级:{{userInfo.levelName||'普通会员'}}</text>
 						<text>职务:{{job}}</text>
-					</view> -->
+					</view>
 				</view>
 			<!-- 	<view class="mine_balance">
 					<view class="balance_price" @click="routeWallet">
@@ -192,9 +184,7 @@
 					if (res.code == 0) {
 						console.log('用户', res)
 						this.userInfo = res.data
-						this.job = res.data.isService === 1 ? '服务中心' :
-							(res.data.isDirector === 1 ? '总监' :
-							res.data.isPartner === 1 ? '联创合伙人' : '无')
+						this.job = res.data.isDirector === 1 ? '总监' : res.data.isPartner === 1 ? '联创合伙人' : '无'
 						uni.setStorageSync('userInfo', res.data)
 					}
 				})
@@ -401,16 +391,15 @@
 		line-height: 1.5;
 	}
 	.text-content{
-		width: 250rpx;
-		margin: 0 auto;
+		display: flex;
 	}
 	.detail_text text{
 		margin-bottom: 10rpx;
 	}
 	.text-content text{
-    display: block;
 		margin-bottom: 10rpx;
 		text-align: left;
+		margin-right: 20rpx;
 	}
 	.detail_text .content {
 		display: flex;

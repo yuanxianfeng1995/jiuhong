@@ -3,10 +3,11 @@
 		<view class="header">
 			<view class="price">
 				<u-icon name="/static/icon/mine-data-icon2@2x.png" size="60"></u-icon>
-				<text>{{user.accountCoupon}}</text>
+				<text>{{user.accountAvailableCoupon}}</text>
 			</view>
 			<view class="menu">
-				<text>当前剩余可用拼团券{{user.accountAvailableCoupon}}张</text>
+				<view></view>
+				<!-- <text>累计拼团券{{user.accountCoupon}}张</text> -->
 				<view class="menu_btn">
 					<button class="btn" type="default" size="mini" @click="routeBuy">投入分红</button>
 				</view>
@@ -67,10 +68,12 @@
 		onLoad:function(){
 			this.user = uni.getStorageSync('user');
 			console.log(this.user)
-			this.couponList()
+			
 		},
 		onShow() {
+			this.couponListArr=[]
 			this.get_userCenter()
+			this.couponList()
 			// this.currenthold()
 		},
 		onReachBottom:function(){

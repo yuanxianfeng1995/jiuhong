@@ -31,20 +31,41 @@
 				</view>
 			</view>
 			<view class="list">
-				<view class="item">
-					<text>日期时间</text>
-					<text>操作说明</text>
-					<text>交易金额</text>
-					<text>结余金额</text>
+				<view class="content" v-if="tabCurrent == 0">
+					<view class="item">
+						<text>日期时间</text>
+						<text>操作说明</text>
+						<text>提现金额</text>
+						<text>扣除金额</text>
+						<text>到账金额</text>
+					</view>
+					<view class="item" v-for="(item,index) in cashList_arr" :key="index">
+						<text>{{item.createtime}}</text>
+						<text>{{item.memo}}</text>
+						<text>{{item.num}}</text>
+						<text>{{item.knum}}</text>
+						<text>{{item.resultnum}}</text>
+					</view>
 				</view>
-				<view class="item" v-for="(item,index) in cashList_arr" :key="index" v-if="tabCurrent == 0">
-					<text>{{item.createtime}}</text>
-					<text>{{item.realtype}}</text>
-					<text>{{(item.optype===0?'+':'-')+item.sjmoney}}</text>
-					<text>{{item.jymoney}}</text>
+				<view class="content" v-if="tabCurrent == 1">
+					<view class="item">
+						<text>日期时间</text>
+						<text>操作说明</text>
+						<text>充值类型</text>
+						<text>充值金额</text>
+						<text>是否成功</text>
+					</view>
+					<view class="item" v-for="(item,index) in cashList_arr" :key="index">
+						<text>{{item.createtime}}</text>
+						<text>{{item.memo}}</text>
+						<text>{{item.ctype==1?'微信':item.ctype==1?'支付宝':'第三方支付'}}</text>
+						<text>{{item.num}}</text>
+						<text>{{item.issuccess==1?'成功':'未成功'}}</text>
+					</view>
 				</view>
 				<u-loadmore :status="'nomore'" :bg-color="'#F8F7F7'"  v-if="loadmoreShow" />
 			</view>
+			
 		</view>
 	</view>
 </template>
@@ -113,23 +134,30 @@
 			chargeList:function(optype){
 				let that = this
 				console.log('optype',optype)
-				const fn=optype===0?this.$u.api.getMemberChargeList:this.$u.api.getMemberWithdrawList
-				fn({ 
-					size: that.current,
-					pageSize: 20
-				}).then(res=>{
-					if( res.code == 0 ){
-						that.cashList_arr = [...that.cashList_arr,...res.data]
-						if( res.data.length < 20 ){
-							that.reachBottem = false
-						}
-						if( res.data.length == 0 ){
-							that.loadmoreShow = true
-						}else{
-							that.loadmoreShow = false
-						}
+				const parms={ 
+						size: that.current,
+						pageSize: 20
 					}
-				})
+				try{
+					const fn=optype===1?this.$u.api.getMemberChargeList(parms):this.$u.api.getMemberWithdrawList(parms)
+					fn.then(res=>{
+						if( res.code == 0 ){
+							that.cashList_arr = [...that.cashList_arr,...res.data]
+							console.log('that.cashList_arr',that.cashList_arr)
+							if( res.data.length < 20 ){
+								that.reachBottem = false
+							}
+							if( res.data.length == 0 ){
+								that.loadmoreShow = true
+							}else{
+								that.loadmoreShow = false
+							}
+						}
+					})
+				}catch(e){
+					console.log(e)
+				}
+				
 			},
 			//路由 - 购买积分
 			routeIntegral:function(){
@@ -222,7 +250,7 @@
 	background-color: #FFFFFF;
 }
 .list .item{
-	height: 96rpx;
+	height: 140rpx;
 	width: 750rpx;
 	border-bottom: 2rpx solid #F9F9F9;
 	padding:  0 40rpx;
