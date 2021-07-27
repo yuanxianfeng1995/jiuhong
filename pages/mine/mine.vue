@@ -276,6 +276,14 @@
 			},
 			//路由 - 我的二维码
 			routeQr: function() {
+				if(true){
+					uni.showToast({
+						title: '暂未开放',
+						icon: 'none'
+					})
+					return
+				}
+				
 				uni.navigateTo({
 					url: "qr-code/qr-code"
 				})
