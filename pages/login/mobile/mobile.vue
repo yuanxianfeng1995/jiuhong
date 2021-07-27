@@ -3,10 +3,9 @@
 		<view class="content">
 			<view class="header">
 				<view class="title">
-					<text>请输入手机号</text>
+					<text>登录</text>
 				</view>
 				<view class="sub_title">
-					<text>Please enter your phone number. We will send you 6-digit code to verify your account.</text>
 				</view>
 			</view>
 			<view class="form">
@@ -15,10 +14,14 @@
 					<input class="input" v-model="mobile" maxlength="11" type="number" placeholder="请输入手机号"
 						@input="mobileChange" />
 				</view>
+				<view class="tel">
+					<text>密码</text>
+					<input class="input" v-model="password" maxlength="11" type="password" placeholder="请输入密码" />
+				</view>
 			</view>
 		</view>
 		<view class="bottom">
-			<button class="btn" @click="getCode">下一步</button>
+			<button class="btn" @click="register">完成</button>
 		</view>
 	</view>
 </template>
@@ -28,51 +31,32 @@
 		data() {
 			return {
 				mobile: '',
+				password: ''
 			}
 		},
 		methods: {
-			//获取验证码
-			getCode() {
-				if (this.mobile.length != 11) {
+			//手机号输入
+			mobileChange: function(e) {
+				this.mobile = e.target.value
+			},
+			register() {
+				const that=this;
+				if (that.password.length < 6) {
 					wx.showToast({
-						title: '手机号输入错误',
+						title: '密码输入最少六位',
 						icon: 'none'
 					})
 					return
 				}
-				let that = this
+				uni.showLoading({
+					title: '登录中'
+				})
 				const app = getApp()
 				let userInfo = app.globalData.userInfo
-				// {
-				// 	"gender": 0,
-				// 	"city": "",
-				// 	"province": "",
-				// 	"country": "",
-				// 	"headimgurl": "",
-				// 	"openid": "oRrdQt6Tau75ETteYhNJz5-m1qO4",
-				// 	"nickname": "旋风",
-				// 	"avatarurl": "",
-				// 	"unionid": "oU5Yyt4oGlJqTXaVpmhXo21nGWuk",
-				// 	"id": 4,
-				// 	"userNo": this.mobile,
-				// 	"username": null,
-				// 	"realname": null,
-				// 	"headPortrait": "",
-				// 	"unionId": "oU5Yyt4oGlJqTXaVpmhXo21nGWuk",
-				// 	"password": null,
-				// 	"tradepwd": null,
-				// 	"status": 1,
-				// 	"mobile": this.mobile,
-				// 	"regtime": null,
-				// 	"iscase": 1,
-				// 	"isreal": null,
-				// 	"logintime": null,
-				// 	"loginIp": "43.250.201.119"
-				// }
 
 				that.$u.api.wxLogin({
 					headPortrait: userInfo.headimgurl,
-					mobile: this.mobile,
+					mobile: that.mobile,
 					nickname: userInfo.nickname,
 					unionId: userInfo.unionid,
 				}).then(res => {
@@ -81,24 +65,40 @@
 							...userInfo,
 							...res.data
 						};
-						console.log('res.data',res.data)
-						uni.navigateTo({
-							url:`/pages/login/password/password?mobile=${this.mobile||''}&smscode=${''}&password=${''}`
-						})
-						// uni.navigateTo({
-						// 	url: `/pages/login/code/code?mobile=${this.mobile||''}&smscode=${''}&password=${''}`
-						// })
 
-					} else {
-						that.$u.toast(res.msg);
+						that.$u.api.pwdLogin({
+							"mobile": that.mobile,
+							"password": that.password,
+						}).then(res1 => {
+							try {
+								console.log('登录成功', res1)
+								if (res1.code == 0) {
+									uni.setStorageSync('token', res.data.token)
+									wx.showToast({
+										title: '登录成功',
+										success() {
+											console.log('登录成功switchTab')
+											uni.reLaunch({
+												url: '/pages/index/index'
+											})
+										}
+									})
+									uni.hideLoading()
+
+								} else {
+									wx.showToast({
+										title: res1.msg,
+										icon: 'none'
+									})
+								}
+							} catch (e) {
+								console.log(e)
+							}
+
+						})
 					}
 				})
-
 			},
-			//手机号输入
-			mobileChange: function(e) {
-				this.mobile = e.target.value
-			}
 		}
 	}
 </script>
@@ -135,12 +135,14 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 0 90rpx 24rpx;
+		margin-bottom: 40rpx;
 	}
 
 	.tel text {
 		border-right: 2rpx solid #8A959A;
 		padding-right: 33rpx;
 		color: #000;
+		width: 100rpx;
 		font-weight: bold;
 	}
 

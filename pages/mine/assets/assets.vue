@@ -72,15 +72,6 @@
 					},
 					{
 						id: 3,
-						lable: '分红',
-						src: '/static/icon/mine-icon4@2x.png',
-						url:"../participation/participation",
-						available: 0,
-						frozen: 0,
-						cumulative: 0
-					},
-					{
-						id: 4,
 						lable: '玖花',
 						isIconfont: true,
 						src: '/static/icon/mine-icon5@2x.png',
@@ -90,7 +81,7 @@
 						cumulative: 0
 					},
 					{
-						id: 5,
+						id: 4,
 						lable: '购物券',
 						isIconfont: true,
 						src: '/static/icon/mine-icon6@2x.png',
@@ -139,17 +130,9 @@
 					}
 					list[4]={
 						...list[4],
-						available: obj.accountAvailableShareBonus,
-						frozen: obj.accountFreezeShareBonus,
-						cumulative: obj.accountTotalShareBonus
-					}
-					list[5]={
-						...list[5],
 						available: obj.accountShopvoucher,
 						cumulative: obj.accountTotalShareBonus
 					}
-					console.log('userInfo.isDirector==1',userInfo.isDirector==1)
-					userInfo.isDirector==1?list.splice(4,1):list.splice(5,1)
 					that.list=list
 				}catch(e){
 					console.log('catch',e)

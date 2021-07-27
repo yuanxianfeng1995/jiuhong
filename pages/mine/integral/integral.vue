@@ -36,7 +36,7 @@
 				</view>
 				<view class="item" v-for="(item,index) in userCenter_integral" :key="index">
 					<text>{{item.createtime}}</text>
-					<text>{{item.realtype}}</text>
+					<text>{{item.memo}}</text>
 					<text>{{(item.optype===0?'+':'-')+item.sjmoney}}</text>
 					<text>{{item.jymoney}}</text>
 				</view>

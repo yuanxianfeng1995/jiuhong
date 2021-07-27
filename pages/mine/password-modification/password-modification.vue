@@ -77,7 +77,7 @@
 						})
 						setTimeout(() => {
 							uni.navigateBack({
-								delta: that.delta||2
+								delta: 2
 							})
 						}, 1000)
 					} else {
