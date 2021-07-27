@@ -94,52 +94,51 @@
 				]
 			}
 		},
-		onLoad: function(option) {
-			let that = this
-			//用户信息
-			const eventChannel = this.getOpenerEventChannel()
-			eventChannel.on('detail', function(data) {
-				console.log('获取详情数据222', data.data)
-				const userInfo=uni.getStorageSync('userInfo')
-				try{
-					const obj=data.data
-					let list = JSON.parse(JSON.stringify(that.list)) 
-					list[0]={
-						...list[0],
-						available: obj.accountAvailableAmount,
-						frozen: obj.accountFreezeAmount,
-						cumulative: obj.accountAmount
-					}
-					list[1]={
-						...list[1],
-						available: obj.accountAvailableIntegral,
-						frozen: obj.accountFreezeIntegral,
-						cumulative: obj.accountIntegral
-					}
-					list[2]={
-						...list[2],
-						available: obj.accountAvailableCoupon,
-						frozen: obj.accountFreezeCoupon,
-						cumulative: obj.accountCoupon
-					}
-					list[3]={
-						...list[3],
-						available: obj.accountAvailableShareBonus,
-						frozen: obj.accountFreezeShareBonus,
-						cumulative: obj.accountTotalShareBonus
-					}
-					list[4]={
-						...list[4],
-						available: obj.accountShopvoucher,
-						cumulative: obj.accountUseShopvoucher
-					}
-					that.list=list
-				}catch(e){
-					console.log('catch',e)
-				}
-			})
+		onShow() {
+			this.get_userCenter()
 		},
 		methods:{
+			//我的信息
+			get_userCenter:function(){
+				 let that = this
+				 this.$u.api.get_userCenter().then(res => {
+					if( res.code == 0 ){
+						const obj=res.data
+						let list = JSON.parse(JSON.stringify(that.list)) 
+						list[0]={
+							...list[0],
+							available: obj.accountAvailableAmount,
+							frozen: obj.accountFreezeAmount,
+							cumulative: obj.accountAmount
+						}
+						list[1]={
+							...list[1],
+							available: obj.accountAvailableIntegral,
+							frozen: obj.accountFreezeIntegral,
+							cumulative: obj.accountIntegral
+						}
+						list[2]={
+							...list[2],
+							available: obj.accountAvailableCoupon,
+							frozen: obj.accountFreezeCoupon,
+							cumulative: obj.accountCoupon
+						}
+						list[3]={
+							...list[3],
+							available: obj.accountAvailableShareBonus,
+							frozen: obj.accountFreezeShareBonus,
+							cumulative: obj.accountTotalShareBonus
+						}
+						list[4]={
+							...list[4],
+							available: obj.accountShopvoucher,
+							cumulative: obj.accountUseShopvoucher
+						}
+						that.list=list
+						console.log('get_userCenter this.account',this.account)
+					}
+				 })
+			},
 			goPage(item){
 				if(item.isFrozen) return;
 				uni.navigateTo({

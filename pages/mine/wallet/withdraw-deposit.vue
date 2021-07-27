@@ -30,7 +30,7 @@
 			<view class="input">
 				<text>￥</text>
 				<text class="line">|</text>
-				<u-input v-model="form.money" name="money"></u-input>
+				<u-input v-model="form.money" name="money" type="number"></u-input>
 			</view>
 		</view>
 		<view class="warn">

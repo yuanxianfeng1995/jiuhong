@@ -7,7 +7,7 @@
 			<view class="input">
 				<text>￥</text>
 				<text class="line">|</text>
-				<u-input v-model="integral"></u-input>
+				<u-input v-model="integral" type="number"></u-input>
 			</view>
 		</view>
 		<view class="warn">

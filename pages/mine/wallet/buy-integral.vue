@@ -7,7 +7,7 @@
 			<view class="input">
 				<text>￥</text>
 				<text class="line">|</text>
-				<u-input v-model="integral"></u-input>
+				<u-input v-model="integral" type="number" ></u-input>
 			</view>
 		</view>
 		<view class="sumbit">
@@ -39,7 +39,7 @@
 					})
 					return
 				}
-				if( that.integral > this.amount ){
+				if(parseInt(that.integral) > parseInt(this.amount)){
 					uni.showToast({
 						title:'余额不足',
 						icon:'none'
