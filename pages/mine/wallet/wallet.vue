@@ -140,26 +140,26 @@
 			},
 			//路由- 充值
 			routeChargeMoney:function(){
-				if(true){
-					uni.showToast({
-						title: '暂未开放',
-						icon: 'none'
-					})
-					return
-				}
+				// if(true){
+				// 	uni.showToast({
+				// 		title: '暂未开放',
+				// 		icon: 'none'
+				// 	})
+				// 	return
+				// }
 				uni.navigateTo({
 					url:"charge-money"
 				})
 			},
 			//路由 - 提现
 			routewithdraw:function(){
-				if(true){
-					uni.showToast({
-						title: '暂未开放',
-						icon: 'none'
-					})
-					return
-				}
+				// if(true){
+				// 	uni.showToast({
+				// 		title: '暂未开放',
+				// 		icon: 'none'
+				// 	})
+				// 	return
+				// }
 				uni.navigateTo({
 					url:'withdraw-deposit?amount=' + this.account.accountAvailableAmount
 				})
