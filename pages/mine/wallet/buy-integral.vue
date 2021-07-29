@@ -39,13 +39,6 @@
 					})
 					return
 				}
-				if(parseInt(that.integral) > parseInt(this.amount)){
-					uni.showToast({
-						title:'余额不足',
-						icon:'none'
-					})
-					return
-				}
 				const userInfo= uni.getStorageSync('userInfo');
 				this.$u.api.balanceBuy({
 					"amount": that.integral,

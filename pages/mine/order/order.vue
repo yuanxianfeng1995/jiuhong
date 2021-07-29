@@ -4,13 +4,13 @@
 			<u-tabs :list="list" :is-scroll="false" :current="current" active-color="#532DA3" @change="change"></u-tabs>
 		</view>
 		<view class="content" v-for="(item,index) in ptOrder_list" :key="index">
-			<view class="date">
-				<text>{{item.createTime?$u.timeFormat(parseInt(item.createTime), 'yyyy-mm-dd hh:MM:ss'):''}}</text>
-			</view>
 			<view class="list">
 				<view class="item">
+					<view class="date">
+						<text>时间:{{item.createtime}}</text>
+					</view>
+					<text class="title">订单:{{item.orderNo}}</text>
 					<view class="line_1">
-						<text>订单:{{item.coupon}}</text>
 						<text class="status" v-if="item.status == 1">拼中商品，待发货</text>
 						<text class="status" v-else-if="item.status == 2">拼中商品，已发货</text>
 						<text class="status" v-else-if="item.status == 3">拼中商品，已收货</text>
@@ -23,8 +23,8 @@
 							</view> -->
 						</view>
 						<view class="detail">
-							<text>{{item.pname}}</text>
-							<text class="tag">{{item.ptPrice}}积分</text>
+							<text>{{item.productName}}</text>
+							<text class="tag">{{item.productPrice}}积分</text>
 						</view>
 					</view>
 				</view>
@@ -107,22 +107,22 @@
 	}
 </script>
 
-<style>
+<style scoped>
+	.content{
+		margin-top: 30rpx;
+	}
 .date{
 	font-size: 26rpx;
 	color: #4d4949;
-	padding: 30rpx;
-	text-align: center;
+	padding: 0 0 20rpx 0;
 }
 .line_1{
-	display: flex;
-	align-items: center;
-	justify-content: space-between;
-	padding-bottom: 38rpx;
+	padding: 20rpx 0;
 }
 .line_1 text{
 	font-size: 28rpx;
 	color: #040404;
+	
 }
 .line_1 .status{
 	color: #FF0000;

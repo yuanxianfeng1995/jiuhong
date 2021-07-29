@@ -11,6 +11,10 @@
 					<text>我参与的</text>
 					<!-- <view :class="['tab_line', tabActive == 2 ? 'tab_line_active' : '']"></view> -->
 				</view>
+				<view :class="['tab_item', tabActive == 3 ? 'active' : '']" @click="tabChange(3)">
+					<text>开团记录</text>
+					<!-- <view :class="['tab_line', tabActive == 2 ? 'tab_line_active' : '']"></view> -->
+				</view>
 			</view>
 			<view class="warn_message">
 				<text>温馨提示：您今日还可开团{{openAndJoin_num.surplusCreateGroupTotal<0?0:openAndJoin_num.surplusCreateGroupTotal}}次，参团{{openAndJoin_num.surplusJoinGroupTotal<0?0:openAndJoin_num.surplusJoinGroupTotal}}次</text>
@@ -23,17 +27,17 @@
 				<swiper-item v-for="(item,index) in group_pt_successList_list" :key="index">
 					<view class="recommend" @click.stop="routeDetailHose(item)">
 						<view class="line_1">
-							<text class="date">开团时间：{{item.createtime}}</text>
+							<text class="date">开团时间：{{item.startTime}}</text>
 							<!-- <text>团号：{{item.groupNo}}</text> -->
 						</view>
 						<view class="line_2">
 							<view class="author">
 								<view class="author_img">
 									<image class="icon" src="../../static/icon/crown-icon@2x.png"></image>
-									<image class="headimg" :src="item.isWinningHeadUrl" mode="aspectFill"></image>
+									<image class="headimg" :src="item.winUserHeadPortrait" mode="aspectFill"></image>
 								</view>
 								<view class="author_name">
-									<view class="u-line-1" style="width: 110rpx;">{{item.winUserno?item.winUserno.substr(0,1):''}}**
+									<view class="u-line-1" style="width: 110rpx;">{{item.winUserName?item.winUserName.substr(0,1):''}}**
 									</view>
 									<!-- <text>贵阳</text> -->
 								</view>
@@ -53,11 +57,11 @@
 							<view class="img_list">
 								<block v-for="(ite,inde) in item.members" :key="inde">
 									<image :src="ite.headPortrait" mode="aspectFill"
-										v-if="item.isWinningHeadUrl != ite"></image>
+										v-if="item.winUserid != ite.userId"></image>
 								</block>
 							</view>
 							<view class="award">
-								<text>获得积分奖励：+{{item.ptPrice}}</text>
+								<text>获得积分奖励：+{{item.givePoint}}</text>
 							</view>
 						</view>
 					</view>
@@ -84,8 +88,8 @@
 						<view class="img_box">
 							<image class="img" :src="item.picture" mode="aspectFill"></image>
 							<view class="history" v-if="item.headUrls&&item.headUrls.length > 0">
-								<image class="history_item" :src="ite.headPortrait" mode="aspectFill"
-									v-for="(ite,inde) in item.headUrls" :key="inde"></image>
+								<image :src="ite.headPortrait" mode="aspectFill"
+									v-if="item.winUserId != ite.userId"></image>
 							</view>
 						</view>
 						<!-- <image :src="item.picture" mode="aspectFill"></image>、 -->
@@ -118,10 +122,20 @@
 				<u-loadmore :status="loadingStatusTab1" />
 			</view>
 		</view>
-		<view class="content" v-if="tabActive == 2">
+		<view class="content" v-else>
 			<view class="tab2_menu">
-				<u-grid :col="5" :border="false" @click="tab2MenuClick">
+				<u-grid :col="5" :border="false" @click="tab2MenuClick" v-if="tabActive == 2">
 					<u-grid-item v-for="(item,index) in tab2_menu" :index="index" :key="index">
+						<view :class="['tab2_menu_num',tab2_current == index ? 'tab2_menu_num_active' : '']">
+							{{item.num ? item.num : 0}}
+						</view>
+						<view :class="['tab2_menu_name',tab2_current == index ? 'tab2_menu_name_active' : '']">
+							{{item.name}}
+						</view>
+					</u-grid-item>
+				</u-grid>
+				<u-grid :col="5" :border="false" @click="tab2MenuClick"  v-if="tabActive == 3">
+					<u-grid-item v-for="(item,index) in tab2_menu1" :index="index" :key="index">
 						<view :class="['tab2_menu_num',tab2_current == index ? 'tab2_menu_num_active' : '']">
 							{{item.num ? item.num : 0}}
 						</view>
@@ -147,7 +161,7 @@
 									<image class="headimg" :src="item.winUserHeadPortrait" mode="aspectFill"></image>
 								</view>
 								<view class="author_name">
-									<view class="u-line-1" style="width: 110rpx;">{{item.winUserno?item.winUserName.substr(0,1):''}}**
+									<view class="u-line-1" style="width: 110rpx;">{{item.winUserName?item.winUserName.substr(0,1):''}}**
 									</view>
 									<!-- <text>贵阳</text> -->
 								</view>
@@ -159,7 +173,7 @@
 								<view class="coupon">
 									<text>获得拼团券：</text>
 									<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
-									<text class="num">+ {{detail.giveCoupon ? detail.giveCoupon : 0}}</text>
+									<text class="num">+ {{item.giveCoupon ? item.giveCoupon : 0}}</text>
 								</view>
 							</view>
 						</view>
@@ -167,11 +181,11 @@
 							<view class="img_list">
 								<block v-for="(ite,inde) in item.members" :key="inde">
 									<image :src="ite.headPortrait" mode="aspectFill"
-										v-if="item.winUserHeadPortrait != ite"></image>
+										v-if="item.winUserId != ite.userId"></image>
 								</block>
 							</view>
 							<view class="award">
-								<text>获得积分奖励：+{{item.ptPrice ? item.ptPrice : 0}}</text>
+								<text>获得积分奖励：+{{item.givePoint ? item.givePoint : 0}}</text>
 							</view>
 						</view>
 					</view>
@@ -243,7 +257,7 @@
 			return {
 				//下拉刷新开关
 				pullDownRefreshOnoff: true,
-				pullDownRefreshTime: 10, //下拉刷新定时
+				pullDownRefreshTime: 5, //下拉刷新定时
 				//菜单
 				list: [{
 						iconPath: "/static/tabbar/i_home@2x.png",
@@ -312,11 +326,38 @@
 						name: '拼团失败',
 					},
 				],
+				tab2_menu1: [{
+						num: 0,
+						name: '全部',
+					},
+					{
+						num: 0,
+						name: '待开奖',
+					},
+					{
+						num: 0,
+						name: '成功数',
+					},
+					{
+						num: 0,
+						name: '失败数',
+					},
+					{
+						num: 0,
+						name: '拼团失败',
+					},
+				],
 				time: ''
 			}
 		},
 		onLoad: function() {
+		},
+		onShow(){
+			this.page = 1
+			this.pullDownRefreshOnoff = true
+			this.group_square_list=[]
 			this.get_openAndJoin_num()
+			this.ptGroupRecord_staticData()
 			this.group_square()
 			this.get_group_time_config()
 			this.group_pt_successList()
@@ -354,6 +395,7 @@
 			this.pullDownRefreshOnoff = false
 			this.group_square_list=[]
 			this.get_openAndJoin_num()
+			this.ptGroupRecord_staticData()
 			this.group_square()
 			this.get_group_time_config()
 			this.group_pt_successList()
@@ -363,7 +405,7 @@
 
 			this.timer = setInterval(() => {
 				if (this.pullDownRefreshTime <= 0) {
-					this.pullDownRefreshTime = 10
+					this.pullDownRefreshTime = 5
 					this.pullDownRefreshOnoff = true
 					clearInterval(this.timer)
 				} else {
@@ -417,14 +459,24 @@
 							status: 3,
 						}
 				}
-				this.$u.api.group_participate({
+				const fn=that.tabActive===3?that.$u.api.getMemberCreateGroupList:that.$u.api.group_participate
+				fn({
 					userId: id,
 					...parma,
 					page: this.page1,
 					pageSize: this.pageSize,
 				}).then(res => {
 					// (1:开团中,2:开团成功,3：开团失败)
-					that.group_participate_list = res.data || []
+					
+					that.group_participate_list = res.data?res.data.map(item=>{
+						const obj=item.members?item.members.find(item2=>item2.userId===item.winUserId):null
+						return {
+							...item,
+							members:item.members||[],
+							winUserHeadPortrait: obj?obj.headPortrait:item.winUserHeadPortrait,
+							winUserName:  obj?obj.nickname:item.winUserName,
+						}
+					}):[]
 					that.loadingStatus = that.group_participate_list.length < that.pageSize * that.page1 ?
 						'nomore' : 'loadmore'
 					console.log('that.loadingStatus', that.loadingStatus)
@@ -433,13 +485,15 @@
 			//我参与的上面的数字统计
 			ptGroupRecord_staticData: function(status) {
 				let that = this
-				this.$u.api.ptGroupRecord_staticData().then(res => {
+				const fn=that.tabActive===3?this.$u.api.getMemberCreateGroupCount:this.$u.api.ptGroupRecord_staticData
+				fn().then(res => {
 					that.ptGroupRecordStaticData = res.data
 					that.tab2_menu[0].num = res.data.ptAll
 					that.tab2_menu[1].num = res.data.dkj
 					that.tab2_menu[2].num = res.data.zj
 					that.tab2_menu[3].num = res.data.wzj
 					that.tab2_menu[4].num = res.data.ptFailed
+					that.tab2_menu1=that.tab2_menu
 				})
 			},
 			//拼团广场
@@ -474,6 +528,11 @@
 				}
 				this.tabActive = index
 				if (index == 2) {
+					this.tab2_current = 0 //重置下标
+					this.group_participate(1)
+					this.ptGroupRecord_staticData()
+				}
+				if (index == 3) {
 					this.tab2_current = 0 //重置下标
 					this.group_participate(1)
 					this.ptGroupRecord_staticData()
@@ -541,7 +600,16 @@
 					page: 1
 				}).then(res => {
 					if (res.code == 0) {
-						that.group_pt_successList_list = res.data
+						that.group_pt_successList_list = res.data?res.data.map(item=>{
+						const obj=item.members?item.members.find(item2=>item2.userId===item.winUserid):null
+						return {
+							...item,
+							members:item.members||[],
+							winUserHeadPortrait: obj?obj.headPortrait:item.winUserHeadPortrait,
+							winUserName:  obj?obj.nickname:item.winUserName,
+						}
+					}):[],
+					console.log('that.group_pt_successList_list',that.group_pt_successList_list)
 					}
 				})
 			},

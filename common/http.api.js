@@ -1,8 +1,8 @@
 // 此处第二个参数vm，就是我们在页面使用的this，你可以通过vm获取vuex等操作，更多内容详见uView对拦截器的介绍部分：
 // https://uviewui.com/js/http.html#%E4%BD%95%E8%B0%93%E8%AF%B7%E6%B1%82%E6%8B%A6%E6%88%AA%EF%BC%9F
 const install = (Vue, vm) => {
-	const url='/web'
-  //const url=''
+	//const url='/web'
+  const url=''
 	/** 
 	 * 用户管理
 	 * --------------------------------------------------------------------
@@ -39,6 +39,12 @@ const install = (Vue, vm) => {
 	let ptGroupRecord_view = (params = {}) => vm.$u.get(url+'/group/getGroupHouseInfo', params);	//查询团信息
 	let group_banner = (params = {}) => vm.$u.get('/group/ptGroupRecord/group/square/shuffling', params);	//拼团广场轮播团
 	let ptGroupRecord_staticData = (params = {}) => vm.$u.get(url+'/group/getMemberGroupCount', params);	//我参与的上面的数字统计
+	
+	let getMemberCreateGroupList = (params = {}) => vm.$u.get(url+'/group/getMemberCreateGroupList', params);	//我创建的拼团列表
+	let getMemberCreateGroupCount = (params = {}) => vm.$u.get(url+'/group/getMemberCreateGroupCount', params);	//会员开团统计
+	
+	
+
 	/** 
 	 * banner
 	 * --------------------------------------------------------------------------
@@ -176,7 +182,9 @@ const install = (Vue, vm) => {
 		getMemberAgent,
 		getMemberServiceInfo,
 		getMemberChargeList,
-		getMemberWithdrawList
+		getMemberWithdrawList,
+		getMemberCreateGroupList,
+		getMemberCreateGroupCount
 	};
 }
 

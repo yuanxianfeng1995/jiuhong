@@ -134,21 +134,6 @@
 			 //开团
 			creatGroup:function(){
 				let that = this
-				console.log('创建开团',this.detail)
-				if( that.openAndJoin_num.surplusCreateGroupTotal <= 0 ){
-					uni.showToast({
-						title:'客官您好，您当前没有拼团次数，暂不可拼团。',
-						icon:'none'
-					})
-					return
-				}
-				if( that.detail.stock <= 0 ){
-					uni.showToast({
-						title:'库存不足',
-						icon:'none'
-					})
-					return
-				}
 				uni.navigateTo({
 					url:'buy',
 					success:function(res){
@@ -257,46 +242,12 @@
 			//随机拼团
 			routeBuy:function(){
 				let that = this
-				//没有拼团券拦截
-				// if( that.openAndJoin_num.surplusJoinGroupTotal <= 0 ){
-				// 	uni.showToast({
-				// 		title:'客官您好，您当前没有拼团次数，暂不可拼团。',
-				// 		icon:'none'
-				// 	})
-				// 	return
-				// }
-				// if( !that.detail.memberBaseVos||(that.detail.memberBaseVos&&that.detail.memberBaseVos.length == 0) ){
-				// 	uni.showToast({
-				// 		title:'此商品当前无人开团，暂不可参团，请稍后再试。',
-				// 		icon:'none'
-				// 	})
-				// 	return
-				// }
-				// if( that.detail.stock <= 0 ){
-				// 	uni.showToast({
-				// 		title:'库存不足，暂不可购买',
-				// 		icon:'none'
-				// 	})
-				// 	return
-				// }
-				console.log('创建拼团',that.detail.groupProductId)
-				this.$u.api.group_random({
-					groupProductId:that.detail.id
-				}).then( re => {
-					if( re.code == 0 && re.data ){
-						uni.navigateTo({
-							url:'buy',
-							success:function(res){
-								res.eventChannel.emit('detail', { data: that.detail })
-								res.eventChannel.emit('groupItem', { data: re.data })
-							},
-						})
-					}else{
-						uni.showToast({
-							title: re.msg,
-							icon:'none'
-						})
-					}
+				uni.navigateTo({
+					url:'buy',
+					success:function(res){
+						res.eventChannel.emit('detail', { data: that.detail })
+						res.eventChannel.emit('groupItem', { data: {...that.detail,groupNo: that.detail.id, type: 'suiji'}})
+					},
 				})
 			},
 		}

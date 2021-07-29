@@ -60,6 +60,8 @@
 		onLoad:function(option){
 			console.log('可用余额',option.amount)
 			this.amount = option.amount
+		},
+		onShow(){
 			this.getAccountList()
 		},
 		methods: {
@@ -82,7 +84,13 @@
 				this.$u.api.getAccountList().then(res => {
 					console.log(res);
 					if (res.code == 0) {
-						that.accountList = res.data
+						that.accountList = res.data?res.data.map(item=>{
+							return {
+								...item,
+								accounttypeName: that.dictionaries[item.accounttype]
+							}
+						}):[]
+						that.chooseaccount = that.accountList[0]
 					}
 				})
 			},
@@ -105,14 +113,6 @@
 					})
 					return
 				}
-				// if( parseFloat(that.form.money) > parseFloat(that.amount) ){
-				// 	console.log(  that.form.money, that.amount )
-				// 	uni.showToast({
-				// 		title:'余额不足',
-				// 		icon:'none'
-				// 	})
-				// 	return
-				// }
 				if( !this.form.money ){
 					this.$u.toast('请填写提现金额')
 					return

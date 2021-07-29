@@ -18,11 +18,11 @@
 						<view class="label">冻结</view>
 						<text class="value">{{item.frozen}}</text>
 					</view>
-					<view class="content-item">
+					<view class="content-item" v-if="!item.isAvailable">
 						<view class="label">累计</view>
 						<text class="value">{{item.cumulative}}</text>
 					</view>
-					<view v-if="item.isFrozen" class="content-item"></view>
+					<view v-if="item.isFrozen||item.isAvailable" class="content-item"></view>
 				</view>
 			</view>
 		</view>
@@ -48,6 +48,7 @@
 						url:"../wallet/wallet",
 						available: 0,
 						frozen: 0,
+						isAvailable: true,
 						cumulative: 0
 					},
 					{
@@ -58,6 +59,7 @@
 						url:"../integral/integral",
 						available: 0,
 						frozen: 0,
+						isAvailable: true,
 						cumulative: 0
 					},
 					{
@@ -68,6 +70,7 @@
 						url:"../coupon/coupon",
 						available: 0,
 						frozen: 0,
+						isAvailable: true,
 						cumulative: 0
 					},
 					{
@@ -78,6 +81,7 @@
 						url:"../nine-flowers/nine-flowers",
 						available: 0,
 						frozen: 0,
+						isAvailable: false,
 						cumulative: 0
 					},
 					{

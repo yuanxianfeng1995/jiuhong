@@ -1,7 +1,7 @@
 <template>
 	<view class="contain">
 		<view class="header">
-			<view class="recommend" v-if="detail.status == 2 && detail.selfHeadPortrait == detail.winUserHeadPortrait">
+			<view class="recommend" v-if="detail.status == 2 && detail.winUserHeadPortrait">
 				<view class="line_1">
 					<text class="date">开团时间：{{detail.startTime}}</text>
 					<!-- <text>团号：{{detail.groupNo}}</text> -->
@@ -32,12 +32,12 @@
 					<view class="img_list">
 						<scroll-view scroll-x="true" style="white-space: nowrap;">
 							<image :src="item.headPortrait" mode="aspectFill" v-for="(item,index) in detail.members" :key="index" 
-							v-if="index < detail.headUrlsLength && item.headPortrait != detail.winUserHeadPortrait">
+							v-if="index < detail.headUrlsLength && detail.winUserId != item.userId">
 							</image>
 						</scroll-view>
 					</view>
 					<view class="award">
-						<text>获得积分奖励：+{{detail.ptPrice ? detail.ptPrice : 0}}</text>
+						<text>获得积分奖励：+{{detail.givePoint ? detail.givePoint : 0}}</text>
 					</view>
 				</view>
 			</view>
@@ -157,10 +157,10 @@
 		onLoad: function(option) {
 			console.log(option)
 			this.groupNo = option.id
-			this.get_group_time_config()
-			this.joinTime=this.$u.timeFormat(new Date(), 'mm-dd hh:MM:ss')
 		},
 		onShow: function() {
+			this.get_group_time_config()
+			this.joinTime=this.$u.timeFormat(new Date(), 'mm-dd hh:MM:ss')
 			this.ptGroupRecord_view()
 		},
 		onReady:function(){
@@ -219,17 +219,15 @@
 							detail.members.push('/static/icon/group-none@2x.png')
 							i++
 						}
-						//检测是否参与开团
-						let isJoin = detail.members.indexOf(detail.selfHeadPortrait)
-						// let isJoin = detail.members.filter((item) => {
-						//   return item == detail.selfHeadPortrait
-						// });
-						console.log('是否参团',isJoin)
 						
-						that.detail = detail
+						const obj=detail.members?detail.members.find(item2=>item2.userId===detail.winUserId):null
+						that.detail = {
+							...detail,
+							winUserHeadPortrait: obj?obj.headPortrait:detail.winUserHeadPortrait,
+							winUserName:  obj?obj.nickname:detail.winUserName,
+						}
 						
 						//找到中奖人的位置
-						let winUserHeadPortrait = detail.winUserHeadPortrait
 						detail.members.map( (item,index) => {
 							if( item.createBySelf ){
 								that.joinStatusText = '你已开团'
@@ -239,7 +237,7 @@
 								that.joinStatusText = '你已加入'
 								that.joinTime=item.createTime
 							}
-							if( item.headPortrait == winUserHeadPortrait ){ //找到中奖人
+							if( item.userId == detail.winUserId ){ //找到中奖人
 								var animation = uni.createAnimation({
 									duration: 500,
 									timingFunction: 'linear',
@@ -247,8 +245,6 @@
 								this.animation = animation
 								animation.rotate(36*index).step()
 								this.animationData = animation.export()
-								// console.log('中奖人列表', detail.members)
-								// console.log('中奖人', detail.members)
 							}
 						}) 
 						

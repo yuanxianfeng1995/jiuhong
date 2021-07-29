@@ -26,7 +26,7 @@
 			context.drawImage(res.data, 0, 0, 347, 567) 
 			context.setFontSize(20)
 			context.fillStyle = '#FFFFFF'
-			context.fillText('ID:'+userInfo.id,140,280)
+			context.fillText('ID:'+userInfo.id,125,280)
 			// context.Color='#FFFFFF';
 			context.draw()
 			setTimeout(function () {

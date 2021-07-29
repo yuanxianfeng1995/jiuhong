@@ -1,7 +1,7 @@
 <template>
 	<view class="contain">
 		<view class="header">
-			<view class="warn_message" v-if="groupItem.groupNo && !chooseAddress">
+			<view class="warn_message" v-if="groupItem.groupNo && addressList.length == 0">
 				<text>您当前没有添加收货地址，请完善收货地址后再下单</text>
 			</view>
 		</view>
@@ -150,20 +150,21 @@
 		onLoad: function(option) {
 			let that = this
 			//用户信息
-			this.userInfo = uni.getStorageSync('user');
-			console.log('用户信息', this.userInfo)
+			that.userInfo = uni.getStorageSync('user');
+			console.log('用户信息', that.userInfo)
 
 			if (option.type && option.type == 2) { //拼团广场 
-				this.type = 2
-				const eventChannel = this.getOpenerEventChannel()
+				that.type = 2
+				const eventChannel = that.getOpenerEventChannel()
 				eventChannel.on('groupData', function(data) {
 					console.log('获取详情数据222', data)
 					that.detail = data.data
 					that.detail.picture = data.data.picture ? data.data.picture.split(',')[0] : ''
 					that.groupItem = data.data
+					that.get_ptAddress_list()
 				})
 			} else {
-				const eventChannel = this.getOpenerEventChannel()
+				const eventChannel = that.getOpenerEventChannel()
 				eventChannel.on('detail', function(data) {
 					console.log('获取详情数据', data)
 					that.detail = data.data
@@ -173,17 +174,24 @@
 				eventChannel.on('groupItem', function(data) {
 					console.log('获取拼团数据', data)
 					that.groupItem = data.data
+					that.get_ptAddress_list()
 				})
 			}
-			const eventChannel = this.getOpenerEventChannel()
-			eventChannel.on('groupData', function(data) {
-				console.log('获取详情数据222', data)
-				that.detail = data.data
-				that.detail.picture = data.data.picture ? data.data.picture.split(',')[0] : ''
-				that.groupItem = data.data
-			})
+			// const eventChannel = that.getOpenerEventChannel()
+			// eventChannel.on('groupData', function(data) {
+			// 	console.log('获取详情数据222', data)
+			// 	that.detail = data.data
+			// 	that.detail.picture = data.data.picture ? data.data.picture.split(',')[0] : ''
+			// 	that.groupItem = data.data
+			// 	that.get_ptAddress_list()
+			// })
+			this.isOnLoad=true
 			console.log('load')
-			this.get_ptAddress_list()
+			
+		},
+		onShow(){
+			this.isOnShow=true
+			if(this.isOnLoad&&this.groupItem.groupNo) this.get_ptAddress_list()
 		},
 		methods: {
 			//进入房间
@@ -212,9 +220,9 @@
 					if (res.code == 0) {
 						console.log('地址', res)
 						that.addressList = res.data
-						if(that.isOnLoad){
-							const obj=res.data.find(item=>item.isDefault===1);
-							console.log('obj',obj)
+						if(that.isOnLoad||(this.isOnShow&&!that.chooseAddress)){
+							const obj=res.data.find(item=>item.isDefault===1)||(res.data?res.data[0]:null);
+							console.log('obj',that.groupItem.groupNo,that.groupItem.groupNo&&obj)
 							that.chooseAddress=that.groupItem.groupNo&&obj?{
 								receiverName: obj.consignee,
 								receiverPhone: obj.tel,
@@ -222,6 +230,7 @@
 								receiverCity: obj.city,
 								receiverArea: obj.area,
 								receiverAddress: obj.address,
+								addressId: obj.id,
 							}:null
 							console.log('that.chooseAddress',that.chooseAddress)
 					    that.isOnLoad=false
@@ -283,10 +292,14 @@
 						mask: true
 					})
 					if (that.groupItem.groupNo) { //拼团
-						that.$u.api.joinGroup({
+					const fn=this.groupItem.type==='suiji'?that.$u.api.group_random({
+						groupProductId: that.groupItem.groupNo,
+						...that.chooseAddress
+					}):that.$u.api.joinGroup({
 							"groupNo": that.groupItem.groupNo,
 							...that.chooseAddress
-						}).then(res => {
+						})
+						fn.then(res => {
 							if (res.code == 0) {
 								that.payResult = true
 								let time = setInterval(() => {
