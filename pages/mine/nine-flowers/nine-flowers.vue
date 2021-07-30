@@ -131,7 +131,7 @@
 			//路由 - 购买余额
 			routeBuyBalance:function(){
 				let that = this
-				if( that.user.accountAvailableShareBonus <= 0 ){
+				if( !that.user.accountAvailableShareBonus && that.user.accountAvailableShareBonus <= 0 ){
 					this.$u.toast('当前可用玖花不足');
 					return
 				}
@@ -168,7 +168,7 @@
 			//路由 - 支付宝购买
 			routeBuyAlipay:function(){
 				let that = this
-				if( that.user.accountAvailableShareBonus <= 0 ){
+				if( !that.user.accountAvailableShareBonus && that.user.accountAvailableShareBonus <= 0 ){
 					this.$u.toast('当前可用玖花不足');
 					return
 				}

@@ -1,7 +1,6 @@
 <template>
 	<view class="contain">
-		<zy-update theme="green" ref="zyupgrade" :h5preview="true" oldversion="1.0.2" :appstoreflag="false"
-			:updateurl="update_url"></zy-update>
+		<zy-update theme="green" ref="zyupgrade" :h5preview="true" oldversion="100" :appstoreflag="false"></zy-update>
 		<!-- 更新组件 force 是否强制更新 有bug -->
 		<!-- <app-update ref="app_update" :force="true"></app-update> -->
 		<view class="nav">
@@ -162,11 +161,9 @@
 				bannerList: [],
 				messageLength: 0,
 				statusBarHeight: false,
-				update_url: '', // 升级url
 			}
 		},
 		onLoad: function() {
-			this.update_url = this.$u.http.config.baseUrl + '/group/ptVersion/update'
 			this.init()
 		},
 		//上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"

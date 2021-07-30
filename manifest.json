@@ -2,11 +2,14 @@
     "name" : "玖红天下",
     "appid" : "__UNI__B5C3A47",
     "description" : "玖红天下",
-    "versionName" : "1.2.5",
+    "versionName" : "125",
     "versionCode" : 125,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
+        "compatible" : {
+            "ignoreVersion" : true //true表示忽略版本检查提示框，HBuilderX1.9.0及以上版本支持  
+        },
         "usingComponents" : true,
         "nvueStyleCompiler" : "uni-app",
         "compilerVersion" : 3,
@@ -138,6 +141,14 @@
                     "secure" : false, // 设置支持https协议的代理
                     "pathRewrite" : {
                         "^/web" : ""
+                    }
+                },
+                "/download" : {
+                    "target" : "https://jhtxsc.oss-cn-shenzhen.aliyuncs.com/app/jhtx.apk", //目标接口域名
+                    "changeOrigin" : true, //是否跨域
+                    "secure" : true, // 设置支持https协议的代理
+                    "pathRewrite" : {
+                        "^/download" : ""
                     }
                 }
             }

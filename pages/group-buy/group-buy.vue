@@ -342,10 +342,6 @@
 						num: 0,
 						name: '失败数',
 					},
-					{
-						num: 0,
-						name: '拼团失败',
-					},
 				],
 				time: ''
 			}
@@ -365,13 +361,13 @@
 		//上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
 		onReachBottom() {
 			if (this.tabActive == 1) {
-				let len = this.group_square_list.length;
-				if (len < this.pageSize * this.page) {
-					this.loadingStatusTab1 = 'nomore'
-					return false;
-				}
-				this.page++
-				this.group_square()
+				// let len = this.group_square_list.length;
+				// if (len < this.pageSize * this.page) {
+				// 	this.loadingStatusTab1 = 'nomore'
+				// 	return false;
+				// }
+				// this.page++
+				// this.group_square()
 			} else {
 				let len = this.group_participate_list.length;
 				if (len < this.pageSize * this.page1) {

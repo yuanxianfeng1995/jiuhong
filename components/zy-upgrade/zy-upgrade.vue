@@ -142,38 +142,30 @@
 					platform: platform
 				}
 				console.log('formdata',formdata)
-				uni.request({  
-					url: that.updateurl,  
-					// data: formdata,
-					header:{
-						Authorization:'Bearer' + uni.getStorageSync('token')
-					},
-					success: (result) => {
+				this.$u.api.checkUpgrade({
+					type: 0,
+					version: parseInt(that.currentversion)
+				}).then(res => {
+					if (res.code == 0) {
 						uni.hideLoading()
-						let data = result.data
-						if(data.code == 200){
+						let data = res.data
+						if(res.code == 0){
 							console.log('当前版本2',that.currentversion)
 							console.log('获取升级2',data) 
-							//判断是否升级
-							let nowVersion = that.currentversion.replace(/\./g,'')
-							let newVersion = data.data.version.replace(/\./g,'')
-							console.log('检查版本2',nowVersion,newVersion)
 							let update_flag = 0
-							if( nowVersion < newVersion && nowVersion >= 111 ){
+							if(!!data){
 								console.log('需要升级')
 								update_flag = 1
 							}
 							//提示升级
 							if(update_flag == 1){ //0不需要升级，1 需要升级
 								that.dshow = true //是否显示升级
-								that.update_tips = data.data.content //升级说明，不用我提醒大家换行应该用\n 了吧？
+								that.update_tips = data.contents //升级说明，不用我提醒大家换行应该用\n 了吧？
 								that.forceupgrade =  1 //0不强制，1 强制升级（这个字段以后可能会优化到 update_flag 里）
-								that.version_url = data.data.downloadUrl //升级安装包或 appstore 地址，注意是全路径
+								that.version_url = data.paths||'https://jhtxsc.oss-cn-shenzhen.aliyuncs.com/app/jhtx.apk' //升级安装包或 appstore 地址，注意是全路径
 								//that.currentversion = widgetInfo.version
-								that.updated2version = data.data.version //当前最新的版本。
-								that.wgt_flag = data.data.wgt_flag
-								that.wgt_url = data.data.wgt_url
-								that.size = data.data.size
+								that.updated2version = data.version //当前最新的版本。
+								that.size = data.size || 20
 							}else{
 								if(that.noticeflag){
 									//通知父组件，当前版为最新版本
@@ -186,8 +178,8 @@
 								icon:'none'
 							});
 						}
-					}  
-				});  
+					}
+				}) 
 			},
 			//点击开始升级按钮，开始升级
 			upgrade_checked:function(){
@@ -222,7 +214,7 @@
 					});
 				}else{
 					let that = this
-					let downloadurl = that.wgt_flag==1?that.wgt_url:that.version_url
+					let downloadurl = that.version_url
 					this.update_confirm = true
 					this.downloadTask = uni.downloadFile({
 						url: downloadurl,
@@ -264,7 +256,7 @@
 						if(res.progress == Infinity){
 							//使用size计算
 							console.log("计算size");
-							let progress = (res.totalBytesWritten / that.size)*100
+							let progress = (res.totalBytesExpectedToWrite / res.totalBytesWritten)*100
 							if(progress>100){
 								progress = 100
 							}

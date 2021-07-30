@@ -92,7 +92,7 @@
 				<view class="btn_content">
 					<button class="btn" type="default" size="mini" v-if="openAndJoin_num.surplusCreateGroupTotal > 0" @click="creatGroup()">发起拼团</button>
 					<view class=""></view>
-					<button :class="['btn','right']" type="default" size="mini" @click.stop="routeBuy">随机参团</button>
+					<!-- <button :class="['btn','right']" type="default" size="mini" @click.stop="routeBuy">随机参团</button> -->
 				</view>
 			</view>
 		</view>

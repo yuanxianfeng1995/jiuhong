@@ -1,6 +1,6 @@
 <template>
 	<view>
-		<zy-update theme="green" ref="zyupgrade" :h5preview="true" oldversion="1.0.2" :appstoreflag="false"
+		<zy-update theme="green" ref="zyupgrade" :h5preview="true" oldversion="125" :appstoreflag="false"
 			:updateurl="update_url"></zy-update>
 		<!-- 更新组件 force 是否强制更新 有bug -->
 		<app-update ref="app_update" :force="true"></app-update>
