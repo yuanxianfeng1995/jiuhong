@@ -141,6 +141,7 @@
 					sign:'123',
 					platform: platform
 				}
+				console.log('formdata',formdata)
 				uni.request({  
 					url: that.updateurl,  
 					// data: formdata,

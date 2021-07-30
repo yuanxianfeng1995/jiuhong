@@ -3,7 +3,7 @@
 		<zy-update theme="green" ref="zyupgrade" :h5preview="true" oldversion="1.0.2" :appstoreflag="false"
 			:updateurl="update_url"></zy-update>
 		<!-- 更新组件 force 是否强制更新 有bug -->
-		<app-update ref="app_update" :force="true"></app-update>
+		<!-- <app-update ref="app_update" :force="true"></app-update> -->
 		<view class="nav">
 			<view style="height: var(--status-bar-height);width: 100%;background-color: #F8F7F7;"></view>
 			<view class="history_title">
@@ -103,15 +103,14 @@
 
 <script>
 	import ZyUpdate from '@/components/zy-upgrade/zy-upgrade.vue' //更新插件2
-	import appUpdate from "@/components/yzhua006-update/app-update.vue" //更新插件1
+	//import appUpdate from "@/components/yzhua006-update/app-update.vue" //更新插件1
 	export default {
 		components: {
 			ZyUpdate,
-			appUpdate,
 		},
 		mounted() {
-			// this.$refs.zyupgrade.check_update()
-			// this.$refs.app_update.update(); //调用子组件 检查更新 有bug
+			this.$refs.zyupgrade.check_update()
+			//this.$refs.app_update.update(); //调用子组件 检查更新 有bug
 		},
 		data() {
 			return {
@@ -167,6 +166,7 @@
 			}
 		},
 		onLoad: function() {
+			this.update_url = this.$u.http.config.baseUrl + '/group/ptVersion/update'
 			this.init()
 		},
 		//上拉加载，需要自己在page.json文件中配置"onReachBottomDistance"
