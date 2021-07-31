@@ -31,18 +31,17 @@
 							<!-- <text>团号：{{item.groupNo}}</text> -->
 						</view>
 						<view class="line_2">
-							<view class="author">
+							<view class="author" v-for="(item2,index) in item.wins" :key="item.id">
 								<view class="author_img">
 									<image class="icon" src="../../static/icon/crown-icon@2x.png"></image>
-									<image class="headimg" :src="item.winUserHeadPortrait" mode="aspectFill"></image>
+									<image class="headimg" :src="item2.headPortrait" mode="aspectFill"></image>
 								</view>
 								<view class="author_name">
-									<view class="u-line-1" style="width: 110rpx;">{{item.winUserName?item.winUserName.substr(0,1):''}}**
-									</view>
+									<text>{{item2.nickname?item2.nickname.substr(0,1):''}}**</text>
 									<!-- <text>贵阳</text> -->
 								</view>
 							</view>
-							<view class="success">
+							<!-- <view class="success">
 								<view class="prod">
 									<text>{{item.pname}}</text>
 								</view>
@@ -51,7 +50,7 @@
 									<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
 									<text class="num">+ {{item.giveCoupon ? item.giveCoupon : 0}}</text>
 								</view>
-							</view>
+							</view> -->
 						</view>
 						<view class="line_3">
 							<view class="img_list">
@@ -155,14 +154,13 @@
 							<!-- <text>团号：{{item.groupNo}}</text> -->
 						</view>
 						<view class="line_2">
-							<view class="author">
+							<view class="author" v-for="(item2,index) in item.wins" :key="item.id">
 								<view class="author_img">
 									<image class="icon" src="../../static/icon/crown-icon@2x.png"></image>
-									<image class="headimg" :src="item.winUserHeadPortrait" mode="aspectFill"></image>
+									<image class="headimg" :src="item2.headPortrait" mode="aspectFill"></image>
 								</view>
 								<view class="author_name">
-									<view class="u-line-1" style="width: 110rpx;">{{item.winUserName?item.winUserName.substr(0,1):''}}**
-									</view>
+									<text>{{item2.nickname?item2.nickname.substr(0,1):''}}**</text>
 									<!-- <text>贵阳</text> -->
 								</view>
 							</view>

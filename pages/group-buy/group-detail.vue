@@ -7,17 +7,17 @@
 					<!-- <text>团号：{{detail.groupNo}}</text> -->
 				</view>
 				<view class="line_2">
-					<view class="author">
+					<view class="author" v-for="(item,index) in detail.wins" :key="item.id">
 						<view class="author_img">
 							<image class="icon" src="../../static/icon/crown-icon@2x.png"></image>
-							<image class="headimg" :src="detail.winUserHeadPortrait" mode="aspectFill"></image>
+							<image class="headimg" :src="item.headPortrait" mode="aspectFill"></image>
 						</view>
 						<view class="author_name">
-							<text>{{detail.winUserName?detail.winUserName.substr(0,1):''}}**</text>
+							<text>{{item.nickname?item.nickname.substr(0,1):''}}**</text>
 							<!-- <text>贵阳</text> -->
 						</view>
 					</view>
-					<view class="success">
+					<!-- <view class="success">
 						<view class="prod">
 							<text>拼中商品: {{detail.pname}}</text>
 						</view>
@@ -26,13 +26,13 @@
 							<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
 							<text class="num">+ {{detail.giveCoupon ? detail.giveCoupon : 0}}</text>
 						</view>
-					</view>
+					</view> -->
 				</view>
 				<view class="line_3">
 					<view class="img_list">
 						<scroll-view scroll-x="true" style="white-space: nowrap;">
-							<image :src="item.headPortrait" mode="aspectFill" v-for="(item,index) in detail.members" :key="index" 
-							v-if="index < detail.headUrlsLength && detail.winUserId != item.userId">
+							<image :src="item.headPortrait" mode="aspectFill" v-for="(item,index) in detail.members"
+								:key="index" v-if="index < detail.headUrlsLength && detail.winUserId != item.userId">
 							</image>
 						</scroll-view>
 					</view>
@@ -45,7 +45,9 @@
 				<view class="item_top">
 					<view class="item_name">
 						<!-- <image :src="detail.openGroupHeadPortrait" mode="aspectFill"></image> -->
-						<text><!--{{detail.openGroupNickname.substr(0,1)}}-->***发起拼团</text>
+						<text>
+							<!--{{detail.openGroupNickname.substr(0,1)}}-->***发起拼团
+						</text>
 					</view>
 					<view class="item_num">
 						<text class="color_red">{{detail.joinNum}}人团</text>
@@ -71,7 +73,8 @@
 				<view class="item_bottom">
 					<view class="time">
 						<text class="time_title">倒计时：</text>
-						<u-count-down :timestamp="time" font-size="24" bg-color="none" @end="endTime()" v-if="detail.status !== 3"></u-count-down>
+						<u-count-down :timestamp="time" font-size="24" bg-color="none" @end="endTime()"
+							v-if="detail.status !== 3"></u-count-down>
 						<text v-else>开团失败</text>
 					</view>
 					<view class="handle">
@@ -88,13 +91,28 @@
 		</view>
 		<view class="content">
 			<view class="turnplate">
-				<image class="turnplate_bg" :animation="animationData" src="../../static/image/turnplate-bg@2x.png">
+				<image class="turnplate_bg" :animation="animationData"  src="../../static/image/turnplate-bg@2x1.png">
 				</image>
 				<view class="turnplate_content">
-					<image :class="['turnplate_img','turnplate_img' + (index + 1)]" :src="item.headPortrait" mode="aspectFill"
-						v-for="(item,index) in detail.members" :key="index" v-if="index < 10"></image>
-					<image class="middle_img" :src="detail.winUserHeadPortrait" mode="aspectFill" v-if="detail.status == 3 || detail.status == 2"></image>
-					<image class="middle_img" src="/static/image/none-get-icon.png" mode="aspectFill" v-else-if="detail.status == 1"></image>
+					<image :class="['turnplate_img','turnplate_img' + (index + 1)]" :src="item.headPortrait"
+						mode="aspectFill" v-for="(item,index) in detail.members" :key="index" v-if="index < 20"></image>
+					<!-- 	<image class="middle_img" :src="detail.winUserHeadPortrait" mode="aspectFill"
+						v-if="detail.status == 3 || detail.status == 2"></image> -->
+					<image class="middle_img" src="/static/image/none-get-icon.png" mode="aspectFill"
+						v-else-if="detail.status == 1"></image>
+						
+					<div class="line line-0" :style="line0" :animation="animationData0">
+						<span></span>
+						<span></span>
+					</div>
+					<div class="line line-1" :style="line1" :animation="animationData1">
+						<span></span>
+						<span></span>
+					</div>
+					<div class="line line-2" :style="line2" :animation="animationData2">
+						<span></span>
+						<span></span>
+					</div>
 				</view>
 			</view>
 		</view>
@@ -105,15 +123,19 @@
 					<view class="btn_content" style="display: flex;align-items: center;justify-content: center;">
 						<view class="count_down" style="font-size: 28rpx;">
 							<text>刷新(</text>
-							<u-count-down :timestamp="5" color="#ffffff" :show-days="false" :show-hours="false" :show-minutes="false" font-size="24" bg-color="none" @end="refreshEndTime()"></u-count-down>s)
+							<u-count-down :timestamp="5" color="#ffffff" :show-days="false" :show-hours="false"
+								:show-minutes="false" font-size="24" bg-color="none" @end="refreshEndTime()">
+							</u-count-down>s)
 						</view>
 					</view>
 				</button>
 				<button class="btn low" type="default" @click="routeShare()">邀请</button>
 			</template>
 			<template v-else>
-				<text class="message_text" v-if="detail.selfHeadPortrait && detail.members.indexOf(detail.selfHeadPortrait) != -1 && detail.status == 2 && detail.selfHeadPortrait == detail.winUserHeadPortrait">客官您好，本次您中奖了哦~</text>
-				<text class="message_text" v-else-if="detail.selfHeadPortrait && detail.members.indexOf(detail.selfHeadPortrait) != -1 && detail.status == 2 && detail.selfHeadPortrait != detail.winUserHeadPortrait">客官您好，本次您未中奖~</text>
+				<text class="message_text"
+					v-if="detail.selfHeadPortrait && detail.members.indexOf(detail.selfHeadPortrait) != -1 && detail.status == 2 && detail.selfHeadPortrait == detail.winUserHeadPortrait">客官您好，本次您中奖了哦~</text>
+				<text class="message_text"
+					v-else-if="detail.selfHeadPortrait && detail.members.indexOf(detail.selfHeadPortrait) != -1 && detail.status == 2 && detail.selfHeadPortrait != detail.winUserHeadPortrait">客官您好，本次您未中奖~</text>
 			</template>
 		</view>
 	</view>
@@ -148,9 +170,15 @@
 				},
 				headUrlsLength: 0,
 				animationData: {},
-				joinStatusText:'你未加入',
+				animationData0: {},
+				animationData1: {},
+				animationData2: {},
+				line0:{},
+				line1:{},
+				line2:{},
+				joinStatusText: '你未加入',
 				joinTime: null,
-				refreshShow:true,
+				refreshShow: true,
 				time: null
 			}
 		},
@@ -160,10 +188,10 @@
 		},
 		onShow: function() {
 			this.get_group_time_config()
-			this.joinTime=this.$u.timeFormat(new Date(), 'mm-dd hh:MM:ss')
+			this.joinTime = this.$u.timeFormat(new Date(), 'mm-dd hh:MM:ss')
 			this.ptGroupRecord_view()
 		},
-		onReady:function(){
+		onReady: function() {
 			let that = this
 		},
 		onUnload: function() {
@@ -179,7 +207,7 @@
 				})
 			},
 			//倒计时结束
-			endTime:function(){
+			endTime: function() {
 				console.log('倒计时结束')
 				this.failGroup()
 			},
@@ -212,13 +240,14 @@
 				}).then(res => {
 					if (res.code == 0) {
 						let detail = res.data
-						if(!detail) return;
-						let i = detail.members?detail.members.length:0
+						if (!detail) return;
+						let i = detail.members ? detail.members.length : 0
 						detail.headUrlsLength = i
-						while (i < 10) {
+						while (i < 20) {
 							detail.members.push('/static/icon/group-none@2x.png')
 							i++
 						}
+						
 						
 						const obj=detail.members?detail.members.find(item2=>item2.userId===detail.winUserId):null
 						that.detail = {
@@ -227,44 +256,56 @@
 							winUserName:  obj?obj.nickname:detail.winUserName,
 						}
 						
+						const arr=that.detail.wins.map(item=>item.userId)
+						console.log('arr',arr)
+
 						//找到中奖人的位置
-						detail.members.map( (item,index) => {
-							if( item.createBySelf ){
+						detail.members.map((item, index) => {
+							if (item.createBySelf) {
 								that.joinStatusText = '你已开团'
-								that.joinTime=detail.joinTime
+								that.joinTime = detail.joinTime
 							}
-							if( detail.queryUserId == item.userId  ){
+							if (detail.queryUserId == item.userId) {
 								that.joinStatusText = '你已加入'
-								that.joinTime=item.createTime
+								that.joinTime = item.createTime
 							}
-							if( item.userId == detail.winUserId ){ //找到中奖人
+							const i=arr.findIndex(item2=>{
+								return item2==item.userId
+							})
+							if (i!==-1) { //找到中奖人
+							console.log('找到中奖人',i)
 								var animation = uni.createAnimation({
 									duration: 500,
 									timingFunction: 'linear',
 								})
-								this.animation = animation
-								animation.rotate(36*index).step()
-								this.animationData = animation.export()
+								that.animation = animation
+								animation.rotate(18 * (index-6)).step()
+								that['line'+i]={
+									transform: 'rotateZ('+(18 * (index-6))+'deg)',
+									'transform-origin': 'left'
+								}
+								that['animationData'] = animation.export()
+								that['animationData'+i] = animation.export()
 							}
-						}) 
-						
-						
-						if( detail.status == 1 ){
+						})
+
+
+						if (detail.status == 1) {
 							console.log('转动动画')
 							//转动动画
 							var animation = uni.createAnimation({
 								duration: 10000000,
 								timingFunction: 'linear',
 							})
-							this.animation = animation
+							that.animation = animation
 							animation.rotate(360000).step()
-							this.animationData = animation.export()
-						}else{
+							that.animationData = animation.export()
+						} else {
 							// that.openGroup_success()
 						}
-						
+
 						that.failGroup() //开团失败判断
-						
+
 					}
 					uni.hideLoading()
 				})
@@ -273,20 +314,20 @@
 			/**
 			 * 刷新倒计时
 			 * */
-			 refreshEndTime:function(){
-				 this.refreshShow = true
-			 },
+			refreshEndTime: function() {
+				this.refreshShow = true
+			},
 			//开团失败 - 逻辑判断
-			failGroup:function(){
+			failGroup: function() {
 				let that = this
 				//开团失败判断
-				if( that.status&&that.status == 3 ){ //拼团失败
+				if (that.status && that.status == 3) { //拼团失败
 					this.$u.toast('因人数不满开团失败，请选择其他商品继续拼团!');
-					setTimeout(()=>{
+					setTimeout(() => {
 						uni.switchTab({
-							url:'/pages/group-buy/group-buy'
+							url: '/pages/group-buy/group-buy'
 						})
-					},1500)
+					}, 1500)
 				}
 			},
 			//路由 - 分享
@@ -514,62 +555,122 @@
 
 	.turnplate_img1 {
 		position: absolute;
-		top: 44rpx;
-		left: 245rpx;
+		top: 48rpx;
+		left: 212rpx;
 	}
 
 	.turnplate_img2 {
 		position: absolute;
-		top: 80rpx;
-		right: 128rpx;
+		top: 54rpx;
+		left: 278rpx;
 	}
 
 	.turnplate_img3 {
 		position: absolute;
-		top: 180rpx;
-		right: 56rpx;
+		top: 72rpx;
+		left: 334rpx;
 	}
 
 	.turnplate_img4 {
 		position: absolute;
-		bottom: 180rpx;
-		right: 56rpx;
+		top: 108rpx;
+		right: 104rpx;
 	}
 
 	.turnplate_img5 {
 		position: absolute;
-		bottom: 80rpx;
-		right: 128rpx;
+		top: 160rpx;
+		right: 70rpx;
 	}
 
 	.turnplate_img6 {
 		position: absolute;
-		bottom: 44rpx;
-		left: 245rpx;
+		top: 218rpx;
+		right: 46rpx;
 	}
 
 	.turnplate_img7 {
 		position: absolute;
-		bottom: 80rpx;
-		left: 128rpx;
+		top: 282rpx;
+		right: 46rpx;
 	}
 
 	.turnplate_img8 {
 		position: absolute;
-		bottom: 180rpx;
-		left: 56rpx;
+		bottom: 152rpx;
+		right: 68rpx;
 	}
 
 	.turnplate_img9 {
 		position: absolute;
-		top: 180rpx;
-		left: 56rpx;
+		bottom: 100rpx;
+		right: 100rpx;
 	}
 
 	.turnplate_img10 {
 		position: absolute;
-		top: 80rpx;
-		left: 128rpx;
+		bottom: 62rpx;
+		right: 158rpx;
+	}
+
+	.turnplate_img11 {
+		position: absolute;
+		bottom: 48rpx;
+		left: 276rpx;
+	}
+
+	.turnplate_img12 {
+		position: absolute;
+		bottom: 44rpx;
+		left: 214rpx;
+	}
+
+	.turnplate_img13 {
+		position: absolute;
+		bottom: 66rpx;
+		left: 152rpx;
+	}
+
+	.turnplate_img14 {
+		position: absolute;
+		bottom: 104rpx;
+		left: 104rpx;
+	}
+
+	.turnplate_img15 {
+		position: absolute;
+		bottom: 152rpx;
+		left: 64rpx;
+	}
+
+	.turnplate_img16 {
+		position: absolute;
+		top: 282rpx;
+		left: 46rpx;
+	}
+
+	.turnplate_img17 {
+		position: absolute;
+		top: 218rpx;
+		left: 44rpx;
+	}
+
+	.turnplate_img18 {
+		position: absolute;
+		top: 158rpx;
+		left: 64rpx;
+	}
+
+	.turnplate_img19 {
+		position: absolute;
+		top: 106rpx;
+		left: 102rpx;
+	}
+
+	.turnplate_img20 {
+		position: absolute;
+		top: 66rpx;
+		left: 154rpx;
 	}
 
 	.middle_img {
@@ -604,8 +705,8 @@
 		box-shadow: 0px 8rpx 8rpx 0px rgba(255, 255, 255, 0.25);
 		color: #FFFFFF;
 	}
-	
-	.footer .close{
+
+	.footer .close {
 		background-color: #999999;
 	}
 
@@ -704,9 +805,9 @@
 	.background_green .author_name text {
 		color: #FFFFFF;
 	}
-	
-	.background_green .success{
-		background:url(../../static/image/group-green-bg.png) no-repeat top left;
+
+	.background_green .success {
+		background: url(../../static/image/group-green-bg.png) no-repeat top left;
 		background-size: contain;
 	}
 
@@ -750,8 +851,8 @@
 		align-items: center;
 		justify-content: space-between;
 	}
-	
-	.img_list{
+
+	.img_list {
 		width: 420rpx;
 		white-space: nowrap;
 	}
@@ -763,10 +864,12 @@
 		border-radius: 24px;
 		box-shadow: 0px 4rpx 4rpx 0px rgba(0, 0, 0, 0.40);
 	}
-	.line_3 .award{
+
+	.line_3 .award {
 		width: 260rpx;
 		text-align: right;
 	}
+
 	.line_3 .award text {
 		font-size: 24rpx;
 		color: #FFFFFF;
@@ -780,5 +883,29 @@
 		background-image: -webkit-linear-gradient(bottom, #532DA3, #ffffff);
 		-webkit-background-clip: text;
 		-webkit-text-fill-color: transparent;
+	}
+
+	.line {
+		position: absolute;
+		top: 50%;
+		left: 51%;
+		transition: -webkit-transform 500ms linear 0ms, transform 500ms linear 0ms;
+	}
+
+	.line span {
+		display: block;
+		height: 4px;
+		width: 114px;
+		background-color: #48b0e6;
+
+	}
+
+	.line span:last-child {
+		display: block;
+		height: 4px;
+		width: 114px;
+		background-color: #48b0e6;
+		transform: rotateZ(17deg);
+		transform-origin: left;
 	}
 </style>

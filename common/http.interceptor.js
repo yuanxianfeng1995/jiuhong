@@ -3,8 +3,8 @@ const install = (Vue, vm, bon) => {
 	// 此为自定义配置参数，具体参数见上方说明
 	if (!bon) {
 		Vue.prototype.$u.http.setConfig({
-			//baseUrl: 'http://47.106.123.165:8813', //测试环境
-			baseUrl: 'http://apisss.jiuhongtianxia.com', //生产环境 (这里、版本更新、二维码获取的统一地址)
+			baseUrl: 'http://47.106.123.165:8815', //测试环境
+			//baseUrl: 'http://apisss.jiuhongtianxia.com', //生产环境 (这里、版本更新、二维码获取的统一地址)
 			loadingTime: 800,
 		});
 	}
