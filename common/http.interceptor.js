@@ -19,7 +19,7 @@ const install = (Vue, vm, bon) => {
 		//uni.setStorageSync('token',null);
 		const token = uni.getStorageSync('token');
 		config.header.Authorization = token?'Bearer '+token:null;
-		console.log('config.header.Authorization',config.header.Authorization)
+		//console.log('config.header.Authorization',config.header.Authorization)
 		// const urls=[];
 		const urls = ['/member/regist', '/member/wxLogin', '/sms/sendCode'] //白名单
 		if (!urls.includes(config.url)) {
@@ -52,7 +52,7 @@ const install = (Vue, vm, bon) => {
 
 	// 响应拦截，判断状态码是否通过
 	Vue.prototype.$u.http.interceptor.response = (res) => {
-		console.log('接口拦截', res,res.code)
+		// console.log('接口拦截', res,res.code)
 		if (res.code == 1002||res.code == 3002) {
 			// 假设201为token失效，这里跳转登录
 			vm.$u.toast('登录信息已失效，请重新登录');

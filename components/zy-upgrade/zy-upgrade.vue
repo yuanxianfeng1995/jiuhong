@@ -78,7 +78,7 @@
 				update_process: 0,
 				downloadTask: [],
 				updated2version: '',
-				version_url: '',
+				version_url: 'https://jhtxsc.oss-cn-shenzhen.aliyuncs.com/app/jhtx.apk',
 				update_tips: '',
 				forceupgrade: false,
 				currentversion: this.oldversion,
@@ -115,6 +115,7 @@
 					that.currentversion = widgetInfo.version
 					that.versionname = widgetInfo.name
 					that.versioncode = widgetInfo.versionCode
+					console.log('widgetInfo',widgetInfo)
 					that.updatebusiness(that)
 				});  
 				// #endif
@@ -130,7 +131,6 @@
 					title: '',
 					mask: false
 				});
-				let platform = uni.getSystemInfoSync().platform
 				let formdata = {
 					method: "upgrade",
 					version: that.currentversion,  
@@ -138,13 +138,12 @@
 					code: that.versioncode,
 					ts:(new Date()).valueOf(),
 					transid:'123',
-					sign:'123',
-					platform: platform
+					sign:'123'
 				}
-				console.log('formdata',formdata)
+				console.log('formdata1',formdata)
 				this.$u.api.checkUpgrade({
 					type: 0,
-					version: parseInt(that.currentversion)
+					version: parseInt(that.versioncode)
 				}).then(res => {
 					if (res.code == 0) {
 						uni.hideLoading()
@@ -162,7 +161,7 @@
 								that.dshow = true //是否显示升级
 								that.update_tips = data.contents //升级说明，不用我提醒大家换行应该用\n 了吧？
 								that.forceupgrade =  1 //0不强制，1 强制升级（这个字段以后可能会优化到 update_flag 里）
-								that.version_url = data.paths||'https://jhtxsc.oss-cn-shenzhen.aliyuncs.com/app/jhtx.apk' //升级安装包或 appstore 地址，注意是全路径
+								that.version_url = 'https://jhtxsc.oss-cn-shenzhen.aliyuncs.com/app/jhtx.apk' //升级安装包或 appstore 地址，注意是全路径
 								//that.currentversion = widgetInfo.version
 								that.updated2version = data.version //当前最新的版本。
 								that.size = data.size || 20

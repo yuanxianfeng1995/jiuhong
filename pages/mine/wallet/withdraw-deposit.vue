@@ -91,6 +91,7 @@
 							}
 						}):[]
 						that.chooseaccount = that.accountList[0]
+						that.form.walletid=that.chooseaccount.id
 					}
 				})
 			},
@@ -106,15 +107,15 @@
 					that.form.money = parseInt(that.form.money)
 					return
 				}
-				if( !that.form.money || that.form.money  <= 0 ){
+				if( !that.form.money || that.form.money  <= 0 || that.form.money > that.amount ){
 					uni.showToast({
 						title:'请正确填写金额',
 						icon:'none'
 					})
 					return
 				}
-				if( !this.form.money ){
-					this.$u.toast('请填写提现金额')
+				if( !that.form.money ){
+					that.$u.toast('请填写提现金额')
 					return
 				}
 				uni.navigateTo({

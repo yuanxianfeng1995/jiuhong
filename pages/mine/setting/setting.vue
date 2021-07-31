@@ -26,7 +26,7 @@
 	export default {
 		data() {
 			return {
-				version:'',
+				version:'127',
 				menuListTitleStyle:{
 					color:'#000000',
 					fontWeight:'600',
@@ -35,7 +35,12 @@
 			}
 		},
 		onLoad:function(){
-			this.version = getApp().globalData.version
+			const that=this
+			// #ifdef APP-PLUS
+			plus.runtime.getProperty(plus.runtime.appid, function(widgetInfo) {
+				that.version = widgetInfo.versionCode
+			});  
+			// #endif
 		},
 		methods: {
 			exit:function(){

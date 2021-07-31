@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-		<zy-update theme="green" ref="zyupgrade" :h5preview="true" oldversion="100" :appstoreflag="false"></zy-update>
+		<zy-update theme="green" ref="zyupgrade" :h5preview="true" oldversion="101" :appstoreflag="false"></zy-update>
 		<!-- 更新组件 force 是否强制更新 有bug -->
 		<!-- <app-update ref="app_update" :force="true"></app-update> -->
 		<view class="nav">
@@ -238,7 +238,6 @@
 					page: 1,
 					pageSize: 10
 				}).then(res => {
-					console.log(res);
 					if (res.code == 0) {
 						// isRead
 						let messageLength = 0
@@ -255,7 +254,6 @@
 			get_headportrait: function() {
 				let that = this
 				this.$u.api.get_headportrait().then(res => {
-					console.log(res);
 					if (res.code == 0) {
 						let headportrait = res.data
 						headportrait.headPortraitList = headportrait
@@ -286,7 +284,6 @@
 					page: 1,
 					pageSize: 10
 				}).then(res => {
-					console.log('消息', res.data);
 					if (res.code == 0) {
 						that.messageList=res.data.map(item => {
 							const reg=/<\/?.+?\/?>/g;
@@ -302,7 +299,6 @@
 			 * */
 			//路由 - 商品详情
 			routeProdDetail: function(id) {
-				console.log('商品id', id)
 				uni.navigateTo({
 					url: '/pages/index/production/detail?groupProductId=' + id,
 					complete: function(res) {

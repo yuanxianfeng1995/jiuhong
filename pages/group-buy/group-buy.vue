@@ -134,7 +134,7 @@
 						</view>
 					</u-grid-item>
 				</u-grid>
-				<u-grid :col="5" :border="false" @click="tab2MenuClick"  v-if="tabActive == 3">
+				<u-grid :col="4" :border="false" @click="tab2MenuClick"  v-if="tabActive == 3">
 					<u-grid-item v-for="(item,index) in tab2_menu1" :index="index" :key="index">
 						<view :class="['tab2_menu_num',tab2_current == index ? 'tab2_menu_num_active' : '']">
 							{{item.num ? item.num : 0}}
@@ -489,7 +489,10 @@
 					that.tab2_menu[2].num = res.data.zj
 					that.tab2_menu[3].num = res.data.wzj
 					that.tab2_menu[4].num = res.data.ptFailed
-					that.tab2_menu1=that.tab2_menu
+					that.tab2_menu1[0].num = res.data.ptAll
+					that.tab2_menu1[1].num = res.data.dkj
+					that.tab2_menu1[2].num = res.data.zj
+					that.tab2_menu1[3].num = res.data.wzj
 				})
 			},
 			//拼团广场
