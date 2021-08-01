@@ -1,7 +1,7 @@
 <template>
 	<view class="contain">
 		<view class="header">
-			<view class="recommend" v-if="detail.status == 2 && detail.winUserHeadPortrait">
+			<view class="recommend" v-if="detail.status == 2 && detail.wins&&detail.wins.length>0">
 				<view class="line_1">
 					<text class="date">开团时间：{{detail.startTime}}</text>
 					<!-- <text>团号：{{detail.groupNo}}</text> -->
@@ -101,15 +101,15 @@
 					<image class="middle_img" src="/static/image/none-get-icon.png" mode="aspectFill"
 						v-else-if="detail.status == 1"></image>
 						
-					<div class="line line-0" :style="line0" :animation="animationData0">
+					<div class="line line-0" :style="line0">
 						<span></span>
 						<span></span>
 					</div>
-					<div class="line line-1" :style="line1" :animation="animationData1">
+					<div class="line line-1" :style="line1">
 						<span></span>
 						<span></span>
 					</div>
-					<div class="line line-2" :style="line2" :animation="animationData2">
+					<div class="line line-2" :style="line2">
 						<span></span>
 						<span></span>
 					</div>
@@ -248,13 +248,7 @@
 							i++
 						}
 						
-						
-						const obj=detail.members?detail.members.find(item2=>item2.userId===detail.winUserId):null
-						that.detail = {
-							...detail,
-							winUserHeadPortrait: obj?obj.headPortrait:detail.winUserHeadPortrait,
-							winUserName:  obj?obj.nickname:detail.winUserName,
-						}
+						that.detail = detail
 						
 						const arr=that.detail.wins.map(item=>item.userId)
 						console.log('arr',arr)
@@ -281,8 +275,8 @@
 								that.animation = animation
 								animation.rotate(18 * (index-6)).step()
 								that['line'+i]={
-									transform: 'rotateZ('+(18 * (index-6))+'deg)',
-									'transform-origin': 'left'
+									transform: 'rotateZ('+((18 * index)-8)+'deg)',
+									'transform-origin': 'center center'
 								}
 								that['animationData'] = animation.export()
 								that['animationData'+i] = animation.export()
@@ -297,9 +291,19 @@
 								duration: 10000000,
 								timingFunction: 'linear',
 							})
+							
+							
 							that.animation = animation
 							animation.rotate(360000).step()
 							that.animationData = animation.export()
+							const array1 = [1, 2, 3];
+							array1.forEach((item,index)=>{
+								that['line'+index]={
+									transform: 'rotate(360000deg)',
+									'transform-origin': 'center center',
+									'transition': 'transform 1e+07ms linear 0ms',
+								}
+							})
 						} else {
 							// that.openGroup_success()
 						}
@@ -551,12 +555,13 @@
 		height: 50rpx;
 		border: 2rpx solid #532da3;
 		border-radius: 28px;
+		background-color: #ffffff94;
 	}
 
 	.turnplate_img1 {
 		position: absolute;
 		top: 48rpx;
-		left: 212rpx;
+		left: 218rpx;
 	}
 
 	.turnplate_img2 {
@@ -568,7 +573,7 @@
 	.turnplate_img3 {
 		position: absolute;
 		top: 72rpx;
-		left: 334rpx;
+		left: 340rpx;
 	}
 
 	.turnplate_img4 {
@@ -610,31 +615,31 @@
 	.turnplate_img10 {
 		position: absolute;
 		bottom: 62rpx;
-		right: 158rpx;
+		right: 150rpx;
 	}
 
 	.turnplate_img11 {
 		position: absolute;
 		bottom: 48rpx;
-		left: 276rpx;
+		left: 284rpx;
 	}
 
 	.turnplate_img12 {
 		position: absolute;
 		bottom: 44rpx;
-		left: 214rpx;
+		left: 220rpx;
 	}
 
 	.turnplate_img13 {
 		position: absolute;
 		bottom: 66rpx;
-		left: 152rpx;
+		left: 158rpx;
 	}
 
 	.turnplate_img14 {
 		position: absolute;
 		bottom: 104rpx;
-		left: 104rpx;
+		left: 108rpx;
 	}
 
 	.turnplate_img15 {
@@ -645,7 +650,7 @@
 
 	.turnplate_img16 {
 		position: absolute;
-		top: 282rpx;
+		top: 278rpx;
 		left: 46rpx;
 	}
 
@@ -657,20 +662,20 @@
 
 	.turnplate_img18 {
 		position: absolute;
-		top: 158rpx;
+		top: 154rpx;
 		left: 64rpx;
 	}
 
 	.turnplate_img19 {
 		position: absolute;
-		top: 106rpx;
+		top: 100rpx;
 		left: 102rpx;
 	}
 
 	.turnplate_img20 {
 		position: absolute;
-		top: 66rpx;
-		left: 154rpx;
+		top: 64rpx;
+		left: 158rpx;
 	}
 
 	.middle_img {
@@ -886,26 +891,22 @@
 	}
 
 	.line {
-		position: absolute;
-		top: 50%;
-		left: 51%;
-		transition: -webkit-transform 500ms linear 0ms, transform 500ms linear 0ms;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 544rpx;
+	height: 544rpx;
+	transform: rotate(10deg);
+	transform-origin: center center;
+	background: url(/static/image/zz.png) no-repeat center 19%;
+	transition: -webkit-transform 500ms linear 0ms, transform 500ms linear 0ms;
 	}
-
-	.line span {
-		display: block;
-		height: 4px;
-		width: 114px;
-		background-color: #48b0e6;
-
+	.line-1{
+		transform: rotate(28deg);
+		transform-origin: center center;
 	}
-
-	.line span:last-child {
-		display: block;
-		height: 4px;
-		width: 114px;
-		background-color: #48b0e6;
-		transform: rotateZ(17deg);
-		transform-origin: left;
+	.line-2{
+		transform: rotate(46deg);
+		transform-origin: center center;
 	}
 </style>

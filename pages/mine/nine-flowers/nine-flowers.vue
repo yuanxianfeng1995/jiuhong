@@ -150,7 +150,6 @@
 									uni.showToast({
 										title:'操作成功'
 									})
-									that.ptUserAccount_bonus()
 									that.get_userCenter()
 									that.tagCurrent = 1
 									that.current = 0
@@ -187,7 +186,6 @@
 									uni.showToast({
 										title:'操作成功'
 									})
-									that.ptUserAccount_bonus()
 									that.get_userCenter()
 									that.tagCurrent = 1
 									that.current = 0

@@ -31,7 +31,7 @@
 							<!-- <text>团号：{{item.groupNo}}</text> -->
 						</view>
 						<view class="line_2">
-							<view class="author" v-for="(item2,index) in item.wins" :key="item.id">
+							<view class="author" v-for="(item2,index) in item.wins" :key="item.id+index">
 								<view class="author_img">
 									<image class="icon" src="../../static/icon/crown-icon@2x.png"></image>
 									<image class="headimg" :src="item2.headPortrait" mode="aspectFill"></image>
@@ -462,15 +462,7 @@
 				}).then(res => {
 					// (1:开团中,2:开团成功,3：开团失败)
 					
-					that.group_participate_list = res.data?res.data.map(item=>{
-						const obj=item.members?item.members.find(item2=>item2.userId===item.winUserId):null
-						return {
-							...item,
-							members:item.members||[],
-							winUserHeadPortrait: obj?obj.headPortrait:item.winUserHeadPortrait,
-							winUserName:  obj?obj.nickname:item.winUserName,
-						}
-					}):[]
+					that.group_participate_list = res.data||[]
 					that.loadingStatus = that.group_participate_list.length < that.pageSize * that.page1 ?
 						'nomore' : 'loadmore'
 					console.log('that.loadingStatus', that.loadingStatus)
@@ -593,19 +585,11 @@
 			group_pt_successList: function() {
 				let that = this
 				this.$u.api.group_pt_successList({
-					offset: 50,
+					offset: 20,
 					page: 1
 				}).then(res => {
 					if (res.code == 0) {
-						that.group_pt_successList_list = res.data?res.data.map(item=>{
-						const obj=item.members?item.members.find(item2=>item2.userId===item.winUserid):null
-						return {
-							...item,
-							members:item.members||[],
-							winUserHeadPortrait: obj?obj.headPortrait:item.winUserHeadPortrait,
-							winUserName:  obj?obj.nickname:item.winUserName,
-						}
-					}):[],
+						that.group_pt_successList_list = res.data||[],
 					console.log('that.group_pt_successList_list',that.group_pt_successList_list)
 					}
 				})

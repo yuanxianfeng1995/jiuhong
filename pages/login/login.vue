@@ -49,12 +49,13 @@
 					return
 				}
 				
-				// if(true){
-				// 	uni.navigateTo({
-				// 		url:'/pages/login/mobile/mobile'
-				// 	})
-				// 	return
-				// }
+				if(true){
+					uni.navigateTo({
+						url:'/pages/login/mobile/mobile'
+					})
+					return
+				}
+				
 				//微信登录
 				uni.login({
 				  provider: 'weixin',
