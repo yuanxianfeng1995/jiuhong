@@ -30,7 +30,7 @@
 							<text class="date">开团时间：{{item.startTime}}</text>
 							<!-- <text>团号：{{item.groupNo}}</text> -->
 						</view>
-						<view class="line_2">
+						<view class="line_2" v-if="item.wins&&item.wins.length>0">
 							<view class="author" v-for="(item2,index) in item.wins" :key="item.id+index">
 								<view class="author_img">
 									<image class="icon" src="../../static/icon/crown-icon@2x.png"></image>
@@ -41,16 +41,16 @@
 									<!-- <text>贵阳</text> -->
 								</view>
 							</view>
-							<!-- <view class="success">
-								<view class="prod">
-									<text>{{item.pname}}</text>
-								</view>
-								<view class="coupon">
-									<text>获得拼团券：</text>
-									<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
-									<text class="num">+ {{item.giveCoupon ? item.giveCoupon : 0}}</text>
-								</view>
-							</view> -->
+						</view>
+						<view class="success" v-else>
+							<view class="prod">
+								<text>{{item.pname}}</text>
+							</view>
+							<view class="coupon">
+								<text>获得拼团券：</text>
+								<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
+								<text class="num">+ {{item.giveCoupon ? item.giveCoupon : 0}}</text>
+							</view>
 						</view>
 						<view class="line_3">
 							<view class="img_list">
@@ -153,7 +153,7 @@
 							<text class="date">开团时间：{{item.startTime}}</text>
 							<!-- <text>团号：{{item.groupNo}}</text> -->
 						</view>
-						<view class="line_2">
+						<view class="line_2" v-if="item.wins&&item.wins.length>0">
 							<view class="author" v-for="(item2,index) in item.wins" :key="item.id">
 								<view class="author_img">
 									<image class="icon" src="../../static/icon/crown-icon@2x.png"></image>
@@ -164,15 +164,15 @@
 									<!-- <text>贵阳</text> -->
 								</view>
 							</view>
-							<view class="success">
-								<view class="prod">
-									<text>获得商品：{{item.pname}}</text>
-								</view>
-								<view class="coupon">
-									<text>获得拼团券：</text>
-									<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
-									<text class="num">+ {{item.giveCoupon ? item.giveCoupon : 0}}</text>
-								</view>
+						</view>
+						<view class="success" v-else>
+							<view class="prod">
+								<text>获得商品：{{item.pname}}</text>
+							</view>
+							<view class="coupon">
+								<text>获得拼团券：</text>
+								<u-icon name="/static/icon/coupon.png" size="30"></u-icon>
+								<text class="num">+ {{item.giveCoupon ? item.giveCoupon : 0}}</text>
 							</view>
 						</view>
 						<view class="line_3">
@@ -748,7 +748,7 @@
 	}
 
 	.success {
-		width: 390rpx;
+		width: 100%;
 		height: 120rpx;
 		border: 2rpx solid rgba(0, 0, 0, 0.16);
 		border-radius: 14rpx;

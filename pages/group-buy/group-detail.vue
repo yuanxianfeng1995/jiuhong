@@ -91,7 +91,7 @@
 		</view>
 		<view class="content">
 			<view class="turnplate">
-				<image class="turnplate_bg" :animation="animationData"  src="../../static/image/turnplate-bg@2x1.png">
+				<image class="turnplate_bg" :animation="animationData" src="../../static/image/turnplate-bg@2x1.png">
 				</image>
 				<view class="turnplate_content">
 					<image :class="['turnplate_img','turnplate_img' + (index + 1)]" :src="item.headPortrait"
@@ -100,18 +100,10 @@
 						v-if="detail.status == 3 || detail.status == 2"></image> -->
 					<image class="middle_img" src="/static/image/none-get-icon.png" mode="aspectFill"
 						v-else-if="detail.status == 1"></image>
-						
-					<div class="line line-0" :style="line0">
-						<span></span>
-						<span></span>
-					</div>
-					<div class="line line-1" :style="line1">
-						<span></span>
-						<span></span>
-					</div>
+
+					<div class="line line-0" :style="line0"></div>
+					<div class="line line-1" :style="line1"></div>
 					<div class="line line-2" :style="line2">
-						<span></span>
-						<span></span>
 					</div>
 				</view>
 			</view>
@@ -173,18 +165,25 @@
 				animationData0: {},
 				animationData1: {},
 				animationData2: {},
-				line0:{},
-				line1:{},
-				line2:{},
+				line0: {},
+				line1: {},
+				line2: {},
 				joinStatusText: '你未加入',
 				joinTime: null,
 				refreshShow: true,
-				time: null
+				time: null,
+				innerAudioContext: null,
+				mp3Src: null
 			}
 		},
 		onLoad: function(option) {
 			console.log(option)
 			this.groupNo = option.id
+			if (this.mp3Src) {
+				const innerAudioContext = uni.createInnerAudioContext();
+				innerAudioContext.src = this.mp3Src;
+				this.innerAudioContext = innerAudioContext;
+			}
 		},
 		onShow: function() {
 			this.get_group_time_config()
@@ -236,112 +235,121 @@
 					title: '加载中'
 				})
 				this.$u.api.ptGroupRecord_view({
-					groupNo: that.groupNo
-				}).then(res => {
-					if (res.code == 0) {
-						let detail = res.data
-						if (!detail) return;
-						let i = detail.members ? detail.members.length : 0
-						detail.headUrlsLength = i
-						while (i < 20) {
-							detail.members.push('/static/icon/group-none@2x.png')
-							i++
-						}
-						
-						that.detail = detail
-						
-						const arr=that.detail.wins.map(item=>item.userId)
-						console.log('arr',arr)
+						groupNo: that.groupNo
+					}).then(res => {
+							if (res.code == 0) {
+								let detail = res.data
+								if (!detail) return;
+								let i = detail.members ? detail.members.length : 0
+								detail.headUrlsLength = i
+								while (i < 20) {
+									detail.members.push('/static/icon/group-none@2x.png')
+									i++
+								}
 
-						//找到中奖人的位置
-						detail.members.map((item, index) => {
-							if (item.createBySelf) {
-								that.joinStatusText = '你已开团'
-								that.joinTime = detail.joinTime
-							}
-							if (detail.queryUserId == item.userId) {
-								that.joinStatusText = '你已加入'
-								that.joinTime = item.createTime
-							}
-							const i=arr.findIndex(item2=>{
-								return item2==item.userId
-							})
-							if (i!==-1) { //找到中奖人
-							console.log('找到中奖人',i)
-								var animation = uni.createAnimation({
-									duration: 500,
-									timingFunction: 'linear',
+								that.detail = detail
+
+								const arr = that.detail.wins.map(item => item.userId)
+								console.log('arr', arr)
+
+								//找到中奖人的位置
+								detail.members.map((item, index) => {
+										if (item.createBySelf) {
+											that.joinStatusText = '你已开团'
+											that.joinTime = detail.joinTime
+										}
+										if (detail.queryUserId == item.userId) {
+											that.joinStatusText = '你已加入'
+											that.joinTime = item.createTime
+										}
+										const i = arr.findIndex(item2 => {
+											return item2 == item.userId
+										})
+										if (i !== -1) { //找到中奖人
+											console.log('找到中奖人', i)
+											var animation = uni.createAnimation({
+												duration: 500,
+												timingFunction: 'linear',
+											})
+											that.animation = animation
+											animation.rotate(18 * (index - 6)).step()
+											that['line' + i] = {
+												transform: 'rotateZ(' + ((18 * index) - 8) + 'deg)',
+												'transform-origin': 'center center'
+											}
+											that['animationData'] = animation.export()
+											that['animationData' + i] = animation.export()
+											if (that.mp3Src) {
+												that.innerAudioContext.stop();
+											}
+										})
+
+
+									if (detail.status == 1) {
+										console.log('转动动画')
+										//转动动画
+										var animation = uni.createAnimation({
+											duration: 10000000,
+											timingFunction: 'linear',
+										})
+
+
+										that.animation = animation
+										animation.rotate(360000).step()
+										that.animationData = animation.export()
+										const array1 = [1, 2, 3];
+										array1.forEach((item, index) => {
+											that['line' + index] = {
+												transform: 'rotate(360000deg)',
+												'transform-origin': 'center center',
+												'transition': 'transform 1e+07ms linear 0ms',
+											}
+										})
+										if (that.mp3Src) {
+											that.innerAudioContext.play();
+										}
+
+									} else {
+										// that.openGroup_success()
+									}
+
+									that.failGroup() //开团失败判断
+
+								}
+								uni.hideLoading()
+							}) this.refreshShow = false
+					},
+					/**
+					 * 刷新倒计时
+					 * */
+					refreshEndTime: function() {
+						this.refreshShow = true
+					},
+					//开团失败 - 逻辑判断
+					failGroup: function() {
+						let that = this
+						//开团失败判断
+						if (that.status && that.status == 3) { //拼团失败
+							this.$u.toast('因人数不满开团失败，请选择其他商品继续拼团!');
+							setTimeout(() => {
+								uni.switchTab({
+									url: '/pages/group-buy/group-buy'
 								})
-								that.animation = animation
-								animation.rotate(18 * (index-6)).step()
-								that['line'+i]={
-									transform: 'rotateZ('+((18 * index)-8)+'deg)',
-									'transform-origin': 'center center'
-								}
-								that['animationData'] = animation.export()
-								that['animationData'+i] = animation.export()
-							}
-						})
-
-
-						if (detail.status == 1) {
-							console.log('转动动画')
-							//转动动画
-							var animation = uni.createAnimation({
-								duration: 10000000,
-								timingFunction: 'linear',
-							})
-							
-							
-							that.animation = animation
-							animation.rotate(360000).step()
-							that.animationData = animation.export()
-							const array1 = [1, 2, 3];
-							array1.forEach((item,index)=>{
-								that['line'+index]={
-									transform: 'rotate(360000deg)',
-									'transform-origin': 'center center',
-									'transition': 'transform 1e+07ms linear 0ms',
-								}
-							})
-						} else {
-							// that.openGroup_success()
+							}, 1500)
 						}
-
-						that.failGroup() //开团失败判断
-
-					}
-					uni.hideLoading()
-				})
-				this.refreshShow = false
-			},
-			/**
-			 * 刷新倒计时
-			 * */
-			refreshEndTime: function() {
-				this.refreshShow = true
-			},
-			//开团失败 - 逻辑判断
-			failGroup: function() {
-				let that = this
-				//开团失败判断
-				if (that.status && that.status == 3) { //拼团失败
-					this.$u.toast('因人数不满开团失败，请选择其他商品继续拼团!');
-					setTimeout(() => {
-						uni.switchTab({
-							url: '/pages/group-buy/group-buy'
+					},
+					//路由 - 分享
+					routeShare: function() {
+						uni.navigateTo({
+							url: '/pages/mine/qr-code/qr-code'
 						})
-					}, 1500)
-				}
+					},
 			},
-			//路由 - 分享
-			routeShare: function() {
-				uni.navigateTo({
-					url: '/pages/mine/qr-code/qr-code'
-				})
-			},
+			destroyed() {
+				this.innerAudioContext.stop();
+				this.innerAudioContext = null
+			}
 		}
-	}
 </script>
 
 <style>
@@ -891,21 +899,23 @@
 	}
 
 	.line {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 544rpx;
-	height: 544rpx;
-	transform: rotate(10deg);
-	transform-origin: center center;
-	background: url(/static/image/zz.png) no-repeat center 19%;
-	transition: -webkit-transform 500ms linear 0ms, transform 500ms linear 0ms;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 544rpx;
+		height: 544rpx;
+		transform: rotate(10deg);
+		transform-origin: center center;
+		background: url(/static/image/zz.png) no-repeat center 22%;
+		transition: -webkit-transform 500ms linear 0ms, transform 500ms linear 0ms;
 	}
-	.line-1{
+
+	.line-1 {
 		transform: rotate(28deg);
 		transform-origin: center center;
 	}
-	.line-2{
+
+	.line-2 {
 		transform: rotate(46deg);
 		transform-origin: center center;
 	}
