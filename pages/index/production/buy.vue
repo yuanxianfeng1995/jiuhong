@@ -271,20 +271,20 @@
 					}
 					//拼团
 					//积分拦截
-					if (that.detail.ptPrice > that.userInfo.accountAvailableIntegral) {
-						uni.showModal({
-							title: '提示',
-							content: '您的积分不足，是否去充值！',
-							success: function(res) {
-								if (res.confirm) {
-									uni.navigateTo({
-										url: '/pages/mine/wallet/charge-money'
-									})
-								}
-							}
-						});
-						return
-					}
+					// if (that.detail.ptPrice > that.userInfo.accountAvailableIntegral) {
+					// 	uni.showModal({
+					// 		title: '提示',
+					// 		content: '您的积分不足，是否去充值！',
+					// 		success: function(res) {
+					// 			if (res.confirm) {
+					// 				uni.navigateTo({
+					// 					url: '/pages/mine/wallet/charge-money'
+					// 				})
+					// 			}
+					// 		}
+					// 	});
+					// 	return
+					// }
 					console.log(this.payResult, '微信支付')
 
 					uni.showLoading({
@@ -326,13 +326,13 @@
 					}
 				} else {
 					console.log('详情', that.detail)
-					if (that.detail.coupon > that.userInfo.accountAvailableCoupon) {
-						uni.showToast({
-							title: '您当前拼团券不足，暂不可开团。',
-							icon: 'none'
-						})
-						return
-					}
+					// if (that.detail.coupon > that.userInfo.accountAvailableCoupon) {
+					// 	uni.showToast({
+					// 		title: '您当前拼团券不足，暂不可开团。',
+					// 		icon: 'none'
+					// 	})
+					// 	return
+					// }
 					/**
 					 * 开团
 					 * */

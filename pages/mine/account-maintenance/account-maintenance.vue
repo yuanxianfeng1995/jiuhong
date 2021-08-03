@@ -8,7 +8,7 @@
 						<view class="item_detail">
 							<text>姓名:{{item.name}}</text>
 							<text>账户类型:{{item.accounttypeName}}</text>
-							<text>开户行:{{item.bankdeposit}}</text>
+							<!-- <text>开户行:{{item.bankdeposit}}</text> -->
 							<text>提现账号:{{item.accountnumber}}</text>
 						</view>
 						<u-icon name="/static/icon/sure@2x.png" size="40" v-if="false"></u-icon>
@@ -48,9 +48,9 @@
 								<u-icon name="arrow-right" size="26"></u-icon>
 							</view>
 						</u-form-item>
-						<u-form-item label="开户行">
+						<!-- <u-form-item label="开户行">
 							<u-input v-model="form.bankdeposit" />
-						</u-form-item>
+						</u-form-item> -->
 						<u-form-item label="提现账号">
 							<u-input v-model="form.accountnumber" />
 						</u-form-item>
@@ -178,13 +178,13 @@
 					})
 					return
 				}
-				if (!formData.bankdeposit) {
-					uni.showToast({
-						title: '请填写开户行',
-						icon: 'none'
-					})
-					return
-				}
+				// if (!formData.bankdeposit) {
+				// 	uni.showToast({
+				// 		title: '请填写开户行',
+				// 		icon: 'none'
+				// 	})
+				// 	return
+				// }
 				if (!formData.accountnumber) {
 					uni.showToast({
 						title: '请填写提现账号',
