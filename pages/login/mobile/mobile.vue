@@ -22,7 +22,7 @@
 		</view>
 		<view class="bottom">
 			<!-- <button class="btn" @click="prev">上一步</button> -->
-			<button class="btn" @click="register">完成</button>
+			<u-button class="btn" @click="register">完成</u-button>
 			<text class="forget-password" @click="forgetPassword">忘记密码</text>
 		</view>
 	</view>

@@ -114,7 +114,7 @@
 						</view>
 						<view class="handle">
 							<!-- <text>团号：{{item.groupNo}}</text> -->
-							<button class="btn" type="default" @click.stop="joinGroup(item)">加入拼团</button>
+							<u-button class="btn" type="default" @click.stop="joinGroup(item)">加入拼团</u-button>
 						</view>
 					</view>
 				</view>
@@ -341,7 +341,8 @@
 						name: '失败数',
 					},
 				],
-				time: ''
+				time: '',
+				time1: ''
 			}
 		},
 		onLoad: function() {
@@ -548,10 +549,6 @@
 			//路由 - 拼团购买
 			joinGroup: function(item) {
 				console.log('拼团item', item)
-				if (this.openAndJoin_num.joinGroupNum <= 0) {
-					this.$u.toast('您当前拼团次数不足哦')
-					return
-				}
 				// console.log('剩下开团次数',this.openAndJoin_num)
 				//开团失败判断
 				if (item.status&&item.status == 3) { //拼团失败

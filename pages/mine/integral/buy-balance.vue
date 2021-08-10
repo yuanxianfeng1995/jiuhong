@@ -11,7 +11,7 @@
 			</view>
 		</view>
 		<view class="sumbit">
-			<button class="btn" type="default" @click="submit()">提交</button>
+			<u-button class="btn" type="default" @click="submit()">提交</u-button>
 		</view>
 	</view>
 </template>

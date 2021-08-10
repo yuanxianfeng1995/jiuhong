@@ -28,7 +28,7 @@
 			</view>
 		</view>
 		<view class="footer">
-			<button class="btn" type="default" @click="add()">新增收货地址</button>
+			<u-button class="btn" type="default" @click="add()">新增收货地址</u-button>
 		</view>
 		<u-popup v-model="formShow" mode="center" border-radius="12" width="632" :closeable="true">
 			<view class="form_content">
@@ -46,7 +46,7 @@
 							</view>
 						</u-form-item>
 						<u-form-item label="详细地址"><u-input v-model="form.address" /></u-form-item>
-						<button class="form_btn" @click="submit">保存</button>
+						<u-button class="form_btn" @click="submit">保存</u-button>
 					</u-form>
 				</view>
 			</view>

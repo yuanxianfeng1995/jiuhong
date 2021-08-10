@@ -37,7 +37,7 @@
 			<text>规则说明</text>
 		</view>
 		<view class="sumbit">
-			<button class="btn" type="default" @click="submit">下一步</button>
+			<u-button class="btn" type="default" @click="submit">下一步</u-button>
 		</view>
 	</view>
 </template>
@@ -52,6 +52,8 @@
 					money:null,
 					walletid: null
 				},
+				isOnLoad: null,
+				isOnShow: null,
 				chooseaccount: null,
 				accountList: [],
 				dictionaries: {1:'支付宝',2:'微信',3:'银行卡'},
@@ -59,9 +61,11 @@
 		},
 		onLoad:function(option){
 			console.log('可用余额',option.amount)
+			this.isOnLoad=true
 			this.amount = option.amount
 		},
 		onShow(){
+			this.isOnShow=true
 			this.getAccountList()
 		},
 		methods: {
@@ -84,14 +88,17 @@
 				this.$u.api.getAccountList().then(res => {
 					console.log(res);
 					if (res.code == 0) {
-						that.accountList = res.data?res.data.map(item=>{
-							return {
-								...item,
-								accounttypeName: that.dictionaries[item.accounttype]
-							}
-						}):[]
-						that.chooseaccount = that.accountList[0]
-						that.form.walletid=that.chooseaccount.id
+						if(that.isOnLoad||(this.isOnShow&&!that.chooseaccount)){
+							that.accountList = res.data?res.data.map(item=>{
+								return {
+									...item,
+									accounttypeName: that.dictionaries[item.accounttype]
+								}
+							}):[]
+							that.chooseaccount = that.accountList[0]
+							that.form.walletid=that.chooseaccount.id
+						  that.isOnLoad=false
+						}
 					}
 				})
 			},

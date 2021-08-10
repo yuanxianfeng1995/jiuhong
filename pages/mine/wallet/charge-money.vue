@@ -14,7 +14,7 @@
 			<text>规则说明</text>
 		</view>
 		<view class="sumbit">
-			<button class="btn" type="default" @click="appPrePay()">确定并提交</button>
+			<u-button class="btn" type="default" @click="appPrePay()">确定并提交</u-button>
 		</view>
 	</view>
 </template>

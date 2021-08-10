@@ -43,10 +43,11 @@
 							<u-input v-model="form.name" />
 						</u-form-item>
 						<u-form-item label="账户类型">
-							<view class="right" @click="regionShow = true">
+							<u-input v-model="form.accounttypeName" disabled/>
+							<!-- <view class="right" @click="regionShow = true">
 								<text>{{form.accounttypeName ? form.accounttypeName : '请选择'}}</text>
 								<u-icon name="arrow-right" size="26"></u-icon>
-							</view>
+							</view> -->
 						</u-form-item>
 						<!-- <u-form-item label="开户行">
 							<u-input v-model="form.bankdeposit" />
@@ -74,7 +75,7 @@
 					accountnumber: null,
 					accounttype: 1,
 					bankdeposit: null,
-					accounttypeName: null,
+					accounttypeName: '支付宝',
 					consignee: null,
 					name: null
 				},

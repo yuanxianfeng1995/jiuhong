@@ -2,8 +2,8 @@
     "name" : "玖红天下",
     "appid" : "__UNI__B5C3A47",
     "description" : "玖红天下",
-    "versionName" : "129",
-    "versionCode" : 129,
+    "versionName" : "131",
+    "versionCode" : 131,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -137,6 +137,7 @@
             "proxy" : {
                 "/web" : {
                     "target" : "http://apisss.jiuhongtianxia.com/", //目标接口域名
+
                     //"target" : "http://47.106.123.165:8815/", //目标接口域名
                     "changeOrigin" : true, //是否跨域
                     "secure" : false, // 设置支持https协议的代理

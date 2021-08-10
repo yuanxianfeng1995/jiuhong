@@ -34,17 +34,17 @@
 				<view class="content" v-if="tabCurrent == 0">
 					<view class="item">
 						<text>日期时间</text>
-						<text>操作说明</text>
 						<text>提现金额</text>
-						<text>扣除金额</text>
 						<text>到账金额</text>
+						<text>审核结果</text>
+						<text>审核说明</text>
 					</view>
 					<view class="item" v-for="(item,index) in cashList_arr" :key="index">
 						<text>{{item.createtime}}</text>
-						<text>{{item.memo}}</text>
 						<text>{{item.num}}</text>
-						<text>{{item.knum}}</text>
 						<text>{{item.resultnum}}</text>
+						<text>{{format(item.examineresult)}}</text>
+						<text>{{item.examinememo}}</text>
 					</view>
 				</view>
 				<view class="content" v-if="tabCurrent == 1">
@@ -110,6 +110,28 @@
 			})
 		},
 		methods: {
+			format(data){
+				let str=null
+				switch(data){
+					case 0:
+					str='未审核'
+					break;
+					case 1:
+					str='审核通过'
+					break;
+					case 2:
+					str='审核失败'
+					break;
+					case 3:
+					str='打款成功'
+					break;
+					case 4:
+					str='打款失败'
+					break;
+				}
+				return str
+				
+			},
 			//我的信息
 			get_userCenter:function(){
 				 let that = this

@@ -100,15 +100,15 @@
 			</view>
 			<view class="handle" v-if="false">
 				<text>还需抵拼团券1张</text>
-				<button class="btn" disabled="true" type="default" v-if="true">立即开团</button>
-				<button class="btn open" disabled="true" type="default" v-else>立即开团</button>
+				<u-button class="btn" disabled="true" type="default" v-if="true">立即开团</u-button>
+				<u-button class="btn open" disabled="true" type="default" v-else>立即开团</u-button>
 			</view>
 			<view class="handle" v-else>
 				<text>
 					<!--还需支付：￥{{total}}-->
 				</text>
-				<button class="btn open" type="default" @click.stop="wxPay('join')" v-if="groupItem.groupNo">支付</button>
-				<button class="btn open" type="default" @click.stop="wxPay('open')" v-else>立即开团</button>
+				<u-button class="btn open" type="default" @click.stop="wxPay('join')" v-if="groupItem.groupNo">支付</u-button>
+				<u-button class="btn open" type="default" @click.stop="wxPay('open')" v-else>立即开团</u-button>
 				<u-popup v-model="payResult" mode="center" border-radius="12" width="526rpx" height="690rpx">
 					<view class="pay_result">
 						<view class="result_top">
